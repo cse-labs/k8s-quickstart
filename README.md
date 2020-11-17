@@ -7,9 +7,7 @@
 - Intro to Docker Best Practices: <https://blog.docker.com/2019/07/intro-guide-to-dockerfile-best-practices/>
 - Dockerfile Linter: <https://github.com/hadolint/hadolint>
 
-### Setup
-
-If you haven't already, open this repo with GitHub Codespaces
+> Open this repo with GitHub Codespaces
 
 ### Some basic docker commands
 
@@ -19,7 +17,7 @@ If you haven't already, open this repo with GitHub Codespaces
 docker images
 
 # pull an image
-docker pull alpine
+docker pull ubuntu
 docker images
 
 # let's run the image interactively as a "jump box"
@@ -36,9 +34,12 @@ ping bing.com
 # oops - ping isn't installed
 # let's install ping, curl and some other goodies
 apt update
-apt install -y --no-install-recommends iputils-ping curl wget nano git redis-tools mariadb-client httpie
+apt install -y --no-install-recommends iputils-ping curl redis-tools mariadb-client httpie
 
+# ping works
 ping -c 1 bing.com
+
+# http works
 http https://www.bing.com
 
 exit
@@ -151,7 +152,7 @@ docker ps -a
 
 ## Build a container
 
-At the end of the first section, we said there was a better way to build images ...
+> At the end of the first section, we said there was a better way to build images ...
 
 ### Build the docker container
 
@@ -191,8 +192,7 @@ docker logs web
 
 ```bash
 
-docker stop web
-docker rm web
+docker rm -f web
 
 # only the jumpbox should show
 docker ps -a
@@ -241,8 +241,7 @@ docker start -ai jbox
 ping redis
 
 # oops
-# We have to attach the container to the same network
-# We could also use --link redis:redis
+# We have to attach the containers to the same network
 exit
 
 # create the network
