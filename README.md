@@ -1,25 +1,19 @@
 # Docker Walk Through
-### 100 level
 
-### Additional Docker Resource Links
+> 100 level
+
+## Additional Docker Resource Links
+
 * Intro to Docker Best Practices: <https://blog.docker.com/2019/07/intro-guide-to-dockerfile-best-practices/>
 * Dockerfile Linter: <https://github.com/hadolint/hadolint>
 
 ### Setup
 
-If you haven't already, clone the repo and run setup as explained in the [readme](README.md)
-
-### Connect to your build server
-
-Follow the steps in [readme](README.md) to connect to your build server via SSH
-
-Your prompt should look like this:
-
-aks@docker:~/$
+If you haven't already, open this repo with GitHub Codespaces
 
 ### Some basic docker commands
 
-```
+```bash
 
 # show local images
 docker images
@@ -37,23 +31,23 @@ docker run -it --name jbox ubuntu
 pwd
 cd root
 
-ping www.microsoft.com
+ping bing.com
 
 # oops - ping isn't installed
 # let's install ping, curl and some other goodies
-apt-get update
-apt-get install -y iputils-ping curl wget nano git redis-tools mariadb-client
+apt update
+apt install -y --no-install-recommends iputils-ping curl wget nano git redis-tools mariadb-client httpie
 
-ping -c 1 www.microsoft.com
-curl www.microsoft.com
+ping -c 1 bing.com
+http https://www.bing.com
 
 exit
 
 ```
 
-### We don't want to have to do that every time ...
+### We don't want to have to do that every time
 
-```
+```bash
 
 # save our changes to a new image
 docker commit jbox jumpbox
@@ -95,20 +89,19 @@ docker ps -a
 
 ```
 
-
 ### Run a simple web app in Docker
 
-```
+```bash
 
 # run a simple web app
-docker run -d -p 80:8080 --name web fourco/go-web-aks
+docker run -d -p 80:8080 --name web retaildevcrew/go-web
 
 # see what happened
 docker ps
 docker logs web
 
 # send a request to the web server
-curl localhost
+http localhost
 
 # recheck the logs
 docker logs web
@@ -132,7 +125,7 @@ exit
 
 ### Remove the web container
 
-```
+```bash
 
 docker rm web
 
@@ -141,7 +134,7 @@ docker stop web
 
 # we can restart it
 docker start web
-curl localhost
+http localhost
 docker logs web
 
 # stop and remove
@@ -162,17 +155,17 @@ At the end of the first section, we said there was a better way to build images 
 
 ### Clone a sample Go app
 
-```
+```bash
 
 cd ~
-git clone https://github.com/4-co/go-web-aks
+git clone https://github.com/retaildevcrews/go-web-aks
 cd go-web-aks
 
 ```
 
 ### Build the docker container
 
-```
+```bash
 
 docker build -t web .
 
@@ -189,7 +182,7 @@ cat dockerfile
 
 ### Run the container
 
-```
+```bash
 
 docker run -d --name web -p 80:8080 web
 
@@ -197,14 +190,14 @@ docker run -d --name web -p 80:8080 web
 docker ps
 
 # send a web request and look at logs
-curl localhost
+http localhost
 docker logs web
 
 ```
 
 ### Stop and remove the web container
 
-```
+```bash
 
 docker stop web
 docker rm web
@@ -216,7 +209,7 @@ docker ps -a
 
 ### Let's run MariaDB in a container
 
-```
+```bash
 
 # start the server
 # use -e to specify an environment variable
@@ -243,10 +236,9 @@ docker ps -a
 
 ```
 
+### Let's run something a little more complex
 
-### Let's run something a little more complex ...
-
-```
+```bash
 
 # run a Redis container
 docker run -d --name redis redis
@@ -299,11 +291,11 @@ exit
 
 # let's run a web app that talks to the redis cache
 # notice we attach it to the network
-docker run -d --net vote --name govote fourco/govote
+docker run -d --net vote --name govote retaildevcrew/govote
 
 docker start -ai jbox
 
-curl govote:8080
+http govote:8080
 
 # Dogs RULE!
 
@@ -312,52 +304,33 @@ exit
 
 ```
 
-### What if we want to curl the website from our dev server?
+### What if we want to access the website from our codespace
 
-```
+```bash
+
 docker rm -f govote
 
 # Same run command with -p option to expose the port
-docker run -d --net vote --name govote -p 80:8080 fourco/govote
+docker run -d --net vote --name govote -p 8080:8080 retaildevcrew/govote
 
-curl localhost
+http localhost:8080
 
 # our network still works
 docker start -ai jbox
 
-curl govote:8080
+http govote:8080
 
 # Dogs RULE!
 
 ```
 
-### Pull an image from ACR
-
-The ACR section of the k8s walkthrough demonstrates how to create a Service Principal with access for docker / kubectl
-
-Note: the ID / Password should be stored in Key Vault, not a public repo ...
-
-```
-# oops
-docker pull fourco.azurecr.io/acrgoweb
-
-# Have to login with a Service Principal
-docker login  -u 24046c70-b4b2-4c06-b62d-52f27d8f1974 -p 3b1ee421-3dc7-48dd-b097-874cd37ec4e3 fourco.azurecr.io
-
-# Works
-docker pull fourco.azurecr.io/acrgoweb
-
-docker images
-
-```
-
 ### Container size matters
 
-Notice the size difference in the diferent images - from 12 MB to 700 MB
+Notice the size difference in the diferent images - from 13 MB to 9.87 GB
 
-The size of the image has a big impact on deployment time, so you want to minimize your image size. That typically also reduces your security footprint. In the walkthrough, we used bad docker build practices but you have to start somewhere ...
+The size of the image has a big impact on deployment time, so you want to minimize your image size. That typically also reduces your security footprint.
 
-```
+```bash
 
 docker images
 
@@ -365,9 +338,8 @@ docker images
 
 ### Cleanup
 
-```
+```bash
 
-# if you don't remove these, parts of the AKS walk through will break as the ports will be in use
 docker rm -f govote
 docker rm -f redis
 docker rm -f maria
@@ -377,5 +349,3 @@ docker rm jbox
 docker ps -a
 
 ```
-
-## We're done!
