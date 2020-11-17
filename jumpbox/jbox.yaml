@@ -1,0 +1,11 @@
+apiVersion: v1 
+kind: Pod 
+metadata:
+  name: jbox
+  namespace: default 
+spec:
+  containers:
+  - name: jbox
+    image: fourco/jumpbox
+    imagePullPolicy: IfNotPresent
+  restartPolicy: Always

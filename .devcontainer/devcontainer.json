@@ -1,0 +1,25 @@
+{
+  "name": "docker101",
+
+  // Set *default* container specific settings.json values on container create.
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+//    "terminal.integrated.shell.linux": "/bin/zsh"
+  },
+
+  "remoteUser": "vscode",
+
+  // Open port 8080 by default
+  "forwardPorts": [8080],
+
+  // Install extensions
+  "extensions": [
+    "eamodio.gitlens",
+    "davidanson.vscode-markdownlint",
+    "gruntfuggly.todo-tree",
+    "ms-azuretools.vscode-docker"
+  ],
+
+  // Run Bash script in .devcontainer directory
+  "postCreateCommand": "/bin/bash ./.devcontainer/post-install.sh"
+}

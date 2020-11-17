@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: votes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: votes
+  template:
+    metadata:
+      labels:
+        app: votes
+    spec:
+      containers:
+      - name: votes
+        image: fourco/govote
+        resources:
+          requests:
+            cpu: 250m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 256Mi
+        ports:
+        - containerPort: 8080
+        env:
+        - name: REDIS
+          value: "redis"
