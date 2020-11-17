@@ -3,13 +3,7 @@
 apt-get update
 apt-get install -y --no-install-recommends git curl httpie
 
-# install WebV global tool
-dotnet tool install -g webvalidate
-
-# update .bashrc
-echo "" >> ~/.bashrc
-echo 'export PATH="$PATH:~/.dotnet/tools"' >> ~/.bashrc
-
+# pull the docker images we use
 docker pull ubuntu
 docker pull golang
 docker pull mariadb
