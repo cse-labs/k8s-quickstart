@@ -4,8 +4,8 @@
 
 ## Additional Docker Resource Links
 
-* Intro to Docker Best Practices: <https://blog.docker.com/2019/07/intro-guide-to-dockerfile-best-practices/>
-* Dockerfile Linter: <https://github.com/hadolint/hadolint>
+- Intro to Docker Best Practices: <https://blog.docker.com/2019/07/intro-guide-to-dockerfile-best-practices/>
+- Dockerfile Linter: <https://github.com/hadolint/hadolint>
 
 ### Setup
 
@@ -153,21 +153,13 @@ docker ps -a
 
 At the end of the first section, we said there was a better way to build images ...
 
-### Clone a sample Go app
-
-```bash
-
-cd ~
-git clone https://github.com/retaildevcrews/go-web-aks
-cd go-web-aks
-
-```
-
 ### Build the docker container
 
 ```bash
 
-docker build -t web .
+cd go-web
+
+docker build . -t web
 
 # look at what happened
 docker images
@@ -176,7 +168,7 @@ docker images
 
 # let's see what we told Docker to do
 # notice these commands are very similar to the first section
-cat dockerfile
+code dockerfile
 
 ```
 
@@ -320,6 +312,10 @@ docker start -ai jbox
 
 http govote:8080
 
+# We can also access remotely from codespaces
+# Click on Remote Explorer in the left nav
+# Click on Open in Browser in the 127.0.0.1:8080 port
+
 # Dogs RULE!
 
 ```
@@ -349,3 +345,11 @@ docker rm jbox
 docker ps -a
 
 ```
+
+## Additional Reading
+
+- AKS: <https://docs.microsoft.com/en-us/azure/aks/>
+- Kubernetes: <https://kubernetes.io/docs/home/>
+- Microsoft Cloud Workshop: <https://github.com/Microsoft/MCW-Containers-and-DevOps>
+- What the Hack - k8s: <https://github.com/Microsoft/WhatTheHack/tree/master/001-IntroToKubernetes>
+- AKS Video: <https://www.youtube.com/watch?v=4ht22ReBjno>
