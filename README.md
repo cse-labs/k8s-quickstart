@@ -95,7 +95,7 @@ docker ps -a
 ```bash
 
 # run a simple web app
-docker run -d -p 80:8080 --name web retaildevcrew/go-web
+docker run -d -p 80:8080 --name web retaildevcrew/goweb
 
 # see what happened
 docker ps
@@ -311,6 +311,8 @@ docker start -ai jbox
 
 http govote:8080
 
+exit
+
 # We can also access remotely from codespaces
 # Click on Remote Explorer in the left nav
 # Click on Open in Browser in the 127.0.0.1:8080 port
@@ -339,6 +341,9 @@ docker rm -f govote
 docker rm -f redis
 docker rm -f maria
 docker rm jbox
+
+# remove unused images / networks
+docker system prune -f
 
 # check results
 docker ps -a
