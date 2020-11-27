@@ -1,24 +1,19 @@
 # build the app in a temporary container
-FROM golang:latest
+FROM golang:latest as build
 
 RUN mkdir -p /root/app
 COPY app/ /root/app/
 WORKDIR /root/app
-CMD bash
+ENTRYPOINT ["/bin/bash"]
 
 # Build the app
-RUN go fmt
-RUN go vet
-#RUN go get -u golang.org/x/lint/golint && golint
-#RUN go test -cover
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o ./app main.go
-#RUN rm main.go
+RUN go fmt && go vet &&  CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o ./app main.go
 
-
+#############################
 # build the release container
 FROM alpine:latest  
 RUN mkdir -p /root/app && apk --no-cache add curl
 WORKDIR /root/app
-COPY --from=0 /root/app/ /root/app/
-CMD ["./app"] 
+COPY --from=build /root/app/ /root/app/
+ENTRYPOINT ["./app"] 
 
