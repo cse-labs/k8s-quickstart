@@ -7,8 +7,6 @@
 - Intro to Docker Best Practices: <https://blog.docker.com/2019/07/intro-guide-to-dockerfile-best-practices/>
 - Dockerfile Linter: <https://github.com/hadolint/hadolint>
 
-> Open this repo with GitHub Codespaces
-
 ### Some basic docker commands
 
 ```bash
@@ -349,11 +347,3 @@ docker system prune -f
 docker ps -a
 
 ```
-
-## Additional Reading
-
-- AKS: <https://docs.microsoft.com/en-us/azure/aks/>
-- Kubernetes: <https://kubernetes.io/docs/home/>
-- Microsoft Cloud Workshop: <https://github.com/Microsoft/MCW-Containers-and-DevOps>
-- What the Hack - k8s: <https://github.com/Microsoft/WhatTheHack/tree/master/001-IntroToKubernetes>
-- AKS Video: <https://www.youtube.com/watch?v=4ht22ReBjno>
