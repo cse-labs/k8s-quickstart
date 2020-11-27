@@ -158,7 +158,7 @@ docker ps -a
 
 ```bash
 
-cd go-web
+cd goweb
 
 docker build . -t web
 
