@@ -2,10 +2,9 @@
 
 > 100 level
 
-## Additional Docker Resource Links
+## Docker Introduction
 
-- Intro to Docker Best Practices: <https://blog.docker.com/2019/07/intro-guide-to-dockerfile-best-practices/>
-- Dockerfile Linter: <https://github.com/hadolint/hadolint>
+- Intro to Docker: <https://docs.microsoft.com/en-us/dotnet/architecture/microservices/container-docker-introduction/>
 
 ### Some basic docker commands
 
@@ -152,7 +151,11 @@ docker ps -a
 
 > At the end of the first section, we said there was a better way to build images ...
 
-### Build the docker container
+### Build a docker container
+
+- goweb is a simple web app written in Go
+  - don't worry if you don't know anything about Go
+    - you don't need to - the beauty of Dockerfiles!
 
 ```bash
 
@@ -263,9 +266,6 @@ redis-cli -h redis
 set Dogs 100
 set Cats 3
 
-incr Dogs
-decr Cats
-
 # exit redis-cli
 exit
 
@@ -347,3 +347,9 @@ docker system prune -f
 docker ps -a
 
 ```
+
+## Additional Docker Resource Links
+
+- Intro to Docker: <https://docs.microsoft.com/en-us/dotnet/architecture/microservices/container-docker-introduction/>
+- Intro to Docker Best Practices: <https://blog.docker.com/2019/07/intro-guide-to-dockerfile-best-practices/>
+- Dockerfile Linter: <https://github.com/hadolint/hadolint>
