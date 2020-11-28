@@ -2,6 +2,11 @@
 
 > Setup Kubernetes on an Azure VM (bare metal)
 
+- TODO - we could setup from a terminal on the local machine
+- we would have to add the ssh-keygen step
+- this has caused issues in the past with customers
+- but shouldn't be an issue for us
+
 ## Login to Azure
 
 ```bash
