@@ -4,7 +4,7 @@
 
 ## Sessions
 
-- [Docker 101](Docker101/README.md)
+- [Docker 101](01-Docker101/README.md)
 
 ## Additional Reading
 
