@@ -45,3 +45,19 @@ az vm create -g ${qsdns}-rg \
 --custom-data startup.sh
 
 ```
+
+## SSH into VM
+
+```bash
+
+# ssh into the VM
+ssh ${qsdns}.${qsloc}.cloudapp.azure.com
+
+# check setup status (until done)
+cat status
+
+# optional - add your local id_rsa.pub key
+nano ~/.ssh/authorized_keys
+# copy and paste your id_rsa.pub key on a new line
+
+```
