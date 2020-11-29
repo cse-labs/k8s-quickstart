@@ -4,8 +4,8 @@
 
 - TODO - we could setup from a terminal on the local machine
   - we would have to add the ssh-keygen step
-  - this has caused issues in the past with customers
-  - but shouldn't be an issue for us
+  - this has caused issues in the past with customers but shouldn't be an issue for us
+  - need to verify the startup.sh will work on Windows
 
 ## Login to Azure
 
@@ -45,7 +45,7 @@ export qsuser=codespace
 # Create a resource group
 az group create -l $qsloc -n ${qsdns}-rg
 
-# update ME= in startup.sh
+# update ME= in startup.templ
 sed "s/ME=codespace/ME=$qsuser/g" startup.templ > startup.sh
 chmod +x startup.sh
 
@@ -60,6 +60,9 @@ az vm create -g ${qsdns}-rg \
 --os-disk-size-gb 128 \
 --custom-data startup.sh
 
+# remove the temporary script
+rm startup.sh
+
 ```
 
 ## SSH into VM
@@ -71,6 +74,11 @@ ssh ${qsuser}@${qsdns}.${qsloc}.cloudapp.azure.com
 
 # check setup status (until done)
 cat status
+
+# clone this repo
+cd~
+git clone https://github.com/retaildevcrews/k8s-quickstart
+cd k8s-quickstart/02-Bare-metal-setup
 
 # optional - add your local id_rsa.pub key
 nano ~/.ssh/authorized_keys
