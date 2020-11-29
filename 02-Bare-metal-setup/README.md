@@ -3,9 +3,9 @@
 > Setup Kubernetes on an Azure VM (bare metal)
 
 - TODO - we could setup from a terminal on the local machine
-- we would have to add the ssh-keygen step
-- this has caused issues in the past with customers
-- but shouldn't be an issue for us
+  - we would have to add the ssh-keygen step
+  - this has caused issues in the past with customers
+  - but shouldn't be an issue for us
 
 ## Login to Azure
 
@@ -21,17 +21,33 @@ az account set -s YourSubscriptionName
 
 ```
 
+## Use your SSH key
+
+> Optional - an SSH key is auto-generated when the codespace is created
+
+- Copy your local id_rsa and id_rsa.pub values to ~/.ssh
+- `chmod 700 ~/.ssh/id_rsa*`
+
 ## Create VM
 
 ```bash
 
-#### Change these environment variables
+# start in this directory
+cd 02-Bare-metal-setup
+
+#### Change this environment variable
+export qsdns=YourDNSName
+
+# (optional) Change these environment variables
 export qsloc=westus2
 export qsuser=codespace
-export qsdns=YourDNSName
 
 # Create a resource group
 az group create -l $qsloc -n ${qsdns}-rg
+
+# update ME= in startup.sh
+sed "s/ME=codespace/ME=$qsuser/g" startup.templ > startup.sh
+chmod +x startup.sh
 
 # Create an Ubuntu VM and install prerequisites
 az vm create -g ${qsdns}-rg \
@@ -51,7 +67,7 @@ az vm create -g ${qsdns}-rg \
 ```bash
 
 # ssh into the VM
-ssh ${qsdns}.${qsloc}.cloudapp.azure.com
+ssh ${qsuser}@${qsdns}.${qsloc}.cloudapp.azure.com
 
 # check setup status (until done)
 cat status
