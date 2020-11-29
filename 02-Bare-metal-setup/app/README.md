@@ -43,7 +43,7 @@ echo "" >> ~/.bashrc
 echo "export ngsa=$(kubectl get service | grep ngsa | awk '{print $3}'):4120" >> ~/.bashrc
 
 # check the version endpoint
-curl http://$ngsa/version
+http $ngsa/version
 
 # check the version remotely
 
