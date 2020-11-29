@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ngsa
+  labels:
+    app: ngsa
+spec:
+  containers:
+  - name: app
+    imagePullPolicy: Always
+    image: retaildevcrew/ngsa:beta
+    args: [ "--in-memory" ]
+    ports:
+    - containerPort: 4120
+    env:
+    - name: Zone
+      valueFrom:
+        configMapKeyRef:
+          name: ngsa-config
+          key: Zone
+    - name: Region
+      valueFrom:
+        configMapKeyRef:
+          name: ngsa-config
+          key: Region
+    - name: PodType
+      value: ngsa-memory
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ngsa
+  labels:
+    app: ngsa
+spec:
+  clusterIP:
+  ports:
+  - port: 4120
+    protocol: TCP
+    targetPort: 4120
+  selector:
+    app: ngsa
+  sessionAffinity: None
+  type: ClusterIP

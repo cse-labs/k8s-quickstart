@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Pod
+
+metadata:
+  name: l8r-baseline
+  labels:
+    app: l8r-baseline
+
+spec:
+  restartPolicy: Never
+  containers:
+  - name: app
+    image: retaildevcrew/loderunner:beta
+    imagePullPolicy: Always
+
+    args: 
+    - -s
+    - http://ngsa:4120
+    - -f
+    - baseline.json
+
+    env:
+    - name: Zone
+      valueFrom:
+        configMapKeyRef:
+          name: ngsa-config
+          key: Zone
+
+    - name: Region
+      valueFrom:
+        configMapKeyRef:
+          name: ngsa-config
+          key: Region
+
+    - name: PodType
+      value: webv

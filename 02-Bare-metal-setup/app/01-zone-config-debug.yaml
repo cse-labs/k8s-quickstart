@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ngsa-config
+  namespace: default
+data:
+  Region: "Debug"
+  Zone: "Debug"
+  l8rLog: "l8rdebug"
+  ngsaLog: "ngsadebug"
