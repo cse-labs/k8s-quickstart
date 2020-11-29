@@ -42,26 +42,53 @@ export qsdns=YourDNSName
 export qsloc=westus2
 export qsuser=codespace
 
+# cmd
+set qsdns=YourDNSName
+set qsloc=westus2
+set qsuser=codespace
+
 # Create a resource group
 az group create -l $qsloc -n ${qsdns}-rg
+
+#cmd
+az group create -l %qsloc% -n %qsdns%-rg
 
 # update ME= in startup.templ
 sed "s/ME=codespace/ME=$qsuser/g" startup.templ > startup.sh
 chmod +x startup.sh
 
+# cmd
+# copy and edit file if you don't have sed installed
+sed "s/ME=codespace/ME=%qsuser%/g" startup.templ > startup.sh
+
 # Create an Ubuntu VM and install prerequisites
 az vm create -g ${qsdns}-rg \
--n $qsuser \
 --admin-username $qsuser \
 --public-ip-address-dns-name $qsdns \
+-n k8s-qs \
 --size standard_d2s_v3 \
 --nsg-rule SSH \
 --image Canonical:UbuntuServer:18.04-LTS:latest \
 --os-disk-size-gb 128 \
 --custom-data startup.sh
 
+#cmd
+az vm create -g %qsdns%-rg ^
+--admin-username %qsuser% ^
+--public-ip-address-dns-name %qsdns% ^
+-n k8s-qs ^
+--size standard_d2s_v3 ^
+--nsg-rule SSH ^
+--image Canonical:UbuntuServer:18.04-LTS:latest ^
+--os-disk-size-gb 128 ^
+--custom-data startup.sh
+
+
 # remove the temporary script
 rm startup.sh
+
+# cmd
+del startup.sh
 
 ```
 
@@ -71,6 +98,9 @@ rm startup.sh
 
 # ssh into the VM
 ssh ${qsuser}@${qsdns}.${qsloc}.cloudapp.azure.com
+
+# cmd
+ssh %qsuser%@%qsdns%.%qsloc%.cloudapp.azure.com
 
 # check setup status (until done)
 cat status
