@@ -37,45 +37,13 @@ az account set -s YourSubscriptionName
 # start in this directory
 cd 02-Bare-metal-setup
 
-#### Change this environment variable
-export qsdns=YourDNSName
-
-# cmd
-set qsdns=YourDNSName
-
 # Create a resource group
-az group create -l westus2 -n ${qsdns}-rg
-
-# cmd
-az group create -l westus2 -n %qsdns%-rg
+az group create -l westus2 -n k8s-qs-rg
 
 # Create an Ubuntu VM and install prerequisites
-az vm create -g ${qsdns}-rg \
---public-ip-address-dns-name $qsdns \
---admin-username codespace \
--n k8s-qs \
---size standard_d2s_v3 \
---nsg-rule SSH \
---image Canonical:UbuntuServer:18.04-LTS:latest \
---os-disk-size-gb 128 \
---custom-data startup.sh
+az vm create -g k8s-qs-rg --admin-username codespace -n k8s-qs --size standard_d2s_v3 --nsg-rule SSH --image Canonical:UbuntuServer:18.04-LTS:latest --os-disk-size-gb 128 --custom-data startup.sh --query publicIpAddress -o tsv
 
-# cmd
-az vm create -g %qsdns%-rg ^
---public-ip-address-dns-name %qsdns% ^
---admin-username codespace ^
--n k8s-qs ^
---size standard_d2s_v3 ^
---nsg-rule SSH ^
---image Canonical:UbuntuServer:18.04-LTS:latest ^
---os-disk-size-gb 128 ^
---custom-data startup.sh
-
-# remove the temporary script
-rm startup.sh
-
-# cmd
-del startup.sh
+# This will output an IP address
 
 ```
 
@@ -84,17 +52,62 @@ del startup.sh
 ```bash
 
 # ssh into the VM
-ssh codespace@${qsdns}.westus2.cloudapp.azure.com
-
-# cmd
-ssh codespace@%qsdns%.westus2.cloudapp.azure.com
+ssh codespace@YourIPAddress
 
 # check setup status (until done)
 cat status
 
 # clone this repo
 cd~
-git clone https://github.com/retaildevcrews/ngsa
-cd ngsa/IaC/BareMetal
+git clone https://github.com/retaildevcrews/k8s-quickstart
+cd k8s-quickstart/02-Bare-metal-setup
 
 ```
+
+### Initialize cluster
+
+```bash
+
+# make sure PIP is set correctly
+echo $PIP
+
+# install k8s controller
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address $PIP
+
+### WARNING ###
+# This will delete your existing kubectl configuration
+# Make sure to back up or merge manually
+###############
+
+# setup your config file
+sudo rm -rf $HOME/.kube
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown -R $(id -u):$(id -g) $HOME/.kube
+
+# add flannel network overlay
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml --namespace=kube-system
+
+# add the taint to schedule normal pods on the control plane
+# this let you run a "one node" cluster for `development`
+k taint nodes --all node-role.kubernetes.io/master-
+
+# patch kube-proxy for metal LB
+kubectl get configmap kube-proxy -n kube-system -o yaml | \
+sed -e "s/strictARP: false/strictARP: true/" | \
+sed -e 's/mode: ""/mode: "ipvs"/' | \
+kubectl apply -f - -n kube-system
+
+## Install metal LB
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.4/manifests/namespace.yaml
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.4/manifests/metallb.yaml
+kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
+
+# create metal LB config map
+sed -e "s/{PIP}/${PIP}/g" metalLB.yml | k apply -f -
+
+```
+
+## Setup app
+
+- ngsa readme <app/README.md>
