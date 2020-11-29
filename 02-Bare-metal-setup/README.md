@@ -3,9 +3,11 @@
 > Setup Kubernetes on an Azure VM (bare metal)
 
 - TODO - we could setup from a terminal on the local machine
-  - we would have to add the ssh-keygen step
-  - this has caused issues in the past with customers but shouldn't be an issue for us
-  - need to verify the startup.sh will work on Windows
+  - would have to have az cli installed
+    - this has caused issues in the past with customers but shouldn't be an issue for us
+  - we would have to add the ssh-keygen step if no ssh key
+    - this has caused issues in the past with customers but shouldn't be an issue for us
+  - I think I prefer using local terminal if possible
 
 ## Login to Azure
 
@@ -38,33 +40,19 @@ cd 02-Bare-metal-setup
 #### Change this environment variable
 export qsdns=YourDNSName
 
-# (optional) Change these environment variables
-export qsloc=westus2
-export qsuser=codespace
-
 # cmd
 set qsdns=YourDNSName
-set qsloc=westus2
-set qsuser=codespace
 
 # Create a resource group
-az group create -l $qsloc -n ${qsdns}-rg
-
-#cmd
-az group create -l %qsloc% -n %qsdns%-rg
-
-# update ME= in startup.templ
-sed "s/ME=codespace/ME=$qsuser/g" startup.templ > startup.sh
-chmod +x startup.sh
+az group create -l westus2 -n ${qsdns}-rg
 
 # cmd
-# copy and edit file if you don't have sed installed
-sed "s/ME=codespace/ME=%qsuser%/g" startup.templ > startup.sh
+az group create -l westus2 -n %qsdns%-rg
 
 # Create an Ubuntu VM and install prerequisites
 az vm create -g ${qsdns}-rg \
---admin-username $qsuser \
 --public-ip-address-dns-name $qsdns \
+--admin-username codespace \
 -n k8s-qs \
 --size standard_d2s_v3 \
 --nsg-rule SSH \
@@ -72,17 +60,16 @@ az vm create -g ${qsdns}-rg \
 --os-disk-size-gb 128 \
 --custom-data startup.sh
 
-#cmd
+# cmd
 az vm create -g %qsdns%-rg ^
---admin-username %qsuser% ^
 --public-ip-address-dns-name %qsdns% ^
+--admin-username codespace ^
 -n k8s-qs ^
 --size standard_d2s_v3 ^
 --nsg-rule SSH ^
 --image Canonical:UbuntuServer:18.04-LTS:latest ^
 --os-disk-size-gb 128 ^
 --custom-data startup.sh
-
 
 # remove the temporary script
 rm startup.sh
@@ -97,21 +84,17 @@ del startup.sh
 ```bash
 
 # ssh into the VM
-ssh ${qsuser}@${qsdns}.${qsloc}.cloudapp.azure.com
+ssh codespace@${qsdns}.westus2.cloudapp.azure.com
 
 # cmd
-ssh %qsuser%@%qsdns%.%qsloc%.cloudapp.azure.com
+ssh codespace@%qsdns%.westus2.cloudapp.azure.com
 
 # check setup status (until done)
 cat status
 
 # clone this repo
 cd~
-git clone https://github.com/retaildevcrews/k8s-quickstart
-cd k8s-quickstart/02-Bare-metal-setup
-
-# optional - add your local id_rsa.pub key
-nano ~/.ssh/authorized_keys
-# copy and paste your id_rsa.pub key on a new line
+git clone https://github.com/retaildevcrews/ngsa
+cd ngsa/IaC/BareMetal
 
 ```
