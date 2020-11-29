@@ -38,10 +38,6 @@ kubectl logs fluentb
 # save the cluster IP
 export ngsa=$(kubectl get service | grep ngsa | awk '{print $3}'):4120
 
-# save to .bashrc (optional but handy)
-echo "" >> ~/.bashrc
-echo "export ngsa=$(kubectl get service | grep ngsa | awk '{print $3}'):4120" >> ~/.bashrc
-
 # check the version endpoint
 http $ngsa/version
 
@@ -71,6 +67,8 @@ kubectl delete -f 02-fluentbit-debug.yaml
 ## Test sending to Log Analytics
 
 ```bash
+
+### TODO - create log analytics and set secrets
 
 # apply the config and create fluentb pod
 kubectl apply -f la-config-debug.yaml

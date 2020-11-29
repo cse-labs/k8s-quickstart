@@ -54,22 +54,23 @@ az vm create -g k8s-qs-rg --admin-username codespace -n k8s-qs --size standard_d
 # ssh into the VM
 ssh codespace@YourIPAddress
 
-# check setup status (until done)
-cat status
-
 # clone this repo
+### TODO - this fails if the repo is private
 cd~
 git clone https://github.com/retaildevcrews/k8s-quickstart
 cd k8s-quickstart/02-Bare-metal-setup
+
+# make sure PIP is set correctly
+echo $PIP
+
+# check setup status (until done)
+cat status
 
 ```
 
 ### Initialize cluster
 
 ```bash
-
-# make sure PIP is set correctly
-echo $PIP
 
 # install k8s controller
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address $PIP
@@ -89,7 +90,7 @@ sudo chown -R $(id -u):$(id -g) $HOME/.kube
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml --namespace=kube-system
 
 # add the taint to schedule normal pods on the control plane
-# this let you run a "one node" cluster for `development`
+# this let you run a "one node cluster" for development
 k taint nodes --all node-role.kubernetes.io/master-
 
 # patch kube-proxy for metal LB
@@ -110,4 +111,4 @@ sed -e "s/{PIP}/${PIP}/g" metalLB.yaml | k apply -f -
 
 ## Setup app
 
-- ngsa readme <app/README.md>
+- app readme <app/README.md>
