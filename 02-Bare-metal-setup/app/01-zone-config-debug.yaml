@@ -6,5 +6,5 @@ metadata:
 data:
   Region: "Debug"
   Zone: "Debug"
-  l8rLog: "l8rdebug"
+  l8rLog: "lrdebug"
   ngsaLog: "ngsadebug"
