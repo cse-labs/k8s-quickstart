@@ -38,6 +38,7 @@ az account set -s YourSubscriptionName
 cd 02-Bare-metal-setup
 
 # Create a resource group
+# If you are using a shared subscription, prefix the resource group name with something unique like your alias.
 az group create -l westus2 -n k8s-qs-rg
 
 # Create an Ubuntu VM and install prerequisites
@@ -45,7 +46,6 @@ vm_ip=$(az vm create -g k8s-qs-rg --admin-username codespace -n k8s-qs --size st
 
 # Print the VM IP address
 echo $vm_ip
-
 
 ```
 
@@ -59,10 +59,12 @@ ssh codespace@${vm_ip}
 # clone this repo
 ### TODO - this fails if the repo is private
 cd ~
+
 # If you have problem cloning with your default password
-# Try creating a Personal Access token in Settings->Developer Setting->Personal Access Token
+# Try creating a Personal Access token at https://github.com/settings/tokens
 # And use that as a password
 git clone https://USERNAME@github.com/retaildevcrews/k8s-quickstart
+
 cd k8s-quickstart/02-Bare-metal-setup
 
 # make sure PIP is set correctly
@@ -93,7 +95,7 @@ sudo chown -R $(id -u):$(id -g) $HOME/.kube
 # add flannel network overlay
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml --namespace=kube-system
 
-# add the taint to schedule normal pods on the control plane
+# remove the taint to schedule normal pods on the control plane
 # this let you run a "one node cluster" for development
 k taint nodes --all node-role.kubernetes.io/master-
 
@@ -115,4 +117,4 @@ sed -e "s/{PIP}/${PIP}/g" metalLB.yaml | k apply -f -
 
 ## Setup app
 
-- app readme <app/README.md>
+- app readme [app/README.md](app/README.md)

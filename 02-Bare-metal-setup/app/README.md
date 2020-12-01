@@ -15,6 +15,10 @@ kubectl create secret generic ngsa-secrets \
 # display the secrets (base 64 encoded)
 kubectl get secret ngsa-secrets -o jsonpath='{.data}'
 
+# you can decode the values using the base64 command
+kubectl get secret ngsa-secrets -o jsonpath='{.data.SharedKey}' | base64 -d
+kubectl get secret ngsa-secrets -o jsonpath='{.data.WorkspaceId}' | base64 -d
+
 # create the service account
 kubectl apply -f 01-role-fluentbit-debug.yaml
 
@@ -49,9 +53,10 @@ echo $ngsa # Note the NGSA IP and PORT.
 ### from a new local terminal
 # Note the VM IP addr from first terminal or use the command below to get your VM IP
 # az vm list-ip-addresses -n YOUR-VM-NAME -g YOUR-RESOURCE-GROUP -o tsv --query '[].virtualMachine.network.publicIpAddresses[].ipAddress'
-# This will print the VM IP
+# This will save the VM IP
+vm_ip=$(az vm list-ip-addresses -n k8s-qs -g k8s-qs-rg -o tsv --query '[].virtualMachine.network.publicIpAddresses[].ipAddress')
 
-ssh -L 4120:127.0.0.1:4120 codespace@VM-IP
+ssh -L 4120:127.0.0.1:4120 codespace@${vm_ip}
 # It will create a new SSH connection with 4120 PORT forwarded
 
 # In this new terminal, setup k8s port forwarding
