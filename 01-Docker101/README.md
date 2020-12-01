@@ -218,9 +218,7 @@ docker run -it --link maria:svr --rm jumpbox sh -c 'exec mysql -h svr -uroot -pS
 
 # from the MariaDB prompt
 # MariaDB [(none)]>
-create database logs;
-use logs;
-show tables;
+show databases;
 exit;
 
 docker ps -a
@@ -312,8 +310,8 @@ http govote:8080
 exit
 
 # We can also access remotely from codespaces
-# Click on Remote Explorer in the left nav
-# Click on Open in Browser in the 127.0.0.1:8080 port
+# Click on "PORTS" tab in the terminal
+# Click on Open in Browser (globe icon) in the 127.0.0.1:8080 port
 
 # Dogs RULE!
 
