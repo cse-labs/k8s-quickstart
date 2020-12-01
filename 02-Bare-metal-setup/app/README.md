@@ -11,7 +11,7 @@ cd app
 kubectl create secret generic ngsa-secrets \
   --from-literal=WorkspaceId=unused \
   --from-literal=SharedKey=unused
-  
+
 # display the secrets (base 64 encoded)
 kubectl get secret ngsa-secrets -o jsonpath='{.data}'
 
@@ -44,15 +44,24 @@ http $ngsa/version
 # check the version remotely
 
 # if you are running kubectl on the bare metal VM, use SSH to forward your port
-### from a new local terminal
-ssh -L 4120:127.0.0.1:4120 YourIP-DNS
+echo $ngsa # Note the NGSA IP and PORT.
 
-# setup port forwarding
+### from a new local terminal
+# Note the VM IP addr from first terminal or use the command below to get your VM IP
+# az vm list-ip-addresses -n YOUR-VM-NAME -g YOUR-RESOURCE-GROUP -o tsv --query '[].virtualMachine.network.publicIpAddresses[].ipAddress'
+# This will print the VM IP
+
+ssh -L 4120:127.0.0.1:4120 codespace@VM-IP
+# It will create a new SSH connection with 4120 PORT forwarded
+
+# In this new terminal, setup k8s port forwarding
 kubectl port-forward svc/ngsa 4120:4120
+# Port Forwarding looks like this: k8s service --> VM-local PORT ~~> |Via-SSH-Port-Forwarding| ~~> Users local Port
 
 # open your local browser
 http://127.0.0.1:4120/version
 
+# In the First terminal
 # check the logs
 kubectl logs fluentb
 

@@ -41,9 +41,11 @@ cd 02-Bare-metal-setup
 az group create -l westus2 -n k8s-qs-rg
 
 # Create an Ubuntu VM and install prerequisites
-az vm create -g k8s-qs-rg --admin-username codespace -n k8s-qs --size standard_d2s_v3 --nsg-rule SSH --image Canonical:UbuntuServer:18.04-LTS:latest --os-disk-size-gb 128 --custom-data startup.sh --query publicIpAddress -o tsv
+vm_ip=$(az vm create -g k8s-qs-rg --admin-username codespace -n k8s-qs --size standard_d2s_v3 --nsg-rule SSH --image Canonical:UbuntuServer:18.04-LTS:latest --os-disk-size-gb 128 --custom-data startup.sh --query publicIpAddress -o tsv)
 
-# This will output an IP address
+# Print the VM IP address
+echo $vm_ip
+
 
 ```
 
@@ -52,19 +54,22 @@ az vm create -g k8s-qs-rg --admin-username codespace -n k8s-qs --size standard_d
 ```bash
 
 # ssh into the VM
-ssh codespace@YourIPAddress
+ssh codespace@${vm_ip}
 
 # clone this repo
 ### TODO - this fails if the repo is private
-cd~
-git clone https://github.com/retaildevcrews/k8s-quickstart
+cd ~
+# If you have problem cloning with your default password
+# Try creating a Personal Access token in Settings->Developer Setting->Personal Access Token
+# And use that as a password
+git clone https://USERNAME@github.com/retaildevcrews/k8s-quickstart
 cd k8s-quickstart/02-Bare-metal-setup
 
 # make sure PIP is set correctly
 echo $PIP
 
 # check setup status (until done)
-cat status
+cat ~/status
 
 ```
 
@@ -81,7 +86,6 @@ sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address
 ###############
 
 # setup your config file
-sudo rm -rf $HOME/.kube
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown -R $(id -u):$(id -g) $HOME/.kube
