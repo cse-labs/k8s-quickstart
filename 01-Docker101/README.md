@@ -170,7 +170,7 @@ docker images
 
 # let's see what we told Docker to do
 # notice these commands are very similar to the first section
-code dockerfile
+code Dockerfile
 
 ```
 
