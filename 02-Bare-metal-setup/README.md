@@ -81,6 +81,7 @@ cat ~/status
 
 # install k8s controller
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address $PIP
+# The final output shows how to add more nodes to the cluster. Save the "kubeadm join" command for later use
 
 ### WARNING ###
 # This will delete your existing kubectl configuration
@@ -118,3 +119,26 @@ sed -e "s/{PIP}/${PIP}/g" metalLB.yaml | k apply -f -
 ## Setup app
 
 - app readme [app/README.md](app/README.md)
+
+## Optional: Add second node to your cluster
+
+Run the following commands in a new terminal to add a second node to the cluster.
+
+```bash
+
+# Get the vnet of the first node
+vnet=$(az network vnet list -g k8s-qs-rg --query '[].name' -o tsv)
+
+# Get the subnet of the first node
+subnet=$(az network vnet list -g k8s-qs-rg --query '[].subnets[].name' -o tsv)
+
+# Create a second VM in the same vnet and subnet
+vm_ip2=$(az vm create -g k8s-qs-rg --admin-username codespace -n k8s-qs-1 --vnet-name $vnet --subnet $subnet --size standard_d2s_v3 --nsg-rule SSH --image Canonical:UbuntuServer:18.04-LTS:latest --os-disk-size-gb 128 --custom-data startup.sh --query publicIpAddress -o tsv)
+
+# SSH into the new VM and run the "kubeadm join" command that was saved earlier
+ssh codespace@${vm_ip2}
+
+# example:
+# sudo kubeadm join 10.0.0.4:6443 --token [TOKEN] --discovery-token-ca-cert-hash [CA_CERT_HASH]
+
+```
