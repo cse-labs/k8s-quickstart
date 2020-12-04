@@ -27,7 +27,7 @@ az account set -s YourSubscriptionName
 
 > Optional - an SSH key is auto-generated when the codespace is created
 
-- Copy your local id_rsa and id_rsa.pub values to ~/.ssh
+- Copy your local id_rsa and id_rsa.pub values to ~/.ssh. This will allow you to ssh into the VM from your local machine if you lose access to the codespace.
 - `chmod 700 ~/.ssh/id_rsa*`
 
 ## Create VM
