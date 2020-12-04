@@ -23,6 +23,8 @@ kubectl get secret ngsa-secrets -o jsonpath='{.data.WorkspaceId}' | base64 -d
 kubectl apply -f 01-role-fluentbit-debug.yaml
 
 # create configmap
+# This file has the configuration for custom log names in Log Analytics.
+# If you are using a shared workspace, you can update the values of data.l8rLog, and data.ngsaLog, to something unique to you.
 kubectl apply -f 01-zone-config-debug.yaml
 
 # config fluentbit to log to stdout

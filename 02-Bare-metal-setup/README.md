@@ -60,10 +60,10 @@ ssh codespace@${vm_ip}
 ### TODO - this fails if the repo is private
 cd ~
 
-# If you have problem cloning with your default password
-# Try creating a Personal Access token at https://github.com/settings/tokens
-# And use that as a password
-git clone https://USERNAME@github.com/retaildevcrews/k8s-quickstart
+# If you have problem cloning with your default password, try creating a Personal Access token at https://github.com/settings/tokens.
+# You only need the top level "repo" permissions checked.
+# Use the personal access token as the password
+git clone https://github.com/retaildevcrews/k8s-quickstart
 
 cd k8s-quickstart/02-Bare-metal-setup
 
@@ -92,6 +92,16 @@ sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown -R $(id -u):$(id -g) $HOME/.kube
+
+# Inspect the kubeconfig file
+kubectl config view --raw
+
+# Fetch information about the node
+kubectl get nodes
+
+kubectl get nodes -o yaml
+
+kubectl describe nodes k8s-qs
 
 # add flannel network overlay
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml --namespace=kube-system
