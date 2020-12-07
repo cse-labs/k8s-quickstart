@@ -2,12 +2,9 @@
 
 > Setup Kubernetes on an Azure VM (bare metal)
 
-- TODO - we could setup from a terminal on the local machine
-  - would have to have az cli installed
-    - this has caused issues in the past with customers but shouldn't be an issue for us
-  - we would have to add the ssh-keygen step if no ssh key
-    - this has caused issues in the past with customers but shouldn't be an issue for us
-  - I think I prefer using local terminal if possible
+## Prerequisites
+
+- Azure CLI ([download](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest))
 
 ## Login to Azure
 
@@ -30,6 +27,25 @@ az account set -s YourSubscriptionName
 - Copy your local id_rsa and id_rsa.pub values to ~/.ssh. This will allow you to ssh into the VM from your local machine if you lose access to the codespace.
 - `chmod 700 ~/.ssh/id_rsa*`
 
+If running locally, you can check for existing ssh keys. More info [here](https://docs.github.com/en/github-ae@latest/github/authenticating-to-github/checking-for-existing-ssh-keys).
+
+```bash
+
+ls -al ~/.ssh
+
+```
+
+If you dont have an existing public or private key pair, generate a new one. More info [here](https://docs.github.com/en/github-ae@latest/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
+
+```bash
+
+ssh-keygen -t ed25519 -C "your_email@example.com"
+
+# Note: If you are using a legacy system that doesn't support the Ed25519 algorithm, use:
+# ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+
+```
+
 ## Create VM
 
 ```bash
@@ -37,12 +53,15 @@ az account set -s YourSubscriptionName
 # start in this directory
 cd 02-Bare-metal-setup
 
-# Create a resource group
 # If you are using a shared subscription, prefix the resource group name with something unique like your alias.
-az group create -l westus2 -n k8s-qs-rg
+RG_PREFIX=""
+RG_NAME="${RG_PREFIX}k8s-qs-rg"
+
+# Create a resource group
+az group create -l westus2 -n $RG_NAME
 
 # Create an Ubuntu VM and install prerequisites
-vm_ip=$(az vm create -g k8s-qs-rg --admin-username codespace -n k8s-qs --size standard_d2s_v3 --nsg-rule SSH --image Canonical:UbuntuServer:18.04-LTS:latest --os-disk-size-gb 128 --custom-data startup.sh --query publicIpAddress -o tsv)
+vm_ip=$(az vm create -g $RG_NAME --admin-username codespace -n k8s-qs --size standard_d2s_v3 --nsg-rule SSH --image Canonical:UbuntuServer:18.04-LTS:latest --os-disk-size-gb 128 --custom-data startup.sh --query publicIpAddress -o tsv)
 
 # Print the VM IP address
 echo $vm_ip
@@ -57,10 +76,10 @@ echo $vm_ip
 ssh codespace@${vm_ip}
 
 # clone this repo
-### TODO - this fails if the repo is private
+
 cd ~
 
-# If you have problem cloning with your default password, try creating a Personal Access token at https://github.com/settings/tokens.
+# If you have problem cloning with your default password, create a Personal Access token at https://github.com/settings/tokens.
 # You only need the top level "repo" permissions checked.
 # Use the personal access token as the password
 git clone https://github.com/retaildevcrews/k8s-quickstart
@@ -137,13 +156,13 @@ Run the following commands in a new terminal to add a second node to the cluster
 ```bash
 
 # Get the vnet of the first node
-vnet=$(az network vnet list -g k8s-qs-rg --query '[].name' -o tsv)
+vnet=$(az network vnet list -g $RG_NAME --query '[].name' -o tsv)
 
 # Get the subnet of the first node
-subnet=$(az network vnet list -g k8s-qs-rg --query '[].subnets[].name' -o tsv)
+subnet=$(az network vnet list -g $RG_NAME --query '[].subnets[].name' -o tsv)
 
 # Create a second VM in the same vnet and subnet
-vm_ip2=$(az vm create -g k8s-qs-rg --admin-username codespace -n k8s-qs-1 --vnet-name $vnet --subnet $subnet --size standard_d2s_v3 --nsg-rule SSH --image Canonical:UbuntuServer:18.04-LTS:latest --os-disk-size-gb 128 --custom-data startup.sh --query publicIpAddress -o tsv)
+vm_ip2=$(az vm create -g $RG_NAME --admin-username codespace -n k8s-qs-1 --vnet-name $vnet --subnet $subnet --size standard_d2s_v3 --nsg-rule SSH --image Canonical:UbuntuServer:18.04-LTS:latest --os-disk-size-gb 128 --custom-data startup.sh --query publicIpAddress -o tsv)
 
 # SSH into the new VM and run the "kubeadm join" command that was saved earlier
 ssh codespace@${vm_ip2}

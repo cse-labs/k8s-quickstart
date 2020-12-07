@@ -52,11 +52,21 @@ http $ngsa/version
 # if you are running kubectl on the bare metal VM, use SSH to forward your port
 echo $ngsa # Note the NGSA IP and PORT.
 
+```
+
+From a new local terminal
+
+```bash
+
+# If you are using a shared subscription, prefix the resource group name with something unique like your alias.
+RG_PREFIX=""
+RG_NAME="${RG_PREFIX}k8s-qs-rg"
+
 ### from a new local terminal
 # Note the VM IP addr from first terminal or use the command below to get your VM IP
 # az vm list-ip-addresses -n YOUR-VM-NAME -g YOUR-RESOURCE-GROUP -o tsv --query '[].virtualMachine.network.publicIpAddresses[].ipAddress'
 # This will save the VM IP
-vm_ip=$(az vm list-ip-addresses -n k8s-qs -g k8s-qs-rg -o tsv --query '[].virtualMachine.network.publicIpAddresses[].ipAddress')
+vm_ip=$(az vm list-ip-addresses -n k8s-qs -g $RG_NAME -o tsv --query '[].virtualMachine.network.publicIpAddresses[].ipAddress')
 
 ssh -L 4120:127.0.0.1:4120 codespace@${vm_ip}
 # It will create a new SSH connection with 4120 PORT forwarded
@@ -67,6 +77,12 @@ kubectl port-forward svc/ngsa 4120:4120
 
 # open your local browser
 http://127.0.0.1:4120/version
+
+```
+
+In the First terminal
+
+```bash
 
 # In the First terminal
 # check the logs
