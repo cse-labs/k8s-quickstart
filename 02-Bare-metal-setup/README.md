@@ -31,7 +31,11 @@ If running locally, you can check for existing ssh keys. More info [here](https:
 
 ```bash
 
+# for linux
 ls -al ~/.ssh
+
+# for windows
+dir %HOMEDRIVE%%HOMEPATH%\.ssh
 
 ```
 
@@ -39,10 +43,7 @@ If you dont have an existing public or private key pair, generate a new one. Mor
 
 ```bash
 
-ssh-keygen -t ed25519 -C "your_email@example.com"
-
-# Note: If you are using a legacy system that doesn't support the Ed25519 algorithm, use:
-# ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+ssh-keygen -b 4096 -C "your_email@example.com"
 
 ```
 
@@ -147,7 +148,7 @@ sed -e "s/{PIP}/${PIP}/g" metalLB.yaml | k apply -f -
 
 ## Setup app
 
-- app readme [app/README.md](app/README.md)
+- [app/README.md](app/README.md)
 
 ## Optional: Add second node to your cluster
 

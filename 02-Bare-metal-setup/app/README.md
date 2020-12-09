@@ -15,10 +15,6 @@ kubectl create secret generic ngsa-secrets \
 # display the secrets (base 64 encoded)
 kubectl get secret ngsa-secrets -o jsonpath='{.data}'
 
-# you can decode the values using the base64 command
-kubectl get secret ngsa-secrets -o jsonpath='{.data.SharedKey}' | base64 -d
-kubectl get secret ngsa-secrets -o jsonpath='{.data.WorkspaceId}' | base64 -d
-
 # create the service account
 kubectl apply -f 01-role-fluentbit-debug.yaml
 
