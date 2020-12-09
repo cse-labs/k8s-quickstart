@@ -11,7 +11,7 @@ cd app
 kubectl create secret generic ngsa-secrets \
   --from-literal=WorkspaceId=unused \
   --from-literal=SharedKey=unused
-  
+
 # display the secrets (base 64 encoded)
 kubectl get secret ngsa-secrets -o jsonpath='{.data}'
 
@@ -19,6 +19,8 @@ kubectl get secret ngsa-secrets -o jsonpath='{.data}'
 kubectl apply -f 01-role-fluentbit-debug.yaml
 
 # create configmap
+# This file has the configuration for custom log names in Log Analytics.
+# If you are using a shared workspace, you can update the values of data.l8rLog, and data.ngsaLog, to something unique to you.
 kubectl apply -f 01-zone-config-debug.yaml
 
 # config fluentbit to log to stdout
@@ -44,15 +46,41 @@ http $ngsa/version
 # check the version remotely
 
 # if you are running kubectl on the bare metal VM, use SSH to forward your port
-### from a new local terminal
-ssh -L 4120:127.0.0.1:4120 YourIP-DNS
+echo $ngsa # Note the NGSA IP and PORT.
 
-# setup port forwarding
+```
+
+From a new local terminal
+
+> Note: If you are using a shared subscription, use a unique name for the resource group below to avoid naming collisions with others in the shared subscription.
+
+```bash
+
+### from a new local terminal
+# Note the VM IP addr from first terminal or use the command below to get your VM IP
+# ex: az vm list-ip-addresses -n YOUR-VM-NAME -g YOUR-RESOURCE-GROUP -o tsv --query '[].virtualMachine.network.publicIpAddresses[].ipAddress'
+
+# If using a shared subscription, update "-g k8s-qs-rg" to your updated resource group name.
+az vm list-ip-addresses -n k8s-qs -g k8s-qs-rg -o tsv --query "[].virtualMachine.network.publicIpAddresses[].ipAddress"
+# This will output an IP address
+
+ssh -L 4120:127.0.0.1:4120 codespace@YourIPAddress
+# It will create a new SSH connection with 4120 PORT forwarded
+
+# In this new terminal, setup k8s port forwarding
 kubectl port-forward svc/ngsa 4120:4120
+# Port Forwarding looks like this: k8s service --> VM-local PORT ~~> |Via-SSH-Port-Forwarding| ~~> Users local Port
 
 # open your local browser
 http://127.0.0.1:4120/version
 
+```
+
+In the First terminal
+
+```bash
+
+# In the First terminal
 # check the logs
 kubectl logs fluentb
 

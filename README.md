@@ -5,6 +5,7 @@
 ## Sessions
 
 - [Docker 101](01-Docker101/README.md)
+- [Bare Metal](02-Bare-metal-setup/README.md)
 
 ## Additional Reading
 

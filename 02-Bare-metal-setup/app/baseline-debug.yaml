@@ -13,7 +13,7 @@ spec:
     image: retaildevcrew/loderunner:beta
     imagePullPolicy: Always
 
-    args: 
+    args:
     - -s
     - http://ngsa:4120
     - -f
