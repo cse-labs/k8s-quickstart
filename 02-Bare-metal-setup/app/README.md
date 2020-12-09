@@ -52,19 +52,19 @@ echo $ngsa # Note the NGSA IP and PORT.
 
 From a new local terminal
 
-```bash
+> Note: If you are using a shared subscription, use a unique name for the resource group below to avoid naming collisions with others in the shared subscription.
 
-# If you are using a shared subscription, prefix the resource group name with something unique like your alias.
-RG_PREFIX=""
-RG_NAME="${RG_PREFIX}k8s-qs-rg"
+```bash
 
 ### from a new local terminal
 # Note the VM IP addr from first terminal or use the command below to get your VM IP
-# az vm list-ip-addresses -n YOUR-VM-NAME -g YOUR-RESOURCE-GROUP -o tsv --query '[].virtualMachine.network.publicIpAddresses[].ipAddress'
-# This will save the VM IP
-vm_ip=$(az vm list-ip-addresses -n k8s-qs -g $RG_NAME -o tsv --query '[].virtualMachine.network.publicIpAddresses[].ipAddress')
+# ex: az vm list-ip-addresses -n YOUR-VM-NAME -g YOUR-RESOURCE-GROUP -o tsv --query '[].virtualMachine.network.publicIpAddresses[].ipAddress'
 
-ssh -L 4120:127.0.0.1:4120 codespace@${vm_ip}
+# If using a shared subscription, update "-g k8s-qs-rg" to your updated resource group name.
+az vm list-ip-addresses -n k8s-qs -g k8s-qs-rg -o tsv --query "[].virtualMachine.network.publicIpAddresses[].ipAddress"
+# This will output an IP address
+
+ssh -L 4120:127.0.0.1:4120 codespace@YourIPAddress
 # It will create a new SSH connection with 4120 PORT forwarded
 
 # In this new terminal, setup k8s port forwarding

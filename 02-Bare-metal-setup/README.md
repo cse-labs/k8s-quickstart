@@ -49,23 +49,22 @@ ssh-keygen -b 4096 -C "your_email@example.com"
 
 ## Create VM
 
+> Note: If you are using a shared subscription, use a unique name for the resource group below to avoid naming collisions with others in the shared subscription.
+
 ```bash
 
 # start in this directory
 cd 02-Bare-metal-setup
 
-# If you are using a shared subscription, prefix the resource group name with something unique like your alias.
-RG_PREFIX=""
-RG_NAME="${RG_PREFIX}k8s-qs-rg"
-
 # Create a resource group
-az group create -l westus2 -n $RG_NAME
+# If you are using a shared subscription, prefix the resource group name with something unique like your alias.
+# example: az group create -l westus2 -n [UNIQUE_PREFIX]-k8s-qs-rg
+az group create -l westus2 -n k8s-qs-rg
 
 # Create an Ubuntu VM and install prerequisites
-vm_ip=$(az vm create -g $RG_NAME --admin-username codespace -n k8s-qs --size standard_d2s_v3 --nsg-rule SSH --image Canonical:UbuntuServer:18.04-LTS:latest --os-disk-size-gb 128 --custom-data startup.sh --query publicIpAddress -o tsv)
-
-# Print the VM IP address
-echo $vm_ip
+# If using a shared subscription, update "-g k8s-qs-rg" to your updated resource group name from the previous command
+az vm create -g k8s-qs-rg --admin-username codespace -n k8s-qs --size standard_d2s_v3 --nsg-rule SSH --image Canonical:UbuntuServer:18.04-LTS:latest --os-disk-size-gb 128 --custom-data startup.sh --query publicIpAddress -o tsv
+# This will output an IP address
 
 ```
 
@@ -73,8 +72,8 @@ echo $vm_ip
 
 ```bash
 
-# ssh into the VM
-ssh codespace@${vm_ip}
+# ssh into the VM using the IP address from the previous command, replacing "YourIPAddress"
+ssh codespace@YourIPAddress
 
 # clone this repo
 
@@ -157,17 +156,22 @@ Run the following commands in a new terminal to add a second node to the cluster
 ```bash
 
 # Get the vnet of the first node
-vnet=$(az network vnet list -g $RG_NAME --query '[].name' -o tsv)
+# The output is the vnet name
+az network vnet list -g k8s-qs-rg --query "[].name" -o tsv
 
 # Get the subnet of the first node
-subnet=$(az network vnet list -g $RG_NAME --query '[].subnets[].name' -o tsv)
+# The output is the subnet name
+az network vnet list -g k8s-qs-rg --query "[].subnets[].name" -o tsv
 
 # Create a second VM in the same vnet and subnet
-vm_ip2=$(az vm create -g $RG_NAME --admin-username codespace -n k8s-qs-1 --vnet-name $vnet --subnet $subnet --size standard_d2s_v3 --nsg-rule SSH --image Canonical:UbuntuServer:18.04-LTS:latest --os-disk-size-gb 128 --custom-data startup.sh --query publicIpAddress -o tsv)
+# replace [VNET_NAME], and [SUBNET_NAME]
+az vm create -g k8s-qs-rg --admin-username codespace -n k8s-qs-1 --vnet-name [VNET_NAME] --subnet [SUBNET_NAME] --size standard_d2s_v3 --nsg-rule SSH --image Canonical:UbuntuServer:18.04-LTS:latest --os-disk-size-gb 128 --custom-data startup.sh --query publicIpAddress -o tsv
+# This will output an IP address for the second VM
 
-# SSH into the new VM and run the "kubeadm join" command that was saved earlier
-ssh codespace@${vm_ip2}
+# SSH into the new VM, replacing "YourIPAddress"
+ssh codespace@YourIPAddress
 
+# run the "kubeadm join" command that was saved earlier
 # example:
 # sudo kubeadm join 10.0.0.4:6443 --token [TOKEN] --discovery-token-ca-cert-hash [CA_CERT_HASH]
 
