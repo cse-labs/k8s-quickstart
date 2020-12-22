@@ -63,7 +63,7 @@ az group create -l westus2 -n k8s-qs-rg
 
 # Create an Ubuntu VM and install prerequisites
 # If using a shared subscription, update "-g k8s-qs-rg" to your updated resource group name from the previous command
-az vm create -g k8s-qs-rg --admin-username codespace -n k8s-qs --size standard_d2s_v3 --nsg-rule SSH --image Canonical:UbuntuServer:18.04-LTS:latest --os-disk-size-gb 128 --custom-data startup.sh --query publicIpAddress -o tsv
+az vm create -g k8s-qs-rg --admin-username codespace -n k8s-qs --size standard_d2s_v3 --nsg-rule SSH --image Canonical:UbuntuServer:18.04-LTS:latest --os-disk-size-gb 128 --generate-ssh-keys --custom-data startup.sh --query publicIpAddress -o tsv
 # This will output an IP address
 
 ```
