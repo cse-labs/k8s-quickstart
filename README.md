@@ -4,8 +4,8 @@
 
 ## Sessions
 
-- [Docker 101](01-Docker101/README.md)
-- [Bare Metal](02-Bare-metal-setup/README.md)
+- [Docker 101](./01-Docker101)
+- [Dev Cluster Setup](./02-Dev-Cluster-Setup)
 
 ## Additional Reading
 
