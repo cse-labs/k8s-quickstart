@@ -45,7 +45,7 @@ http $ngsa/version
 
 # check the version remotely
 
-# if you are running kubectl on the bare metal VM, use SSH to forward your port
+# if you are running kubectl on the Azure VM, use SSH to forward your port
 echo $ngsa # Note the NGSA IP and PORT.
 
 ```
