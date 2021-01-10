@@ -1,6 +1,6 @@
-# Kubernetes Setup
+# Dev Cluster Setup
 
-> Setup Kubernetes on an Azure VM (bare metal)
+> Setup a Kubernetes Development Cluster on an Azure VM
 
 ## Prerequisites
 
@@ -54,7 +54,7 @@ ssh-keygen -b 4096 -C "your_email@example.com"
 ```bash
 
 # start in this directory
-cd 02-Bare-metal-setup
+cd 02-Dev-Cluster-Setup
 
 # Create a resource group
 # If you are using a shared subscription, prefix the resource group name with something unique like your alias.
@@ -84,7 +84,7 @@ cd ~
 # Use the personal access token as the password
 git clone https://github.com/retaildevcrews/k8s-quickstart
 
-cd k8s-quickstart/02-Bare-metal-setup
+cd k8s-quickstart/02-Dev-Cluster-Setup
 
 # make sure PIP is set correctly
 echo $PIP
