@@ -27,13 +27,6 @@ data:
         Shared_Key      ${SharedKey}
         Log_Type        ${LogName}
 
-    [OUTPUT]
-        Name            azure
-        Match           kube.var.log.containers.logapp*.*
-        Customer_ID     ${WorkspaceId}
-        Shared_Key      ${SharedKey}
-        Log_Type        ${LogName}
-
     [FILTER]
         Name    modify
         Match   kube.*

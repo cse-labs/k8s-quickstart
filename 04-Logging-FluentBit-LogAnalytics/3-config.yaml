@@ -21,11 +21,8 @@ data:
 
   output.conf: |
     [OUTPUT]
-        Name            azure
+        Name            stdout
         Match           kube.var.log.containers.logapp*.*
-        Customer_ID     ${WorkspaceId}
-        Shared_Key      ${SharedKey}
-        Log_Type        ${LogName}
 
   input-kubernetes.conf: |
     [INPUT]
