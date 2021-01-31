@@ -97,6 +97,7 @@ kubectl delete -f logapp.yaml
 kubectl delete -f fluentbit-pod.yaml
 
 # check pods
+# should be none
 kubectl get pods
 
 # Repeat with 2-config and 3-config
@@ -111,7 +112,7 @@ kubectl get pods
 
 [0] kube.var.log.containers.logapp_default_app-*.log:
 [
-     # timestamp
+  # timestamp
   1612126313.650765701,
   {
     # log is a string field that contains json
@@ -156,7 +157,7 @@ kubectl get pods
         "duration"=>41,
         "value"=>"rCepJlQqMC", 
 
-        # added the kubernetes josn properties
+        # added the kubernetes json properties
         "kubernetes"=>
         {
             "pod_name"=>"logapp", 
