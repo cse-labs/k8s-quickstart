@@ -302,7 +302,7 @@ kubectl logs fluentb
 #   [2021/02/01 21:54:19] [ info] [output:azure:azure.0]
 
 # check Log Analytics for your data
-# this can take 10-15 minutes
+# this can take 10-15 minutes the first time
 
 # delete the app
 kubectl delete -f run-in-loop.yaml
