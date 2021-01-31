@@ -26,7 +26,6 @@ The sample application generates JSON logs. Normal logs are written to stdout. E
 - Bash shell (tested on GitHub Codespaces, Mac, Ubuntu, WSL2)
 - Azure CLI ([download](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest))
 - Kubernetes cluster
-  - Setup an [AKS Cluster](https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough)
   - Setup a [Development Cluster](https://github.com/retaildevcrews/akdc) on an Azure VM
 - kubectl with access to the Kubernetes cluster
 - Docker CLI (optional) ([download](https://docs.docker.com/install/))
@@ -36,6 +35,11 @@ The sample application generates JSON logs. Normal logs are written to stdout. E
 
 ```bash
 
+# ssh into your dev cluster
+
+# verify k8s access
+kubectl get all
+
 git clone https://github.com/retaildevcrews/k8s-quickstart
 cd 04-Logging-FluentBit-LogAnalytics
 
@@ -44,9 +48,6 @@ cd 04-Logging-FluentBit-LogAnalytics
 ## Deploy to Kubernetes
 
 ```bash
-
-# verify k8s access
-kubectl get all
 
 # create service account
 kubectl apply -f account.yaml
@@ -87,11 +88,13 @@ kubectl get pods
 # check fluentb logs
 kubectl logs fluentb
 
+# compare to output section below
+
 # delete the app
 kubectl delete -f logapp.yaml
 
 # delete fluent bit
-kubectl delete -f logapp.yaml
+kubectl delete -f fluentbit-pod.yaml
 
 # check pods
 kubectl get pods
