@@ -273,12 +273,12 @@ kubectl get secret fluentbit-secrets -o jsonpath='{.data}'
 
 ```
 
-### Deploy basic Fluent Bit config
+### Deploy Fluent Bit config
 
 ```bash
 
 # apply the fluentbit config
-kubectl apply -f 1-config.yaml
+kubectl apply -f 4-config.yaml
 
 # start fluentbit pod
 kubectl apply -f fluentbit-pod.yaml
@@ -299,7 +299,7 @@ kubectl get pods
 kubectl logs fluentb
 
 # looking for a line like:
-#   [2021/01/02 21:54:19] [ info] [output:azure:azure.0]
+#   [2021/02/01 21:54:19] [ info] [output:azure:azure.0]
 
 # check Log Analytics for your data
 # this can take 10-15 minutes
