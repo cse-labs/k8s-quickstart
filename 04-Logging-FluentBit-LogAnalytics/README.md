@@ -51,6 +51,10 @@ kubectl get all
 # create service account
 kubectl apply -f account.yaml
 
+# delete secret
+# can ignore does not exist error
+kubectl delete secret fluentbit-secrets
+
 # add temporary secrets
 kubectl create secret generic fluentbit-secrets \
   --from-literal=WorkspaceId=dev \
@@ -70,13 +74,10 @@ kubectl apply -f 1-config.yaml
 # start fluentbit pod
 kubectl apply -f fluentbit-pod.yaml
 
-# check pods until fluentb is Running
-kubectl get pods
-
 # check fluentb logs
 kubectl logs fluentb
 
-# run log app - this will generate 5 log entries
+# run log app - this will generate a log entry
 kubectl apply -f logapp.yaml
 
 # check pods
@@ -85,21 +86,6 @@ kubectl get pods
 
 # check fluentb logs
 kubectl logs fluentb
-
-# looking for a line like:
-# [0] kube.var.log.containers.logapp_default_app-...log:
-# [
-#    1611874503.902210578,
-#    {
-#        "stream"=>"stdout", 
-#        "logtag"=>"F", 
-#        "log"=>"{"date":"2021-01-28T22:55:03.8796957Z",
-#               "statusCode":200,
-#               "path":"/log/app",
-#               "duration":95,
-#               "value":"mJJDlmVlVt"}"
-#     }
-# ]
 
 # delete the app
 kubectl delete -f logapp.yaml
@@ -111,6 +97,120 @@ kubectl delete -f logapp.yaml
 kubectl get pods
 
 # Repeat with 2-config and 3-config
+
+```
+
+### Output
+
+#### Output 1
+
+```text
+
+[0] kube.var.log.containers.logapp_default_app-*.log:
+[
+     # timestamp
+  1612126313.650765701,
+  {
+    # log is a string field that contains json
+    # it is not a json map
+    "log"=>
+    "{
+        # log is a string field that contains json
+        # it is not a map
+        "log":
+        "{
+            \"date\":\"2021-01-31T20:51:50.8930226Z\",
+            \"statusCode\":200,
+            \"path\":\"/log/app\",
+            \"duration\":78,
+            \"value\":\"cNxwDdxRKX\"
+        }",
+
+        "stream":"stdout",
+        "time":"2021-01-31T20:51:50.906665641Z"
+    }"
+  }
+]
+
+```
+
+#### Output 2
+
+```text
+
+[0] kube.var.log.containers.logapp_default_app-*.log:
+[
+    1612135622.239024095, 
+    {
+        # log was converted to a json map by the kubernetes filter
+        # Merge_Log  On
+        "stream"=>"stdout",
+        "logtag"=>"F", 
+
+        "date"=>"2021-01-31T23:27:02.2260122Z", 
+        "statusCode"=>200,
+        "path"=>"/log/app", 
+        "duration"=>41,
+        "value"=>"rCepJlQqMC", 
+
+        # added the kubernetes josn properties
+        "kubernetes"=>
+        {
+            "pod_name"=>"logapp", 
+            "namespace_name"=>"default", 
+            "pod_id"=>"83889e9a-9ee8-456a-a347-0513e89a5df0", 
+            "labels"=>
+            {
+                "app"=>"logapp"
+            },
+            "host"=>"k8s", 
+            "container_name"=>"app", 
+            "docker_id"=>"aa89f*", 
+            "container_hash"=>"docker.io/retaildevcrew/logapp@sha256:2e6ed*", 
+            "container_image"=>"docker.io/retaildevcrew/logapp:latest"
+        }
+    }
+]
+
+```
+
+#### Output 3
+
+```text
+
+[0] kube.var.log.containers.logapp_default_app-*.log:
+[
+    1612135739.551305142,
+    {
+        "stream"=>"stdout", 
+        "logtag"=>"F", 
+
+        "date"=>"2021-01-31T23:28:59.5368881Z", 
+        "statusCode"=>200,
+        "path"=>"/log/app", 
+        "duration"=>79,
+        "value"=>"EWyKyDRPwJ", 
+
+        # "lifted" to top level properties with the next filters
+        "kubernetes_pod_name"=>"logapp", 
+        "kubernetes_namespace_name"=>"default", 
+        "kubernetes_pod_id"=>"d1d65bbe-e658-4568-8412-e47d49d69540", 
+        "kubernetes_host"=>"k8s", 
+        "kubernetes_container_name"=>"app", 
+        "kubernetes_docker_id"=>"f4ffa8*", 
+        "kubernetes_container_hash"=>"docker.io/retaildevcrew/logapp@sha256:2e6ed*", 
+        "kubernetes_container_image"=>"docker.io/retaildevcrew/logapp:latest", 
+        "kubernetes_labels_app"=>"logapp", 
+
+        # copied from kubernetes_* by the modify filter
+        "k_container"=>"app", 
+        "k_app"=>"logapp", 
+
+        # added properties by the modify filter
+        "Zone"=>"DevZone", 
+        "Region"=>"DevRegion"
+    }
+]
 
 ```
 
@@ -157,7 +257,7 @@ az monitor log-analytics workspace show -g $LogAppRG -n $LogAppName --query cust
 az monitor log-analytics workspace get-shared-keys -g $LogAppRG -n $LogAppName --query primarySharedKey -o tsv
 
 # delete temporary secrets
-kubectl delete secret generic fluentbit-secrets
+kubectl delete secret fluentbit-secrets
 
 # add Log Analytics secrets
 kubectl create secret generic fluentbit-secrets \
@@ -185,11 +285,10 @@ kubectl get pods
 # check fluentb logs
 kubectl logs fluentb
 
-# run log app - this will generate 5 log entries
-kubectl apply -f logapp.yaml
+# run log app - this will generate a log every second
+kubectl apply -f run-in-loop.yaml
 
 # check pods
-# logapp will run and then exit with Completed state
 kubectl get pods
 
 # check fluentb logs
@@ -201,19 +300,13 @@ kubectl logs fluentb
 # check Log Analytics for your data
 # this can take 10-15 minutes
 
-# generate more logs
-kubectl delete -f logapp.yaml
-kubectl apply -f logapp.yaml
-
-# check Log Analytics for your data
-# this should only take a few seconds
-
 # delete the app
-kubectl delete -f logapp.yaml
+kubectl delete -f run-in-loop.yaml
+
+# delete fluent bit
+kubectl delete -f fluentbit-pod.yaml
 
 # check pods
 kubectl get pods
-
-# Result - fluentb pod is running
 
 ```
