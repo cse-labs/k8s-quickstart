@@ -13,4 +13,4 @@ spec:
     image: retaildevcrew/logapp:latest
     args:
     - --iterations
-    - "5"
+    - "1"
