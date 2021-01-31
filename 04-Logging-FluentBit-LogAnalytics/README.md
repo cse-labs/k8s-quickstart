@@ -51,6 +51,128 @@ kubectl get all
 # create service account
 kubectl apply -f account.yaml
 
+# add temporary secrets
+kubectl create secret generic fluentbit-secrets \
+  --from-literal=WorkspaceId=dev \
+  --from-literal=SharedKey=dev
+
+```
+
+### Deploy basic Fluent Bit config
+
+> repeat these steps for 1, 2 and 3-config.yaml
+
+```bash
+
+# apply the fluentbit config
+kubectl apply -f 1-config.yaml
+
+# start fluentbit pod
+kubectl apply -f fluentbit-pod.yaml
+
+# check pods until fluentb is Running
+kubectl get pods
+
+# check fluentb logs
+kubectl logs fluentb
+
+# run log app - this will generate 5 log entries
+kubectl apply -f logapp.yaml
+
+# check pods
+# logapp will run and then exit with Completed state
+kubectl get pods
+
+# check fluentb logs
+kubectl logs fluentb
+
+# looking for a line like:
+# [0] kube.var.log.containers.logapp_default_app-...log:
+# [
+#    1611874503.902210578,
+#    {
+#        "stream"=>"stdout", 
+#        "logtag"=>"F", 
+#        "log"=>"{"date":"2021-01-28T22:55:03.8796957Z",
+#               "statusCode":200,
+#               "path":"/log/app",
+#               "duration":95,
+#               "value":"mJJDlmVlVt"}"
+#     }
+# ]
+
+# delete the app
+kubectl delete -f logapp.yaml
+
+# delete fluent bit
+kubectl delete -f logapp.yaml
+
+# check pods
+kubectl get pods
+
+# Repeat with 2-config and 3-config
+
+```
+
+## Create Azure Log Analytics Workspace
+
+### Select Azure Subscription
+
+```bash
+
+# login to Azure (if necessary)
+az login
+
+# get list of subscriptions
+az account list -o table
+
+# select subscription (if necesary)
+az account set -s YourSubscriptionName
+
+```
+
+### Create Log Analytics Workspace
+
+```bash
+
+# add az cli extension
+#   this extension is in preview
+az extension add --name log-analytics
+
+# set environment variables (edit if desired)
+export LogAppLoc=westus2
+export LogAppRG=LogAppRG
+export LogAppName=LogAppLogs
+
+# create resource group
+az group create -n $LogAppRG -l $LogAppLoc
+
+# create Log Analytics Workspace
+# check for workspace name is not unique error
+#    export LogAppName with a different name and try again
+az monitor log-analytics workspace create -g $LogAppRG -n $LogAppName -l $LogAppLoc
+
+# verify keys
+az monitor log-analytics workspace show -g $LogAppRG -n $LogAppName --query customerId -o tsv
+az monitor log-analytics workspace get-shared-keys -g $LogAppRG -n $LogAppName --query primarySharedKey -o tsv
+
+# delete temporary secrets
+kubectl delete secret generic fluentbit-secrets
+
+# add Log Analytics secrets
+kubectl create secret generic fluentbit-secrets \
+  --from-literal=WorkspaceId=$(az monitor log-analytics workspace show -g $LogAppRG -n $LogAppName --query customerId -o tsv) \
+  --from-literal=SharedKey=$(az monitor log-analytics workspace get-shared-keys -g $LogAppRG -n $LogAppName --query primarySharedKey -o tsv)
+
+# verify the secrets are set properly (base 64 encoded)
+kubectl get secret fluentbit-secrets -o jsonpath='{.data}'
+
+```
+
+### Deploy basic Fluent Bit config
+
+```bash
+
 # apply the fluentbit config
 kubectl apply -f 1-config.yaml
 
@@ -95,78 +217,3 @@ kubectl get pods
 # Result - fluentb pod is running
 
 ```
-
-## Create Azure Log Analytics Workspace
-
-### Select Azure Subscription
-
-```bash
-
-# login to Azure (if necessary)
-az login
-
-# get list of subscriptions
-az account list -o table
-
-# select subscription (if necesary)
-az account set -s YourSubscriptionName
-
-```
-
-### Create Log Analytics Workspace
-
-```bash
-
-# add az cli extension
-#   this extension is in preview
-az extension add --name log-analytics
-
-# set environment variables (edit if desired)
-export LogAppLoc=westus2
-export LogAppRG=LogAppRG
-export LogAppName=LogAppLogs
-
-# create resource group
-az group create -n $LogAppRG -l $LogAppLoc
-
-# create Log Analytics Workspace
-# check for workspace name is not unique error
-#    export LogAppName with a different name and try again
-az monitor log-analytics workspace create -g $LogAppRG -n $LogAppName -l $LogAppLoc
-
-# add Log Analytics secrets
-# check for secrets already exist error
-#   kubectl delete secret fluentbit-secrets
-kubectl create secret generic fluentbit-secrets \
-  --from-literal=WorkspaceId=$(az monitor log-analytics workspace show -g $LogAppRG -n $LogAppName --query customerId -o tsv) \
-  --from-literal=SharedKey=$(az monitor log-analytics workspace get-shared-keys -g $LogAppRG -n $LogAppName --query primarySharedKey -o tsv)
-
-# verify the secrets are set properly (base 64 encoded)
-kubectl get secret fluentbit-secrets -o jsonpath='{.data}'
-
-```
-
-## Contributing
-
-This project welcomes contributions and suggestions. Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit [Microsoft Contributor License Agreement](https://cla.opensource.microsoft.com).
-
-When you submit a pull request, a CLA bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
-
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments
-
-## Trademarks
-
-This project may contain trademarks or logos for projects, products, or services.
-
-Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
-
-Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
-
-Any use of third-party trademarks or logos are subject to those third-party's policies.
