@@ -39,11 +39,8 @@ Sample logs from logapp
 ## Prerequisites
 
 - Bash shell (tested on GitHub Codespaces, Mac, Ubuntu, WSL2)
-- Azure CLI ([download](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest))
-- Kubernetes cluster
+- Kubernetes Dev Cluster
   - Setup a [Development Cluster](https://github.com/retaildevcrews/akdc) on an Azure VM
-- kubectl with access to the Kubernetes cluster
-- Docker CLI (optional) ([download](https://docs.docker.com/install/))
 - Visual Studio Code (optional) ([download](https://code.visualstudio.com/download))
 
 ## Verify your dev cluster
