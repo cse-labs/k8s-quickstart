@@ -347,3 +347,8 @@ kubectl delete -f fluentbit-pod.yaml
 kubectl get pods
 
 ```
+
+### More Information
+
+- [Azure Log Analytics](https://docs.microsoft.com/en-us/azure/azure-monitor/log-query/log-analytics-overview)
+- [Fluent Bit](https://fluentbit.io/)
