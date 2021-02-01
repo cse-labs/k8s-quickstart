@@ -68,7 +68,7 @@ kubectl describe node k8s | grep containerd
 ```bash
 
 git clone https://github.com/retaildevcrews/k8s-quickstart
-cd 04-Logging-FluentBit-LogAnalytics
+cd k8s-quickstart/04-Logging-FluentBit-LogAnalytics
 
 ```
 
