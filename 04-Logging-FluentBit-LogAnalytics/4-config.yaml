@@ -27,15 +27,6 @@ data:
         Shared_Key      ${SharedKey}
         Log_Type        ${LogName}
 
-    [FILTER]
-        Name    modify
-        Match   kube.*
-        Add     Zone                                           DevZone
-        Add     Region                                         DevRegion
-        Copy    kubernetes_labels_app.kubernetes.io/instance   k_app
-        Copy    kubernetes_labels_app                          k_app
-        Copy    kubernetes_container_name                      k_container
-
   input-kubernetes.conf: |
     [INPUT]
         Name              tail
@@ -76,6 +67,15 @@ data:
         Operation     lift
         Nested_under  kubernetes_labels
         Add_prefix    kubernetes_labels_
+
+    [FILTER]
+        Name    modify
+        Match   kube.*
+        Add     Zone                                           DevZone
+        Add     Region                                         DevRegion
+        Copy    kubernetes_labels_app.kubernetes.io/instance   k_app
+        Copy    kubernetes_labels_app                          k_app
+        Copy    kubernetes_container_name                      k_container
 
   parsers.conf: |
     [PARSER]
