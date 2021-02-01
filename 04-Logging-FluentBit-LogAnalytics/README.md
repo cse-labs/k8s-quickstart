@@ -31,7 +31,7 @@ The sample application generates JSON logs. Normal logs are written to stdout. E
 - Docker CLI (optional) ([download](https://docs.docker.com/install/))
 - Visual Studio Code (optional) ([download](https://code.visualstudio.com/download))
 
-## Clone this repo
+## Verify your dev cluster
 
 ```bash
 
@@ -39,6 +39,21 @@ The sample application generates JSON logs. Normal logs are written to stdout. E
 
 # verify k8s access
 kubectl get all
+
+# verify the k8s cluster is using containerd
+kubectl describe node k8s | grep containerd
+
+# You should see:
+# Container Runtime Version:  containerd://1.4.3
+
+# if you see dockerd as the runtime you have to uninstall docker, reboot, run kubeadm reset
+# the logs depend on containerd and will not work with dockerd
+
+```
+
+## Clone this repo
+
+```bash
 
 git clone https://github.com/retaildevcrews/k8s-quickstart
 cd 04-Logging-FluentBit-LogAnalytics
