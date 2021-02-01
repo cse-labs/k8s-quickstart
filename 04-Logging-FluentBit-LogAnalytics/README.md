@@ -306,9 +306,6 @@ kubectl apply -f 4-config.yaml
 # start fluentbit pod
 kubectl apply -f fluentbit-pod.yaml
 
-# check pods until fluentb is Running
-kubectl get pods
-
 # check fluentb logs
 kubectl logs fluentb
 
