@@ -269,6 +269,8 @@ az extension add --name log-analytics
 # set environment variables (edit if desired)
 export LogAppLoc=westus2
 export LogAppRG=LogAppRG
+
+# this must be unique
 export LogAppName=LogAppLogs
 
 # create resource group
