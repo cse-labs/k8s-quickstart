@@ -56,7 +56,7 @@ kubectl get all
 kubectl describe node k8s | grep containerd
 
 # You should see:
-# Container Runtime Version:  containerd://1.4.3
+# Container Runtime Version:  containerd://x.x.x
 
 # if you see dockerd as the runtime you have to uninstall docker, reboot, run kubeadm reset
 # the logs depend on containerd and will not work with dockerd
