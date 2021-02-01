@@ -79,10 +79,6 @@ cd 04-Logging-FluentBit-LogAnalytics
 # create service account
 kubectl apply -f account.yaml
 
-# delete secret
-# can ignore does not exist error
-kubectl delete secret fluentbit-secrets
-
 # add temporary secrets
 kubectl create secret generic fluentbit-secrets \
   --from-literal=WorkspaceId=dev \
