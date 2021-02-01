@@ -4,6 +4,14 @@
 
 This is an end-to-end walkthrough of setting up Fluent Bit for log forwarding to Azure Log Analytics
 
+## Prerequisites
+
+- Kubernetes Dev Cluster
+  - Setup a [Development Cluster](https://github.com/retaildevcrews/akdc) on an Azure VM
+- Visual Studio Code (optional) ([download](https://code.visualstudio.com/download))
+
+### Log App
+
 The sample application generates JSON logs. Normal logs are written to stdout. Error logs are written to stderr.
 
 Sample logs from logapp
@@ -36,14 +44,7 @@ Sample logs from logapp
 
 ```
 
-## Prerequisites
-
-- Bash shell (tested on GitHub Codespaces, Mac, Ubuntu, WSL2)
-- Kubernetes Dev Cluster
-  - Setup a [Development Cluster](https://github.com/retaildevcrews/akdc) on an Azure VM
-- Visual Studio Code (optional) ([download](https://code.visualstudio.com/download))
-
-## Verify your dev cluster
+### Verify your dev cluster
 
 ```bash
 
@@ -63,7 +64,7 @@ kubectl describe node k8s | grep containerd
 
 ```
 
-## Helpful aliases
+### Helpful aliases
 
 ```bash
 
@@ -75,7 +76,7 @@ alias kf='kubectl logs fluentb'
 
 ```
 
-## Clone this repo
+### Clone this repo
 
 ```bash
 
@@ -84,7 +85,7 @@ cd k8s-quickstart/04-Logging-FluentBit-LogAnalytics
 
 ```
 
-## Deploy to Kubernetes
+### Deploy to Kubernetes
 
 ```bash
 
@@ -139,9 +140,7 @@ kubectl get pods
 
 ```
 
-### Output
-
-#### Output 1
+### Example Output 1
 
 ```text
 
@@ -173,7 +172,7 @@ kubectl get pods
 
 ```
 
-#### Output 2
+### Example Output 2
 
 ```text
 
@@ -213,7 +212,7 @@ kubectl get pods
 
 ```
 
-#### Output 3
+### Example Output 3
 
 ```text
 
