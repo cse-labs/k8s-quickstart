@@ -63,6 +63,17 @@ kubectl describe node k8s | grep containerd
 
 ```
 
+## Helpful aliases
+
+```bash
+
+alias k='kubectl'
+alias ka='kubectl apply -f'
+alias kd='kubectl delete -f'
+alias kl='kubectl logs'
+
+```
+
 ## Clone this repo
 
 ```bash
