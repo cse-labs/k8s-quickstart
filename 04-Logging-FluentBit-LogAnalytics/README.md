@@ -71,6 +71,7 @@ alias k='kubectl'
 alias ka='kubectl apply -f'
 alias kd='kubectl delete -f'
 alias kl='kubectl logs'
+alias kf='kubectl logs fluentb'
 
 ```
 
