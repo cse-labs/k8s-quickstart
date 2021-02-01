@@ -6,11 +6,31 @@ This is an end-to-end walkthrough of setting up Fluent Bit for log forwarding to
 
 The sample application generates JSON logs. Normal logs are written to stdout. Error logs are written to stderr.
 
+Sample logs from logapp
+
 ```json
 
-{"date":"2020-12-28T21:19:06.1347849Z","statusCode":200,"path":"/log/app","duration":78,"value":"HWIkixicjA"}
-{"date":"2020-12-28T21:19:06.1846021Z","statusCode":400,"path":"/log/app","duration":9,"message":"Invalid paramater: cMwyFA"}
-{"date":"2020-12-28T21:19:06.1444807Z","statusCode":500,"path":"/log/app","duration":266,"message":"Server error 9750"}
+{
+    "date":"2020-12-28T21:19:06.1347849Z",
+    "statusCode":200,
+    "path":"/log/app",
+    "duration":78,
+    "value":"HWIkixicjA"
+}
+{
+    "date":"2020-12-28T21:19:06.1846021Z",
+    "statusCode":400,
+    "path":"/log/app",
+    "duration":9,
+    "message":"Invalid paramater: cMwyFA"
+}
+{
+    "date":"2020-12-28T21:19:06.1444807Z",
+    "statusCode":500,
+    "path":"/log/app",
+    "duration":266,
+    "message":"Server error 9750"
+}
 
 ```
 
