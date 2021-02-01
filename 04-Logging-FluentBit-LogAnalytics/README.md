@@ -9,15 +9,8 @@ The sample application generates JSON logs. Normal logs are written to stdout. E
 ```json
 
 {"date":"2020-12-28T21:19:06.1347849Z","statusCode":200,"path":"/log/app","duration":78,"value":"HWIkixicjA"}
-{"date":"2020-12-28T21:19:06.1444807Z","statusCode":500,"path":"/log/app","duration":266,"message":"Server error 9750"}
-{"date":"2020-12-28T21:19:06.1613873Z","statusCode":200,"path":"/log/app","duration":34,"value":"olJDPKglhr"}
-{"date":"2020-12-28T21:19:06.1660308Z","statusCode":200,"path":"/log/app","duration":86,"value":"lHldzimJSW"}
-{"date":"2020-12-28T21:19:06.1669528Z","statusCode":200,"path":"/log/app","duration":65,"value":"BkPCTxoWcp"}
 {"date":"2020-12-28T21:19:06.1846021Z","statusCode":400,"path":"/log/app","duration":9,"message":"Invalid paramater: cMwyFA"}
-{"date":"2020-12-28T21:19:06.1867848Z","statusCode":200,"path":"/log/app","duration":82,"value":"BAZeQzaLFc"}
-{"date":"2020-12-28T21:19:06.1944765Z","statusCode":200,"path":"/log/app","duration":22,"value":"NuUnKjZoNq"}
-{"date":"2020-12-28T21:19:06.2080865Z","statusCode":200,"path":"/log/app","duration":74,"value":"wKOBoeYgBc"}
-{"date":"2020-12-28T21:19:06.2116748Z","statusCode":200,"path":"/log/app","duration":79,"value":"UQWDWTPbHr"}
+{"date":"2020-12-28T21:19:06.1444807Z","statusCode":500,"path":"/log/app","duration":266,"message":"Server error 9750"}
 
 ```
 
