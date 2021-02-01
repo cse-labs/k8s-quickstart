@@ -10,40 +10,6 @@ This is an end-to-end walkthrough of setting up Fluent Bit for log forwarding to
   - Setup a [Development Cluster](https://github.com/retaildevcrews/akdc) on an Azure VM
 - Visual Studio Code (optional) ([download](https://code.visualstudio.com/download))
 
-### Log App
-
-The sample application generates JSON logs. Normal logs are written to stdout. Error logs are written to stderr.
-
-Sample logs from logapp
-
-```json
-
-{
-    "date":"2020-12-28T21:19:06.1347849Z",
-    "statusCode":200,
-    "path":"/log/app",
-    "duration":78,
-    "value":"HWIkixicjA"
-},
-
-{
-    "date":"2020-12-28T21:19:06.1846021Z",
-    "statusCode":400,
-    "path":"/log/app",
-    "duration":9,
-    "message":"Invalid paramater: cMwyFA"
-},
-
-{
-    "date":"2020-12-28T21:19:06.1444807Z",
-    "statusCode":500,
-    "path":"/log/app",
-    "duration":266,
-    "message":"Server error 9750"
-}
-
-```
-
 ### Verify your dev cluster
 
 ```bash
@@ -96,6 +62,40 @@ kubectl apply -f account.yaml
 kubectl create secret generic fluentbit-secrets \
   --from-literal=WorkspaceId=dev \
   --from-literal=SharedKey=dev
+
+```
+
+### Log App
+
+The sample application generates JSON logs. Normal logs are written to stdout. Error logs are written to stderr.
+
+Sample logs from logapp
+
+```json
+
+{
+    "date":"2020-12-28T21:19:06.1347849Z",
+    "statusCode":200,
+    "path":"/log/app",
+    "duration":78,
+    "value":"HWIkixicjA"
+},
+
+{
+    "date":"2020-12-28T21:19:06.1846021Z",
+    "statusCode":400,
+    "path":"/log/app",
+    "duration":9,
+    "message":"Invalid paramater: cMwyFA"
+},
+
+{
+    "date":"2020-12-28T21:19:06.1444807Z",
+    "statusCode":500,
+    "path":"/log/app",
+    "duration":266,
+    "message":"Server error 9750"
+}
 
 ```
 
