@@ -4,7 +4,14 @@
 
 This is an end-to-end walkthrough of setting up Fluent Bit for log forwarding to Azure Log Analytics
 
-## Prerequisites
+## More Information
+
+- [12 Factor App](https://12factor.net)
+- [12 Factor App - Logging](https://12factor.net/logs)
+- [Azure Log Analytics](https://docs.microsoft.com/en-us/azure/azure-monitor/log-query/log-analytics-overview)
+- [Fluent Bit](https://fluentbit.io/)
+
+### Prerequisites
 
 - Kubernetes Dev Cluster
   - Setup a [Development Cluster](https://github.com/retaildevcrews/akdc) on an Azure VM
@@ -347,8 +354,3 @@ kubectl delete -f fluentbit-pod.yaml
 kubectl get pods
 
 ```
-
-### More Information
-
-- [Azure Log Analytics](https://docs.microsoft.com/en-us/azure/azure-monitor/log-query/log-analytics-overview)
-- [Fluent Bit](https://fluentbit.io/)
