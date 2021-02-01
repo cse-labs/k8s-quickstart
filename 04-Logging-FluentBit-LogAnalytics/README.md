@@ -16,14 +16,16 @@ Sample logs from logapp
     "path":"/log/app",
     "duration":78,
     "value":"HWIkixicjA"
-}
+},
+
 {
     "date":"2020-12-28T21:19:06.1846021Z",
     "statusCode":400,
     "path":"/log/app",
     "duration":9,
     "message":"Invalid paramater: cMwyFA"
-}
+},
+
 {
     "date":"2020-12-28T21:19:06.1444807Z",
     "statusCode":500,
