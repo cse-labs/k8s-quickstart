@@ -156,23 +156,19 @@ kubectl get pods
   # timestamp
   1612126313.650765701,
   {
+    "stream"=>"stdout",
+    "time"=>"2021-01-31T20:51:50.906665641Z"
+    "logtag"=>"F",
+
     # log is a string field that contains json
     # it is not a json map
     "log"=>
     "{
-        # log is a string field that contains json
-        # it is not a map
-        "log":
-        "{
-            \"date\":\"2021-01-31T20:51:50.8930226Z\",
-            \"statusCode\":200,
-            \"path\":\"/log/app\",
-            \"duration\":78,
-            \"value\":\"cNxwDdxRKX\"
-        }",
-
-        "stream":"stdout",
-        "time":"2021-01-31T20:51:50.906665641Z"
+        \"date\":\"2021-01-31T20:51:50.8930226Z\",
+        \"statusCode\":200,
+        \"path\":\"/log/app\",
+        \"duration\":78,
+        \"value\":\"cNxwDdxRKX\"
     }"
   }
 ]
