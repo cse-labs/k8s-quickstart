@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: logapp
+  labels:
+    app: logapp
+
+spec:
+  restartPolicy: OnFailure
+  containers:
+  - name: app
+    imagePullPolicy: Always
+    image: retaildevcrew/logapp:latest
+    args:
+    - --iterations
+    - "1"
