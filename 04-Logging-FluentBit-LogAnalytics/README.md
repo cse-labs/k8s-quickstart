@@ -27,8 +27,7 @@ This is an end-to-end walkthrough of setting up Fluent Bit for log forwarding to
 kubectl get all
 
 # verify the k8s cluster is using containerd
-# note: node name akdc is from the dev cluster setup; it will differ if you used a different name
-kubectl describe node akdc | grep containerd
+kubectl describe node | grep containerd
 
 # You should see:
 # Container Runtime Version:  containerd://x.x.x
