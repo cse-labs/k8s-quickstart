@@ -164,11 +164,11 @@ kubectl get pods
     # it is not a json map
     "log"=>
     "{
-        \"date\":\"2021-01-31T20:51:50.8930226Z\",
-        \"statusCode\":200,
-        \"path\":\"/log/app\",
-        \"duration\":78,
-        \"value\":\"cNxwDdxRKX\"
+        "date":"2021-01-31T20:51:50.8930226Z",
+        "statusCode":200,
+        "path":"/log/app",
+        "duration":78,
+        "value":"cNxwDdxRKX"
     }"
   }
 ]
