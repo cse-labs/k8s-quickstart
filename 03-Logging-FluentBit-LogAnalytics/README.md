@@ -54,7 +54,7 @@ alias kf='kubectl logs fluentb'
 ```bash
 
 git clone https://github.com/retaildevcrews/k8s-quickstart
-cd k8s-quickstart/04-Logging-FluentBit-LogAnalytics
+cd k8s-quickstart/03-Logging-FluentBit-LogAnalytics
 
 ```
 
