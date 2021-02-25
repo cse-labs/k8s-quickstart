@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ##################################
-# replace with your ID (optional)
+# automatically replaced with $USER (bash) or %USERNAME% (Windows)
 export ME=akdc
 ##################################
 
