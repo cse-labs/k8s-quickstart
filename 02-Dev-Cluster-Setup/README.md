@@ -89,15 +89,12 @@ az group create -l %AKDC_LOC% -n %AKDC_RG%
 
 # These commands should be executed from 02-Dev-Cluster-Setup/scripts directory.
 
-# replace user name in the setup script
-sed s/ME=akdc/ME=$USER/ startup.sh > akdc.sh
-
 # create an Ubuntu VM and install k8s prerequisites
 # save IP address into the AKDC_IP env var
 
 export AKDC_IP=$(az vm create \
   -g $AKDC_RG \
-  --admin-username $USER \
+  --admin-username akdc \
   -n akdc \
   --size standard_d2s_v3 \
   --nsg-rule SSH \
@@ -105,10 +102,8 @@ export AKDC_IP=$(az vm create \
   --os-disk-size-gb 128 \
   --generate-ssh-keys \
   --query publicIpAddress -o tsv \
-  --custom-data akdc.sh)
-# Notice the path of the akdc.sh file.
-
-rm akdc.sh
+  --custom-data startup.sh)
+# Notice the path of the startup.sh file.
 
 # This will output an IP address into the AKDC_IP env var
 echo $AKDC_IP
@@ -122,12 +117,9 @@ az network nsg rule create -g $AKDC_RG \
 -n AkdcPorts --priority 1200
 
 # SSH into the VM
-ssh ${AKDC_IP}
+ssh akdc@${AKDC_IP}
 
 ### Windows
-
-# replace user name
-sed s/ME=akdc/ME=%USERNAME%/ startup.sh > akdc.sh
 
 # create an Ubuntu VM and install k8s
 # save IP address into the AKDC_IP env var
@@ -135,7 +127,7 @@ sed s/ME=akdc/ME=%USERNAME%/ startup.sh > akdc.sh
 for /f %f in (' ^
   az vm create ^
   -g %AKDC_RG% ^
-  --admin-username %USERNAME% ^
+  --admin-username akdc ^
   -n akdc ^
   --size standard_d2s_v3 ^
   --nsg-rule SSH ^
@@ -143,10 +135,8 @@ for /f %f in (' ^
   --os-disk-size-gb 128 ^
   --generate-ssh-keys ^
   --query publicIpAddress -o tsv ^
-  --custom-data akdc.sh') ^
+  --custom-data startup.sh') ^
 do set AKDC_IP=%f
-
-del akdc.sh
 
 echo %AKDC_IP%
 
@@ -158,7 +148,7 @@ az network nsg rule create -g %AKDC_RG% ^
 --protocol tcp ^
 -n AkdcPorts --priority 1200
 
-ssh %AKDC_IP%
+ssh akdc@%AKDC_IP%
 
 ```
 

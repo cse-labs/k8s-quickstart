@@ -1,7 +1,8 @@
 #!/bin/bash
 
 ##################################
-# automatically replaced with $USER (bash) or %USERNAME% (Windows)
+# replace with your ID (optional)
+# this should match the "--admin-username" option when creating the VM
 export ME=akdc
 ##################################
 
