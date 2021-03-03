@@ -1,24 +1,29 @@
 # Setup Kubernetes Development Cluster
 
-> This will setup a single node Kubernetes cluster for development
+## New Content
 
-## Key learnings
+### [GitHub Codespaces](https://github.com/features/codespaces) is the easiest way to create a developer cluster
+
+- Follow the setup instructions: [Dev Cluster on Codespaces](https://github.com/retaildevcrews/akdc-kind)
+
+## Azure VM Setup
+
+> Setup a single node Kubernetes development cluster on an Azure VM
+
+### Key learnings
 
 - Create an Azure VM
 - Create a single-node Kubernetes cluster on the VM
 - Verify the cluster
 
-## Prerequisites
+### Prerequisites
 
 - Bash or Windows cmd shell (tested on GitHub Codespaces, Mac, Ubuntu, WSL2, Azure Cloud Shell and Windows cmd)
 - Azure CLI ([download](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest))
 - Visual Studio Code (optional) ([download](https://code.visualstudio.com/download))
 - kubectl (optional) - <https://kubernetes.io/docs/tasks/tools/>
 
-> [GitHub Codespaces](https://github.com/features/codespaces) is the easiest way to experiment
-> Select `Open with Codespaces` from the `Code` button
-
-## Host VM Requirements
+### Host VM Requirements
 
 - tested on `Ubuntu 18.04 LTS`
 - minimum 2 cores with 2 GB RAM
