@@ -14,11 +14,11 @@
 docker images
 
 # pull an image
-docker pull ubuntu
+docker pull alpine
 docker images
 
 # let's run the image interactively as a "jump box"
-docker run -it --name jbox ubuntu
+docker run -it --name jumpbox alpine
 
 # notice your prompt changed to something like this: root@257fde9a1ad2:/#
 # we are now "in" the docker container
@@ -30,8 +30,8 @@ ping bing.com
 
 # oops - ping isn't installed
 # let's install ping, curl and some other goodies
-apt update
-apt install -y --no-install-recommends iputils-ping curl redis-tools mariadb-client httpie
+apk update
+apk add iputils curl redis mariadb-client httpie bash
 
 # ping works
 ping -c 1 bing.com
@@ -48,29 +48,31 @@ exit
 ```bash
 
 # save our changes to a new image
-docker commit jbox jumpbox
+docker commit jumpbox jumpbox
 docker images
 
 # let's run our new image
-docker run -it --name jbox jumpbox
+docker run -it --name jumpbox jumpbox
 
 # oops
 docker ps -a
 
 # we have to remove the instance first
-docker rm jbox
-docker run -it --name jbox jumpbox
+docker rm jumpbox
+docker run -it --name jumpbox jumpbox bash -l
 
 # your prompt changes again
 # we're in the root directory (/) and we want to start in the home directory (~)
 exit
 
 # tell docker where to start
-docker commit -c "WORKDIR /root" jbox jumpbox
+docker cp .profile jumpbox:/root
+docker commit -c "WORKDIR /root" jumpbox jumpbox
+docker commit -c 'CMD ["/bin/bash", "-l"]' jumpbox jumpbox
 
 # remove the instance and run again
-docker rm jbox
-docker run -it --name jbox jumpbox
+docker rm jumpbox
+docker run -it --name jumpbox jumpbox
 
 # from the docker container
 
@@ -92,6 +94,7 @@ docker ps -a
 ```bash
 
 # run a simple web app
+# todo - move to ghcr.io
 docker run -d -p 80:8080 --name web retaildevcrew/goweb
 
 # see what happened
@@ -142,7 +145,7 @@ docker rm web
 # you could do this instead
 docker rm -f web
 
-# only jbox should show
+# only jumpbox should show
 docker ps -a
 
 ```
@@ -234,8 +237,8 @@ docker ps -a
 # run a Redis container
 docker run -d --name redis redis
 
-# restart the jbox container
-docker start -ai jbox
+# restart the jumpbox container
+docker start -ai jumpbox
 
 ping redis
 
@@ -249,14 +252,14 @@ docker network create vote
 # add the containers to the network
 docker network connect vote maria
 docker network connect vote redis
-docker network connect vote jbox
+docker network connect vote jumpbox
 
 # let's try again
-docker start -ai jbox
+docker start -ai jumpbox
 
 ping -c 1 redis
 ping -c 1 maria
-ping -c 1 jbox
+ping -c 1 jumpbox
 
 # let's connect to Redis
 redis-cli -h redis
@@ -280,7 +283,7 @@ exit
 # notice we attach it to the network
 docker run -d --net vote --name govote retaildevcrew/govote
 
-docker start -ai jbox
+docker start -ai jumpbox
 
 http govote:8080
 
@@ -303,7 +306,7 @@ docker run -d --net vote --name govote -p 8080:8080 retaildevcrew/govote
 http localhost:8080
 
 # our network still works
-docker start -ai jbox
+docker start -ai jumpbox
 
 http govote:8080
 
@@ -336,7 +339,7 @@ docker images
 docker rm -f govote
 docker rm -f redis
 docker rm -f maria
-docker rm jbox
+docker rm jumpbox
 
 # remove unused images / networks
 docker system prune -f
