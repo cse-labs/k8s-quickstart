@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+
+metadata:
+  name: loderunner-baseline-memory
+  labels:
+    app: loderunner-baseline-memory
+
+spec:
+  restartPolicy: Never
+  containers:
+  - name: app
+    image: ghcr.io/retaildevcrews/ngsa-lr:beta
+    imagePullPolicy: Always
+
+    args: 
+    - -s
+    - http://ngsa-memory:8080
+    - -f
+    - baseline.json
+    - --prometheus
+    - --zone
+    - dev
+    - --region
+    - dev
