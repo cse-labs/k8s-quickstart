@@ -7,7 +7,7 @@ WORKDIR /root/app
 ENTRYPOINT ["/bin/bash"]
 
 # Build the app
-RUN go fmt && go vet &&  CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o ./app main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o ./app main.go
 
 #############################
 # build the release container
