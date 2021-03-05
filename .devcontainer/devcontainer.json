@@ -1,24 +1,26 @@
 {
-  "name": "docker101",
+	"name": "k8s-qs",
+	// "image": "ghcr.io/retaildevcrews/kind",
+	// "runArgs": ["--init", "--privileged"],
+	"overrideCommand": false,
 
-  // Set *default* container specific settings.json values on container create.
-  "settings": {
-    "terminal.integrated.shell.linux": "/bin/bash"
-//    "terminal.integrated.shell.linux": "/bin/zsh"
-  },
+	// Set *default* container specific settings.json values on container create.
+	"settings": {
+		"terminal.integrated.shell.linux": "/bin/bash"
+	},
 
-  "remoteUser": "codespace",
+	"remoteUser": "vscode",
 
-  // Open port 8080 by default
-  "forwardPorts": [8080],
+	"forwardPorts": [30000, 32000, 30080, 30088],
 
-  // Install extensions
-  "extensions": [
-    "davidanson.vscode-markdownlint",
-    "gruntfuggly.todo-tree",
-    "ms-azuretools.vscode-docker"
-  ],
+	// Install extensions
+	"extensions": [
+		"davidanson.vscode-markdownlint",
+		"gruntfuggly.todo-tree",
+		"ms-azuretools.vscode-docker",
+		"humao.rest-client"
+	],
 
-  // Run Bash script in .devcontainer directory
-  "postCreateCommand": "/bin/bash ./.devcontainer/post-install.sh"
+	// Run Bash script in .devcontainer directory
+	"postCreateCommand": "/bin/bash ./.devcontainer/post-install.sh"
 }
