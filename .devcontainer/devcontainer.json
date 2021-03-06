@@ -11,7 +11,7 @@
 
 	"remoteUser": "vscode",
 
-	"forwardPorts": [30000, 32000, 30080, 30088],
+	"forwardPorts": [80, 8080, 30000, 32000, 30080, 30088],
 
 	// Install extensions
 	"extensions": [
