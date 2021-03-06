@@ -137,7 +137,6 @@ reset-grafana :
 	# remove and copy the data to /grafana volume
 	@sudo rm -rf /grafana
 	@sudo mkdir -p /grafana
-	@sudo cp -R deploy/grafanadata/grafana.db /grafana
 	@sudo chown -R 472:472 /grafana
 
 jumpbox :
