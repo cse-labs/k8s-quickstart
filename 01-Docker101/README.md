@@ -19,8 +19,8 @@ This is a `hands-on lab` and assumes familiarity with basic Docker and Kubernete
 
 ### Setup Codespaces
 
-- For these labs, we will be using [GitHub Codespaces](./README.md) and [KIND](./README.md) to create a `Development Cluster`
-- For `production clusters` please see the [AKS documentation](./README.md)
+- For these labs, we will be using [GitHub Codespaces](https://github.com/features/codespaces) and [KIND](https://kind.sigs.k8s.io/) to create a `Development Cluster`
+- For `production clusters` please see the [AKS documentation](https://docs.microsoft.com/en-us/azure/aks/)
 
 - setup codespace
 - validate docker / kubectl / etc
