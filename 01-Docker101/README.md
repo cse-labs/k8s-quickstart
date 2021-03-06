@@ -124,8 +124,6 @@ docker run -it --name jumpbox jumpbox
 exit
 
 # Notice that jumpbox is stopped
-docker ps
-
 docker ps -a
 
 # set jumpbox to run forever (almost)
@@ -258,7 +256,6 @@ docker ps -a
 - Create jumpbox pod
 - k exec command in jumpbox
 - run ngsa-app as pod
-- delete ngsa-app
 - show http in jumpbox
 
 ## Session 4
