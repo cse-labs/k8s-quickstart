@@ -1,0 +1,4 @@
+existingConfigMap: fluentbit-config
+envFrom:
+  - secretRef:
+      name: fluentbit-secrets

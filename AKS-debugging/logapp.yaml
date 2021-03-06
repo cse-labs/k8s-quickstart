@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logapp
+spec:
+  selector:
+    matchLabels:
+      app: logapp
+  template:
+    metadata:
+      labels:
+        app: logapp
+        app.kubernetes.io/instance: logapp
+    spec:
+      containers:
+      - name: logapp
+        image: ghcr.io/retaildevcrews/logapp:latest
+        args:
+          - --loop
+          - -s 1000
