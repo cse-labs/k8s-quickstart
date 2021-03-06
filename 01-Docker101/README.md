@@ -14,78 +14,91 @@
 docker images
 
 # pull an image
-docker pull alpine
+### TODO - use alpine instead of ubuntu
+### ash / sh don't work in codespaces
+### output is not displayed
+
+docker pull ubuntu
 docker images
 
-# let's run the image interactively as a "jump box"
-docker run -it --name jumpbox alpine
+# let's run the image interactively
+docker run -it --rm ubuntu
 
 # notice your prompt changed to something like this: root@257fde9a1ad2:/#
 # we are now "in" the docker container
 
+# run some commands
+ls -alF
 pwd
-cd root
-
-ping bing.com
-
-# oops - ping isn't installed
-# let's install ping, curl and some other goodies
-apk update
-apk add iputils curl redis mariadb-client httpie bash
-
-# ping works
-ping -c 1 bing.com
-
-# http works
-http https://www.bing.com
 
 exit
 
+# back in the codespaces terminal
 ```
 
-### We don't want to have to do that every time
+### Create a `jumbox` image
+
+- A `jumbox` is a machine with dual network homes that allows you to `jump` from one network to the other
+- In this case, it will allow us to `jump` into the Docker network
+
+We are going to use `Alpine` as the base for our jump box because it is signifcantly smaller than most other distro images
 
 ```bash
 
-# save our changes to a new image
-docker commit jumpbox jumpbox
+# pull the alpine image
+docker pull alpine
+
+# notice the size difference between alpine and ubuntu
 docker images
+
+```
+
+
+#### Build the `jumpbox`
+
+```bash
+
+# install some utilities into the alpine base image
+docker run -it --name jumpbox alpine apk add --no-cache curl redis mariadb-client httpie jq nano bash
+
+# copy a very basic .profile
+docker cp 01-Docker101/.profile jumpbox:/root
+
+# set the image to use bash and start in /root
+docker commit -c 'CMD ["/bin/bash", "-l"]'  -c 'WORKDIR /root' jumpbox jumpbox
+
+# remove build image
+docker rm jumpbox
 
 # let's run our new image
 docker run -it --name jumpbox jumpbox
 
-# oops
-docker ps -a
-
-# we have to remove the instance first
-docker rm jumpbox
-docker run -it --name jumpbox jumpbox bash -l
-
 # your prompt changes again
-# we're in the root directory (/) and we want to start in the home directory (~)
+
+# exit back to Codespaces
 exit
 
-# tell docker where to start
-docker cp .profile jumpbox:/root
-docker commit -c "WORKDIR /root" jumpbox jumpbox
-docker commit -c 'CMD ["/bin/bash", "-l"]' jumpbox jumpbox
-
-# remove the instance and run again
-docker rm jumpbox
-docker run -it --name jumpbox jumpbox
-
-# from the docker container
-
-pwd
-
-exit
-
-# See what's there
+# Notice that jumpbox is stopped
 docker ps
 
 docker ps -a
 
-# there's a MUCH better way! We'll get there soon.
+# set jumpbox to run forever (almost)
+docker commit -c 'CMD ["/bin/bash", "-c", "sleep 999999999d"]'  jumpbox jumpbox
+
+# remove jumpbox
+docker rm jumpbox
+
+# run jumpbox detached
+docker run -d --name jumpbox --restart always jumpbox
+
+# run a command "in" jumpbox
+docker exec -t jumpbox http www.microsoft.com
+
+# notice the -t gives us ansi colors
+docker exec jumpbox http www.microsoft.com
+
+# there's a MUCH better way to build Docker images. We'll get there soon.
 
 ```
 
@@ -95,32 +108,20 @@ docker ps -a
 
 # run a simple web app
 # todo - move to ghcr.io
-docker run -d -p 80:8080 --name web retaildevcrew/goweb
+docker run -d -p 80:8080 --name web ghcr.io/retaildevcrews/ngsa-app:beta --in-memory
 
 # see what happened
 docker ps
 docker logs web
 
 # send a request to the web server
-http localhost
+http localhost/version
 
 # recheck the logs
 docker logs web
 
 # run some commands in the container
-docker exec web ls -al
-docker exec web cat logs/app.log
-
-# start an interactive shell in the container
-docker exec -it web sh
-
-# notice your prompt changed
-
-# run a couple of commands and exit
-ls -al
-cat logs/app.log
-
-exit
+docker exec -t web ls -al
 
 ```
 
@@ -162,50 +163,15 @@ docker ps -a
 
 ```bash
 
-cd goweb
-
-docker build . -t web
-
-# look at what happened
-docker images
-
-# notice the size difference in the web container and the <none> container
-
-# let's see what we told Docker to do
-# notice these commands are very similar to the first section
-code Dockerfile
-
-```
-
-### Run the container
-
-```bash
-
-docker run -d --name web -p 80:8080 web
-
-# verify it's running
-docker ps
-
-# send a web request and look at logs
-http localhost
-docker logs web
-
-```
-
-### Stop and remove the web container
-
-```bash
-
-docker rm -f web
-
-# only the jumpbox should show
-docker ps -a
+### TODO - change this to build jumpbox
 
 ```
 
 ### Let's run MariaDB in a container
 
 ```bash
+
+### TODO - change this to loderunner?
 
 # start the server
 # use -e to specify an environment variable
