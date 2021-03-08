@@ -68,7 +68,7 @@ GET http://localhost:30080/api/movies?year=1999 HTTP/1.1
 
 ###
 
-# IMDB Movie API - filter movies with ration of 8.0
+# IMDB Movie API - filter movies with rating of 8.0
 GET http://localhost:30080/api/movies?rating=8.0 HTTP/1.1
 
 ###

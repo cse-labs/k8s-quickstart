@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      env: production
+      svc: web
+  template:
+    metadata:
+      labels:
+        env: production
+        svc: web
+    spec:
+      containers:
+      - image: nginx:1.13
+        name: nginx
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    env: production
+    svc: web
+  name: nginx
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    env: production
+    svc: web
+  type: LoadBalancer
