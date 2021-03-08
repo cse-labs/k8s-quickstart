@@ -147,6 +147,43 @@ docker exec jumpbox http www.microsoft.com
 
 ```
 
+### Build jumpbox from `Dockerfile`
+
+- TODO - build jumpbox from a dockerfile
+
+## Session 3
+
+### Let's run MariaDB in a container
+
+```bash
+
+### TODO - change this to loderunner?
+
+# start the server
+# use -e to specify an environment variable
+docker run -d --name maria -e MYSQL_ROOT_PASSWORD=SuperSecretPassword mariadb
+
+docker ps
+
+# start a client
+# --link creates a link to the server container
+# --rm removes the container when it exits
+# sh -c ... runs the mysql CLI with the right parameters
+docker run -it --link maria:svr --rm jumpbox sh -c 'exec mysql -h svr -uroot -pSuperSecretPassword'
+
+# from the MariaDB prompt
+# MariaDB [(none)]>
+show databases;
+exit;
+
+docker ps -a
+
+# notice the MySQL client container is gone (--rm)
+
+```
+
+## Session 4
+
 ### Run a simple web app in Docker
 
 ```bash
@@ -249,7 +286,7 @@ docker ps -a
 
 ```
 
-## Session 3
+## Session 5
 
 - Install kind (make create)
 - Load local jumpbox image into Kind
@@ -258,12 +295,12 @@ docker ps -a
 - run ngsa-app as pod
 - show http in jumpbox
 
-## Session 4
+## Session 6
 
 - explain pods and deployments
 - re-deploy ngsa-app
 
-## Session 5
+## Session 7
 
 - Services
 - Cluster IP
@@ -271,7 +308,7 @@ docker ps -a
 - Show accessing ngsa-app locally via NodePort
 - I would save Load Balancer for a later discussion for simplicity
 
-## Session 6
+## Session 8
 
 - deploy LodeRunner (k apply -f)
 - LodeRunner uses the cluster IP
@@ -279,25 +316,25 @@ docker ps -a
 - access /version via NodePort
 - show /metrics on app / loderunner
 
-## Session 7
+## Session 9
 
 - deploy Prometheus (k apply -f)
 - show Prometheus via NodePort (30000)
 
-## Session 8
+## Session 10
 
 - deploy Grafana
 - show Grafana dashboards via NodePort (32000)
   - admin
   - Ngsa512
 
-## Session 9
+## Session 11
 
 - deploy Fluent Bit
 - show logs
 - show logs via k9s
 
-## Session 10
+## Session 12
 
 - makefile
 - make all
@@ -305,9 +342,9 @@ docker ps -a
 - make create
 - check loderunner logs in k9s
 
-## Session 11
+## Session 13
 
-- build LodeRunner local
+- build ngsa-lr:local
 - clone repo
 - docker build
 - load local image into kind
@@ -315,47 +352,8 @@ docker ps -a
 - k apply -f loderunner-local
 - check logs in k9s / Grafana
 
-## Session 12
+## Session 14
 
 - run a load test
 - show grafana dashboard
 - show grafana annotation
-
-## Build a container
-
-> At the end of the first section, we said there was a better way to build images ...
-
-### Build a docker container
-
-- TODO - change this to build jumpbox or loderunner
-
-### Let's run MariaDB in a container
-
-- TODO - should we cut this because we're running ngsa-app / loderunner?
-
-```bash
-
-### TODO - change this to loderunner?
-
-# start the server
-# use -e to specify an environment variable
-docker run -d --name maria -e MYSQL_ROOT_PASSWORD=SuperSecretPassword mariadb
-
-docker ps
-
-# start a client
-# --link creates a link to the server container
-# --rm removes the container when it exits
-# sh -c ... runs the mysql CLI with the right parameters
-docker run -it --link maria:svr --rm jumpbox sh -c 'exec mysql -h svr -uroot -pSuperSecretPassword'
-
-# from the MariaDB prompt
-# MariaDB [(none)]>
-show databases;
-exit;
-
-docker ps -a
-
-# notice the MySQL client container is gone (--rm)
-
-```
