@@ -2,7 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: logapp
+  namespace: logapp
 spec:
+  replicas: 6
   selector:
     matchLabels:
       app: logapp
@@ -18,3 +20,8 @@ spec:
         args:
           - --loop
           - -s 1000
+        resources:
+          requests:
+            cpu: "2000m"
+          limits:
+            cpu: "2000m"
