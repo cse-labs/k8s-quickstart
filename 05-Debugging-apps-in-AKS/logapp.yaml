@@ -4,7 +4,7 @@ metadata:
   name: logapp-config
   namespace: logapp
 data:
-  SLEEP_SECONDS: "0"
+  SLEEP_MS: "0"
 
 ---
 
@@ -28,14 +28,14 @@ spec:
       - name: logapp
         image: ghcr.io/retaildevcrews/logapp:latest
         env:
-        - name: SLEEP_SECONDS
+        - name: SLEEP_MS
           valueFrom:
             configMapKeyRef:
               name: logapp-config
-              key: SLEEP_SECONDS
+              key: SLEEP_MS
         args:
           - --loop
-          - "-s $(SLEEP_SECONDS)"
+          - "-s $(SLEEP_MS)"
         resources:
           limits:
             cpu: "1000m"
