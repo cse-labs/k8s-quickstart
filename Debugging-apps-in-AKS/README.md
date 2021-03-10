@@ -1,6 +1,10 @@
 # TODO: title
 
-TODO: what goes here?
+```bash
+
+
+
+```
 
 ## Helpful links
 
@@ -9,3 +13,4 @@ TODO: what goes here?
 <https://kubernetes.io/docs/tasks/debug-application-cluster/troubleshooting>
 <https://kubernetes.io/docs/tasks/debug-application-cluster/debug-application>
 <https://kubernetes.io/docs/tasks/debug-application-cluster/debug-cluster>
+<https://kubernetes.io/docs/reference/kubectl/cheatsheet/>

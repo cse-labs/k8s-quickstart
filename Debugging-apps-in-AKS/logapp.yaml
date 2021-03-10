@@ -1,3 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logapp-config
+  namespace: logapp
+data:
+  SLEEP_SECONDS: "0"
+
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -17,11 +27,15 @@ spec:
       containers:
       - name: logapp
         image: ghcr.io/retaildevcrews/logapp:latest
+        env:
+        - name: SLEEP_SECONDS
+          valueFrom:
+            configMapKeyRef:
+              name: logapp-config
+              key: SLEEP_SECONDS
         args:
           - --loop
-          - -s 1000
+          - "-s $(SLEEP_SECONDS)"
         resources:
-          requests:
-            cpu: "2000m"
           limits:
-            cpu: "2000m"
+            cpu: "1000m"
