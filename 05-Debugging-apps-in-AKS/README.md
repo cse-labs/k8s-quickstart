@@ -65,7 +65,7 @@ kubectl scale deployment --replicas=<desired number of replicas> <deployment nam
 
 ```bash
 # Get basic Configmaps information.
-# This will tell us if our Configmaps are running. 
+# This will list the ConfigMaps
 kubectl get configmap 
 
 # NAME            DATA   AGE
