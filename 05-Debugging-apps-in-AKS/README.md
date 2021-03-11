@@ -74,7 +74,7 @@ kubectl get configmap
 # The Age column tell us how old is the configuration.
 
 
-# Get more detail information about the Deployment.
+# Get more detail information about the ConfigMap.
 kubectl describe configmap <configmap name>
 
 # ...
