@@ -85,7 +85,7 @@ kubectl describe configmap <configmap name>
 # 0
 # Events:  <none>
 
-# By inspecting Data section we see that Slepp_Seconds is set to zero.
+# By inspecting Data section we see that SLEEP_MS is set to zero.
 # There are no Events listed
 
 
