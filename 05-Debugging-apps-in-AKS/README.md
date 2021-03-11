@@ -89,7 +89,7 @@ kubectl describe configmap <configmap name>
 # There are no Events listed
 
 
-# Edit Deployment on the cluster.
+# Edit ConfigMap on the cluster.
 kubectl edit configmap <configmap name>
 
 # This will let you edit and apply changes directly on the cluster.
