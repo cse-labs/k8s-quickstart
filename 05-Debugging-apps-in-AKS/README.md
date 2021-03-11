@@ -80,7 +80,7 @@ kubectl describe configmap <configmap name>
 # ...
 # Data
 # ====
-# SLEEP_SECONDS:
+# SLEEP_MS:
 # ----
 # 0
 # Events:  <none>
