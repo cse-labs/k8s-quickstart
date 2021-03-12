@@ -174,4 +174,9 @@ kubectl logs <pod name>
 
 <https://kubernetes.io/docs/tasks/debug-application-cluster/debug-cluster>
 
+<https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes>
+
+<https://medium.com/swlh/understanding-kubernetes-resource-cpu-and-memory-units-30284b3cc866>
+
 <https://kubernetes.io/docs/reference/kubectl/cheatsheet/>
+
