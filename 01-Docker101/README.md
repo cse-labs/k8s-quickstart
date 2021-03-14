@@ -12,10 +12,13 @@ This is a `hands-on lab` and assumes familiarity with basic Docker and Kubernete
 
 ## Kubernetes Introduction
 
+- Overview of Kubernetes: <https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/>
 - TODO - add k8s for kids video
 - TODO - other links
 
 ## Session 1
+
+TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
 
 ### Setup Codespaces
 
@@ -30,6 +33,8 @@ This is a `hands-on lab` and assumes familiarity with basic Docker and Kubernete
 - show restarting
 
 ## Session 2
+
+TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
 
 ### Some basic docker commands
 
@@ -106,7 +111,7 @@ docker ps -a
 docker cp 01-Docker101/.profile jumpbox:/root
 
 # set the image to use bash and start in /root
-# commit (save) as an image
+# commit (save) as an image with an additional layer
 docker commit -c 'CMD ["/bin/bash", "-l"]'  -c 'WORKDIR /root' jumpbox jumpbox
 
 # our jumpbox image is created
@@ -153,6 +158,8 @@ docker exec jumpbox http www.microsoft.com
 
 ## Session 3
 
+TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
+
 ### Let's run MariaDB in a container
 
 ```bash
@@ -183,6 +190,8 @@ docker ps -a
 ```
 
 ## Session 4
+
+TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
 
 ### Run a simple web app in Docker
 
@@ -288,6 +297,8 @@ docker ps -a
 
 ## Session 5
 
+TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
+
 - Install kind (make create)
 - Load local jumpbox image into Kind
 - Create jumpbox pod
@@ -297,10 +308,16 @@ docker ps -a
 
 ## Session 6
 
-- explain pods and deployments
+TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
+
+- create pod
+- create replicaset
+- create deployment
 - re-deploy ngsa-app
 
 ## Session 7
+
+TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
 
 - Services
 - Cluster IP
@@ -310,6 +327,8 @@ docker ps -a
 
 ## Session 8
 
+TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
+
 - deploy LodeRunner (k apply -f)
 - LodeRunner uses the cluster IP
 - show logs / traffic
@@ -318,10 +337,14 @@ docker ps -a
 
 ## Session 9
 
+TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
+
 - deploy Prometheus (k apply -f)
 - show Prometheus via NodePort (30000)
 
 ## Session 10
+
+TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
 
 - deploy Grafana
 - show Grafana dashboards via NodePort (32000)
@@ -330,11 +353,17 @@ docker ps -a
 
 ## Session 11
 
+TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
+
 - deploy Fluent Bit
 - show logs
 - show logs via k9s
 
+>Can reference info in [04-Logging-FluentBit-LogAnalytics](./04-Logging-FluentBit-LogAnalytics) for walkthrough creation
+
 ## Session 12
+
+TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
 
 - makefile
 - make all
@@ -343,6 +372,8 @@ docker ps -a
 - check loderunner logs in k9s
 
 ## Session 13
+
+TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
 
 - build ngsa-lr:local
 - clone repo
@@ -353,6 +384,8 @@ docker ps -a
 - check logs in k9s / Grafana
 
 ## Session 14
+
+TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
 
 - run a load test
 - show grafana dashboard
