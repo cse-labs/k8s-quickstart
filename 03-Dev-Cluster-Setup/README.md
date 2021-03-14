@@ -39,7 +39,7 @@
 git clone https://github.com/retaildevcrews/k8s-quickstart.git
 
 # start in the scripts directory
-cd k8s-quickstart/02-Dev-Cluster-Setup/scripts/
+cd k8s-quickstart/03-Dev-Cluster-Setup/scripts/
 
 ```
 
@@ -92,7 +92,7 @@ az group create -l %AKDC_LOC% -n %AKDC_RG%
 
 ### bash
 
-# These commands should be executed from 02-Dev-Cluster-Setup/scripts directory.
+# These commands should be executed from 03-Dev-Cluster-Setup/scripts directory.
 
 # create an Ubuntu VM and install k8s prerequisites
 # save IP address into the AKDC_IP env var

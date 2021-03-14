@@ -5,8 +5,9 @@
 ## Sessions
 
 - [Docker 101](./01-Docker101)
-- [Dev Cluster Setup](./02-Dev-Cluster-Setup)
-- [Fluent Bit / Log Analytics](./03-Logging-FluentBit-LogAnalytics)
+- [Deploying Pods 101](./02-Deploying-Pods101)
+- [Dev Cluster Setup](./03-Dev-Cluster-Setup)
+- [Fluent Bit / Log Analytics](./04-Logging-FluentBit-LogAnalytics)
 
 ## Additional Reading
 
