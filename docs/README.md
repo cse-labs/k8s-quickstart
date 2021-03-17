@@ -1,6 +1,9 @@
 # Information for presenters
 
-This document has two goals. First is to help people own their session from ideation to presentation. Second is to collect best practices for presentations.
+This document has two goals.
+
+1. Help people manage their session from idea to presentation.
+1. Collect best practices for presentations.
 
 ## Types of presentation
 
@@ -26,7 +29,17 @@ These are some ideas for the types of sessions you can choose from here. You can
 
 ## How to upload videos to Stream
 
-- TODO: add link to video after recording
+- "[Uploading Videos to Stream](https://msit.microsoftstream.com/video/92e5a3ff-0400-85a8-becc-f1eb87532a60)" video in the [Stream channel](https://aka.ms/rdc-demos).
+
+Steps:
+
+- Open recording in Stream.
+- Update video details.
+- Enable "Allow everyone in your company to view this video" if video is not team confidential.
+- Shared with appropriate "RDC-*" channel. Choose "Channels", then search for "rdc".
+- Make RDC group an owner. Choose "My groups", then search for "rdc" again.
+- Enable the "Owner" option for the RDC group.
+- Click "Apply".
 
 ## Best practices for presentations
 
@@ -42,5 +55,5 @@ These are some ideas for the types of sessions you can choose from here. You can
   - "quiet mouse" - only move your mouse and scroll your screen when necessary.
   - Scroll slowly.
   - Close unused windows and tabs.
-  - Color blindness is common. Double check that the color scheme you'r e using is inclusive.
+  - Color blindness is common. Double check that the color scheme you're using is inclusive.
   - Plan your close and close quickly. Make it clear that the session is over.
