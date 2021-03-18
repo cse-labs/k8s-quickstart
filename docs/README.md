@@ -3,7 +3,7 @@
 This document has two goals.
 
 1. Help people manage their session from idea to presentation.
-1. Collect best practices for presentations.
+2. Collect best practices for presentations.
 
 ## Types of presentation
 
