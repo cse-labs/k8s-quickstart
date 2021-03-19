@@ -8,6 +8,10 @@
 - [Dev Cluster Setup](./02-Dev-Cluster-Setup)
 - [Fluent Bit / Log Analytics](./03-Logging-FluentBit-LogAnalytics)
 
+## Documentation
+
+- [How-Tos and best practices for sessions](./docs)
+
 ## Additional Reading
 
 - AKS: <https://docs.microsoft.com/en-us/azure/aks/>
