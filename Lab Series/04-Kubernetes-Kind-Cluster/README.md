@@ -1,4 +1,4 @@
-# Session 5: Kubernetes Kind Cluster Lab
+# Session 4: Kubernetes Kind Cluster Lab
 
 > Purpose: TODO
 
