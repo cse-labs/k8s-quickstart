@@ -1,170 +1,208 @@
-# Docker and Kubernetes Lab
+# Docker Walk Through
 
 > 100 level
-
-This is a `hands-on lab` and assumes familiarity with basic Docker and Kubernetes concepts. Please use the links below for basic familiarity.
 
 ## Docker Introduction
 
 - Intro to Docker: <https://docs.microsoft.com/en-us/dotnet/architecture/microservices/container-docker-introduction/>
-- Intro to Docker Best Practices: <https://blog.docker.com/2019/07/intro-guide-to-dockerfile-best-practices/>
-- Dockerfile Linter: <https://github.com/hadolint/hadolint>
-
-## Kubernetes Introduction
-
-- Overview of Kubernetes: <https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/>
-- TODO - add k8s for kids video
-- TODO - other links
-
-## Session 1
-
-TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
-
-### Setup Codespaces
-
-- For these labs, we will be using [GitHub Codespaces](https://github.com/features/codespaces) and [KIND](https://kind.sigs.k8s.io/) to create a `Development Cluster`
-- For `production clusters` please see the [AKS documentation](https://docs.microsoft.com/en-us/azure/aks/)
-
-- setup codespace
-- validate docker / kubectl / etc
-- show how to configure
-- show how to delete
-- show how to suspend
-- show restarting
-
-## Session 2
-
-TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
 
 ### Some basic docker commands
 
 ```bash
 
-# see which containers are running (none)
-docker ps
-
-# see which containers are created (none)
-docker ps -a
-
-# show local images (none)
+# show local images
 docker images
 
 # pull an image
 docker pull ubuntu
 docker images
 
-# let's run the image interactively
-# -i - interactivee
-# -t - tty
-# --rm - remove the container on exit
-docker run -it --rm ubuntu
+# let's run the image interactively as a "jump box"
+docker run -it --name jbox ubuntu
 
 # notice your prompt changed to something like this: root@257fde9a1ad2:/#
 # we are now "in" the docker container
 
-# run some commands
-ls -alF
+pwd
+cd root
+
+ping bing.com
+
+# oops - ping isn't installed
+# let's install ping, curl and some other goodies
+apt update
+apt install -y --no-install-recommends iputils-ping curl redis-tools mariadb-client httpie
+
+# ping works
+ping -c 1 bing.com
+
+# http works
+http https://www.bing.com
+
+exit
+
+```
+
+### We don't want to have to do that every time
+
+```bash
+
+# save our changes to a new image
+docker commit jbox jumpbox
+docker images
+
+# let's run our new image
+docker run -it --name jbox jumpbox
+
+# oops
+docker ps -a
+
+# we have to remove the instance first
+docker rm jbox
+docker run -it --name jbox jumpbox
+
+# your prompt changes again
+# we're in the root directory (/) and we want to start in the home directory (~)
+exit
+
+# tell docker where to start
+docker commit -c "WORKDIR /root" jbox jumpbox
+
+# remove the instance and run again
+docker rm jbox
+docker run -it --name jbox jumpbox
+
+# from the docker container
+
 pwd
 
 exit
 
-# back in the codespaces terminal
+# See what's there
+docker ps
 
-# notice nothing is running or created
 docker ps -a
+
+# there's a MUCH better way! We'll get there soon.
 
 ```
 
-### Create a `jumpbox` image
-
-- A `jumpbox` is a machine with dual network homes that allows you to `jump` from one network to the other
-- In this case, it will allow us to `jump` into the Docker network
-- A `jumpbox` is invaluable for debugging issues
-
-> We are going to use `Alpine` as the base for our jump box because it is signifcantly smaller than most other images
+### Run a simple web app in Docker
 
 ```bash
 
-# pull the alpine image
-docker pull alpine
+# run a simple web app
+docker run -d -p 80:8080 --name web retaildevcrew/goweb
 
-# notice the size difference between alpine and ubuntu
-docker images
+# see what happened
+docker ps
+docker logs web
 
-```
+# send a request to the web server
+http localhost
 
-### Build the `jumpbox`
+# recheck the logs
+docker logs web
 
-We are going to build the jumpbox manually - later we'll show how to build using a `Dockerfile` which is the preferred method
+# run some commands in the container
+docker exec web ls -al
+docker exec web cat logs/app.log
 
-```bash
+# start an interactive shell in the container
+docker exec -it web sh
 
-# install some utilities into the alpine base image
-# notice that we name our image jumpbox
-# apk ... is the command we want to run in the container
-docker run -it --name jumpbox alpine apk add --no-cache curl redis mariadb-client httpie jq nano bash
+# notice your prompt changed
 
-# our container is created but not running
-docker ps -a
+# run a couple of commands and exit
+ls -al
+cat logs/app.log
 
-# copy a very basic .profile
-docker cp 01-Docker101/.profile jumpbox:/root
-
-# set the image to use bash and start in /root
-# commit (save) as an image with an additional layer
-docker commit -c 'CMD ["/bin/bash", "-l"]'  -c 'WORKDIR /root' jumpbox jumpbox
-
-# our jumpbox image is created
-docker images
-
-# remove container
-docker rm jumpbox
-
-# let's run our new image
-docker run -it --name jumpbox jumpbox
-
-# your prompt changes again
-
-# exit back to Codespaces
 exit
 
-# Notice that jumpbox is stopped
+```
+
+### Remove the web container
+
+```bash
+
+docker rm web
+
+# oops - the container is still running, so we need to stop it first
+docker stop web
+
+# we can restart it
+docker start web
+http localhost
+docker logs web
+
+# stop and remove
+docker stop web
+docker rm web
+
+# you could do this instead
+docker rm -f web
+
+# only jbox should show
 docker ps -a
-
-# set jumpbox to run forever (almost)
-# Alpine does support "sleep forever"
-docker commit -c 'CMD ["/bin/bash", "-c", "sleep 999999999d"]'  jumpbox jumpbox
-
-# remove jumpbox
-docker rm jumpbox
-
-# run jumpbox detached
-# -d runs in detached (daemon) mode
-# compared to -it which runs in interactive tty mode
-# --restart always will restart the docker image on reboot or failure
-docker run -d --name jumpbox --restart always jumpbox
-
-# run a command "in" jumpbox
-docker exec -t jumpbox http www.microsoft.com
-
-# notice the -t gives us ansi colors
-docker exec jumpbox http www.microsoft.com
 
 ```
 
-### Build jumpbox from `Dockerfile`
+## Build a container
 
-- TODO - build jumpbox from a dockerfile
+> At the end of the first section, we said there was a better way to build images ...
 
-## Session 3
+### Build a docker container
 
-TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
+- goweb is a simple web app written in Go
+  - don't worry if you don't know anything about Go
+    - you don't need to - the beauty of Dockerfiles!
+
+```bash
+
+cd goweb
+
+docker build . -t web
+
+# look at what happened
+docker images
+
+# notice the size difference in the web container and the <none> container
+
+# let's see what we told Docker to do
+# notice these commands are very similar to the first section
+code Dockerfile
+
+```
+
+### Run the container
+
+```bash
+
+docker run -d --name web -p 80:8080 web
+
+# verify it's running
+docker ps
+
+# send a web request and look at logs
+http localhost
+docker logs web
+
+```
+
+### Stop and remove the web container
+
+```bash
+
+docker rm -f web
+
+# only the jumpbox should show
+docker ps -a
+
+```
 
 ### Let's run MariaDB in a container
 
 ```bash
-
-### TODO - change this to loderunner?
 
 # start the server
 # use -e to specify an environment variable
@@ -189,204 +227,127 @@ docker ps -a
 
 ```
 
-## Session 4
-
-TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
-
-### Run a simple web app in Docker
+### Let's run something a little more complex
 
 ```bash
 
-# run a simple web app
-# pull from GitHub container registry (ghcr.io/retaildevcrews)
-# use the beta tag (:beta)
-# pass the --in-memory flag to the container
-docker run -d --name web ghcr.io/retaildevcrews/ngsa-app:beta --in-memory
+# run a Redis container
+docker run -d --name redis redis
 
-# see what happened
-docker ps
-docker logs web
+# restart the jbox container
+docker start -ai jbox
 
-# run a command in the container
-docker exec -t web ls -al
+ping redis
+
+# oops
+# We have to attach the containers to the same network
+exit
+
+# create the network
+docker network create vote
+
+# add the containers to the network
+docker network connect vote maria
+docker network connect vote redis
+docker network connect vote jbox
+
+# let's try again
+docker start -ai jbox
+
+ping -c 1 redis
+ping -c 1 maria
+ping -c 1 jbox
+
+# let's connect to Redis
+redis-cli -h redis
+
+set Dogs 100
+set Cats 3
+
+# exit redis-cli
+exit
+
+# Run the mysql CLI
+mysql -h maria -uroot -pSuperSecretPassword
+
+show databases;
+exit;
+
+# exit the jumpbox
+exit
+
+# let's run a web app that talks to the redis cache
+# notice we attach it to the network
+docker run -d --net vote --name govote retaildevcrew/govote
+
+docker start -ai jbox
+
+http govote:8080
+
+# Dogs RULE!
+
+# exit the jump box
+exit
 
 ```
 
-### Create a Docker network
-
-- Currently, the `jumpbox` can't communicate with the `web server`
-- In order for this to work, you have to create a `Docker network` and add each container to the network
+### What if we want to access the website from our codespace
 
 ```bash
 
-# this will fail
-docker exec -t jumpbox http web:8080/version
+docker rm -f govote
 
-# create a network
-docker create network web
+# Same run command with -p option to expose the port
+docker run -d --net vote --name govote -p 8080:8080 retaildevcrew/govote
 
-# add containers to network
-docker network connect web jumpbox
-docker network connect web web
+http localhost:8080
 
-# this will work
-docker exec -t jumpbox http web:8080/version
+# our network still works
+docker start -ai jbox
+
+http govote:8080
+
+exit
+
+# We can also access remotely from codespaces
+# Click on "PORTS" tab in the terminal
+# Click on Open in Browser (globe icon) in the 127.0.0.1:8080 port
+
+# Dogs RULE!
 
 ```
 
-### Accessing web server from terminal
+### Container size matters
 
-- Currently, we can only access `web` from `jumpbox`
-- Docker allows you to map ports from within docker
+Notice the size difference in the diferent images - from 13 MB to 9.87 GB
+
+The size of the image has a big impact on deployment time, so you want to minimize your image size. That typically also reduces your security footprint.
 
 ```bash
 
-# delete the web server
-docker rm -f web
-
-# create the web server
-# add to the web network
-# map port 8080 in the container to port 80 in the terminal
-docker run -d --name web -p 80:8080 --network web ghcr.io/retaildevcrews/ngsa-app:beta --in-memory
-
-# check web from jumpbox
-docker exec -t jumpbox http web:8080/version
-
-# check web from terminal
-# notice that our port mapping mapped the port to 80 locally
-http localhost/version
+docker images
 
 ```
 
-### Access from your local browser
-
-`Codespaces` can `forward` local ports so you can access remotely
-
-- Click on the `PORTS 4` tab
-- Choose `Add Port`
-- Enter 80
-- Hover over `Local Address` for `Port 80` and click `Open in Browser`
-- You will get a new browser tab with the `Swagger UI`
-  - Note: popup blockers may have to be disabled
-
-### Remove the web container
+### Cleanup
 
 ```bash
 
-docker rm web
+docker rm -f govote
+docker rm -f redis
+docker rm -f maria
+docker rm jbox
 
-# oops - the container is still running, so we need to stop it first
-docker stop web
+# remove unused images / networks
+docker system prune -f
 
-# we can restart it
-docker start web
-http localhost/version
-docker logs web
-
-# stop and remove
-docker stop web
-docker rm web
-
-# you could do this instead
-docker rm -f web
-
-# only jumpbox should show
+# check results
 docker ps -a
 
 ```
 
-## Session 5
+## Additional Docker Resource Links
 
-TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
-
-- Install kind (make create)
-- Load local jumpbox image into Kind
-- Create jumpbox pod
-- k exec command in jumpbox
-- run ngsa-app as pod
-- show http in jumpbox
-
-## Session 6
-
-TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
-
-- create pod
-- create replicaset
-- create deployment
-- re-deploy ngsa-app
-
-## Session 7
-
-TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
-
-- Services
-- Cluster IP
-- NodePort
-- Show accessing ngsa-app locally via NodePort
-- I would save Load Balancer for a later discussion for simplicity
-
-## Session 8
-
-TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
-
-- deploy LodeRunner (k apply -f)
-- LodeRunner uses the cluster IP
-- show logs / traffic
-- access /version via NodePort
-- show /metrics on app / loderunner
-
-## Session 9
-
-TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
-
-- deploy Prometheus (k apply -f)
-- show Prometheus via NodePort (30000)
-
-## Session 10
-
-TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
-
-- deploy Grafana
-- show Grafana dashboards via NodePort (32000)
-  - admin
-  - Ngsa512
-
-## Session 11
-
-TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
-
-- deploy Fluent Bit
-- show logs
-- show logs via k9s
-
->Can reference info in [04-Logging-FluentBit-LogAnalytics](./04-Logging-FluentBit-LogAnalytics) for walkthrough creation
-
-## Session 12
-
-TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
-
-- makefile
-- make all
-- delete loderunner (k delete -f)
-- make create
-- check loderunner logs in k9s
-
-## Session 13
-
-TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
-
-- build ngsa-lr:local
-- clone repo
-- docker build
-- load local image into kind
-- k delete -f loderunner
-- k apply -f loderunner-local
-- check logs in k9s / Grafana
-
-## Session 14
-
-TODO - [Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
-
-- run a load test
-- show grafana dashboard
-- show grafana annotation
+- Intro to Docker: <https://docs.microsoft.com/en-us/dotnet/architecture/microservices/container-docker-introduction/>
+- Intro to Docker Best Practices: <https://blog.docker.com/2019/07/intro-guide-to-dockerfile-best-practices/>
+- Dockerfile Linter: <https://github.com/hadolint/hadolint>
