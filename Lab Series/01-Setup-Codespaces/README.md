@@ -1,24 +1,43 @@
 # Session 1: Setup Codespaces Lab
 
-> Purpose: TODO
+> Purpose: Set up the Codespaces environment to use for this lab series
 
-This is a `hands-on lab` and assumes familiarity with basic Kubernetes. Please use the links below for basic familiarity.
-
-## Kubernetes Introduction
-
-- Overview of Kubernetes: <https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/>
-- The Illustrated Children's Guide to Kubernetes: <https://www.youtube.com/watch?v=4ht22ReBjno/>
-- What the Hack - Intro to Kubernetes: <https://github.com/Microsoft/WhatTheHack/tree/master/001-IntroToKubernetes/>
+TODO [MS Internal Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
 
 ## Lab Introduction
 
 - For these labs, we will be using [GitHub Codespaces](https://github.com/features/codespaces)
 
-> TODO [MS Internal Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
+## Open with Codespaces
 
-- Setup Codespaces
-- validate docker / kubectl / etc
-- show how to configure
+- Navigate to the [k8s-quickstart](https://github.com/retaildevcrews/k8s-quickstart) repo
+- Click the green `Code` button 
+- Click `Open with Codespaces`
+- Click `New Codespace`
+
+![Create Codespace](./images/OpenWithCodespaces.jpeg)
+
+## Verify environment configs
+
+Validate docker is running
+
+```bash
+docker -v
+```
+
+Validate kind was installed
+
+```bash
+kind --version
+```
+
+## Customized Codespaces
+
+Resource: ([Configuring Codespaces for your project](https://docs.github.com/en/github/developing-online-with-codespaces/configuring-codespaces-for-your-project)
+
+TODO
+
+## TODO
 - show how to delete
 - show how to suspend
 - show restarting
