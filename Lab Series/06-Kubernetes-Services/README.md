@@ -21,3 +21,5 @@ This is a `hands-on lab` and assumes familiarity with basic Kubernetes. Please u
 - Cluster IP
 - NodePort
 - Show accessing ngsa-app locally via NodePort
+- Ingress
+- Load Balancer
