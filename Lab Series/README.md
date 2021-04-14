@@ -20,6 +20,7 @@
 - Grafana
 - FluentBit
 - Makefile
+- K9s
 
 # Resources
 

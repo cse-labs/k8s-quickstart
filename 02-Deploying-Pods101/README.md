@@ -190,5 +190,5 @@ kl busybox
 
 ## Additional Kubernetes Resource Links
 
-- Overview of Kubernetes Components: <https://kubernetes.io/docs/concepts/overview/components>
-- Template for PodSpecs: <https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#podtemplate-v1-core>
+- Overview of Kubernetes Components: <https://kubernetes.io/docs/concepts/overview/components/>
+- Template for PodSpecs: <https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#podtemplate-v1-core/>
