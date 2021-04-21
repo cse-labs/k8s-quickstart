@@ -1,4 +1,4 @@
-# 
+# Session 10: Kubernetes Grafana Lab
 
 > Purpose: TODO
 
@@ -17,8 +17,8 @@ This is a `hands-on lab` and assumes familiarity with basic Kubernetes. Please u
 
 > TODO [MS Internal Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
 
-- makefile
-- make all
-- delete loderunner (k delete -f)
-- make create
-- check loderunner logs in k9s
+- deploy Grafana
+- show Grafana dashboards via NodePort (32000)
+  - admin
+  - Ngsa512
+- Sample uses of reading dashboard/use cases

@@ -1,4 +1,4 @@
-# Session 8: Kubernetes Prometheus Lab
+# Session 11: Kubernetes FluentBit Lab
 
 > Purpose: TODO
 
@@ -17,5 +17,6 @@ This is a `hands-on lab` and assumes familiarity with basic Kubernetes. Please u
 
 > TODO [MS Internal Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
 
-- deploy Prometheus (k apply -f)
-- show Prometheus via NodePort (30000)
+- deploy FluentBit
+- show logs
+- show logs via k9s

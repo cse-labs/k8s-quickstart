@@ -1,4 +1,4 @@
-# Session 7: Kubernetes LodeRunner Lab
+# Session 14: Kubernetes Load Test Lab
 
 > Purpose: TODO
 
@@ -17,8 +17,6 @@ This is a `hands-on lab` and assumes familiarity with basic Kubernetes. Please u
 
 > TODO [MS Internal Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
 
-- deploy LodeRunner (k apply -f)
-- LodeRunner uses the cluster IP
-- show logs / traffic
-- access /version via NodePort
-- show /metrics on app / loderunner
+- run a load test
+- show grafana dashboard
+- show grafana annotation

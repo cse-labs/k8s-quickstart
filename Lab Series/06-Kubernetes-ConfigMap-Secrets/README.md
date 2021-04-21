@@ -1,4 +1,4 @@
-# Session 10: FluentBit Lab
+# Session 6: Kubernetes Pods Lab
 
 > Purpose: TODO
 
@@ -17,6 +17,7 @@ This is a `hands-on lab` and assumes familiarity with basic Kubernetes. Please u
 
 > TODO [MS Internal Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
 
-- deploy FluentBit
-- show logs
-- show logs via k9s
+- create pod
+- create replicaset
+- create deployment
+- re-deploy ngsa-app

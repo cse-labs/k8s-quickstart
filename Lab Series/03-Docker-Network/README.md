@@ -2,17 +2,8 @@
 
 > Purpose: TODO
 
-This is a `hands-on lab` and assumes familiarity with basic Docker. Please use the links below for basic familiarity.
-
 ## Docker Introduction
-
-- Intro to Docker: <https://docs.microsoft.com/en-us/dotnet/architecture/microservices/container-docker-introduction/>
-- Intro to Docker Best Practices: <https://blog.docker.com/2019/07/intro-guide-to-dockerfile-best-practices/>
-- Dockerfile Linter: <https://github.com/hadolint/hadolint>
-
 ## Lab Introduction
-
-- For these labs, we will be using [GitHub Codespaces](https://github.com/features/codespaces)
 
 > TODO [MS Internal Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
 

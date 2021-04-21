@@ -1,4 +1,4 @@
-# Session 13: Load Test Lab
+# Session 9: Kubernetes Prometheus Lab
 
 > Purpose: TODO
 
@@ -17,6 +17,5 @@ This is a `hands-on lab` and assumes familiarity with basic Kubernetes. Please u
 
 > TODO [MS Internal Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
 
-- run a load test
-- show grafana dashboard
-- show grafana annotation
+- deploy Prometheus (k apply -f)
+- show Prometheus via NodePort (30000)
