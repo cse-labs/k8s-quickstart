@@ -1,4 +1,4 @@
-# Session 6: Kubernetes Services Lab
+# Session 7: Kubernetes Services Lab
 
 > Purpose: TODO
 
@@ -15,7 +15,7 @@ This is a `hands-on lab` and assumes familiarity with basic Kubernetes. Please u
 - For these labs, we will be using [GitHub Codespaces](https://github.com/features/codespaces) and [KIND](https://kind.sigs.k8s.io/) to create a `Development Cluster`
 - For `production clusters` please see the [AKS documentation](https://docs.microsoft.com/en-us/azure/aks/)
 
-> TODO [MS Internal Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
+> TODO [MS Internal Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f37284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
 
 - Services
 - Cluster IP
