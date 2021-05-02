@@ -41,7 +41,7 @@ kind --version
 
 To manually suspend Codespaces
 
-- On the lower right-hand side, select the `Codespaces` with the blue background
+- On the lower left corner, select the `Codespaces` with the blue background
 
 ![Codespaces Options](./images/SuspendCodespaces1.png)
 
