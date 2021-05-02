@@ -350,4 +350,4 @@ docker ps -a
 
 - Intro to Docker: <https://docs.microsoft.com/en-us/dotnet/architecture/microservices/container-docker-introduction/>
 - Intro to Docker Best Practices: <https://blog.docker.com/2019/07/intro-guide-to-dockerfile-best-practices/>
-- Dockerfile Linter: <https://github.com/hadolint/hadolint>
+- Dockerfile Linter: <https://github.com/hadolint/hadolint/>

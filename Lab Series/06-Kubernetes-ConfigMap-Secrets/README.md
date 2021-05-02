@@ -1,4 +1,4 @@
-# Session 9: Kubernetes Grafana Lab
+# Session 6: Kubernetes ConfigMap Secrets Lab
 
 > Purpose: TODO
 
@@ -16,9 +16,3 @@ This is a `hands-on lab` and assumes familiarity with basic Kubernetes. Please u
 - For `production clusters` please see the [AKS documentation](https://docs.microsoft.com/en-us/azure/aks/)
 
 > TODO [MS Internal Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
-
-- deploy Grafana
-- show Grafana dashboards via NodePort (32000)
-  - admin
-  - Ngsa512
-- Sample uses of reading dashboard/use cases

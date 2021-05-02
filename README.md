@@ -11,6 +11,13 @@
 
 ## Additional Reading
 
+### Docker
+
+- Dockerfile Best Practices: <https://blog.docker.com/2019/07/intro-guide-to-dockerfile-best-practices/>
+- Dockerfile Linter: <https://github.com/hadolint/hadolint>
+
+### Kubernetes
+
 - AKS: <https://docs.microsoft.com/en-us/azure/aks/>
 - Kubernetes: <https://kubernetes.io/docs/home/>
 - Microsoft Cloud Workshop: <https://github.com/Microsoft/MCW-Containers-and-DevOps>

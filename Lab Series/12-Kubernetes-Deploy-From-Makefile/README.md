@@ -1,4 +1,4 @@
-# Session 4: Kubernetes Kind Cluster Lab
+# Session 12: Kubernetes Deploy from Makefile
 
 > Purpose: TODO
 
@@ -17,11 +17,8 @@ This is a `hands-on lab` and assumes familiarity with basic Kubernetes. Please u
 
 > TODO [MS Internal Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
 
-### Create a Kind Cluster
-
-- Install kind (make create)
-- Load local jumpbox image into Kind
-- Create jumpbox pod
-- k exec command in jumpbox
-- run ngsa-app as pod
-- show http in jumpbox
+- makefile
+- make all
+- delete loderunner (k delete -f)
+- make create
+- check loderunner logs in k9s

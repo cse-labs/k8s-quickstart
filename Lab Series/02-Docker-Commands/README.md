@@ -2,24 +2,19 @@
 
 > Purpose: TODO
 
-This is a `hands-on lab` and assumes familiarity with basic Docker. Please use the links below for basic familiarity.
+TODO [MS Internal Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
+[Docker101](https://microsoft.sharepoint.com/teams/WMTCSEEngagement/Shared%20Documents/Forms/AllItems.aspx?id=%2Fteams%2FWMTCSEEngagement%2FShared%20Documents%2FGeneral%2FK8s%20Training%20Sessions%2F100%2DDocker%2DBasics%2Emp4&parent=%2Fteams%2FWMTCSEEngagement%2FShared%20Documents%2FGeneral%2FK8s%20Training%20Sessions)
 
-## Docker Introduction
+## Lab Resources
 
-- Intro to Docker: <https://docs.microsoft.com/en-us/dotnet/architecture/microservices/container-docker-introduction/>
-- Intro to Docker Best Practices: <https://blog.docker.com/2019/07/intro-guide-to-dockerfile-best-practices/>
-- Dockerfile Linter: <https://github.com/hadolint/hadolint>
+- For these labs, we will be using [GitHub Codespaces](https://github.com/features/codespaces). To setup Codespaces, see Lab 1, [Setup Codespaces](../01-Setup-Codespaces/README.md).
+- This is a `hands-on lab` and assumes familiarity with basic Docker. Please use the link(s) below for basic familiarity.
+  - Intro to Docker: <https://docs.microsoft.com/en-us/dotnet/architecture/microservices/container-docker-introduction/>
+- Dockerfile Reference: https://docs.docker.com/engine/reference/builder/
 
-## Lab Introduction
-
-- For these labs, we will be using [GitHub Codespaces](https://github.com/features/codespaces)
-
-> TODO [MS Internal Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
-
-### Some basic docker commands
+## Some basic docker commands
 
 ```bash
-
 # see which containers are running (none)
 docker ps
 
