@@ -1,4 +1,4 @@
-# Session 2: Docker Commands Lab
+# Session 2: Docker Part 1
 
 ## Lab Resources
 

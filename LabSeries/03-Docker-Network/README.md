@@ -1,11 +1,12 @@
-# Session 3: Docker Network Lab
+# Session 3: Docker Part 2
 
-> Purpose: TODO
+## Lab Resources
 
-## Docker Introduction
-## Lab Introduction
-
-> TODO [MS Internal Link to Stream Walkthrough](https://msit.microsoftstream.com/group/f36284b8-cb9d-42b4-947e-9ac3e141aa74?view=highlights)
+- For these labs, we will be using [GitHub Codespaces](https://github.com/features/codespaces). To setup Codespaces, see Lab 1, [Setup Codespaces](../01-Setup-Codespaces/README.md).
+- This is a `hands-on lab` and assumes familiarity with basic Docker. Please use the link(s) below for basic familiarity.
+  - Intro to Docker: <https://docs.microsoft.com/en-us/dotnet/architecture/microservices/container-docker-introduction/>
+- Dockerfile Reference: <https://docs.docker.com/engine/reference/builder/>
+- Docker 101 [video walk through](https://msit.microsoftstream.com/video/7115a4ff-0400-85a8-5a90-f1eb80993e79?channelId=533aa1ff-0400-85a8-6076-f1eb81fb8468) (Microsoft Internal)
 
 ### Run a simple web app in Docker
 
