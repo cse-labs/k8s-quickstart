@@ -144,4 +144,4 @@ docker run -d --name jumpbox --restart always jumpbox
 docker exec -t jumpbox http www.microsoft.com
 
 # run a shell in jumpbox
-docker exec -it jumbox bash -l
+docker exec -it jumpbox bash -l
