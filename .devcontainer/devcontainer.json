@@ -11,7 +11,7 @@
 
 	"remoteUser": "rdc",
 
-	"forwardPorts": [80, 443, 30000, 32000, 30080, 30088],
+	"forwardPorts": [80, 443, 30000, 30080, 30088, 32000],
 
 	// Install extensions
 	"extensions": [
