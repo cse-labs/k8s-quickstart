@@ -9,7 +9,7 @@
 		"terminal.integrated.shell.linux": "/bin/bash"
 	},
 
-	"remoteUser": "rdc",
+	"remoteUser": "akdc",
 
 	"forwardPorts": [80, 443, 30000, 30080, 30088, 32000],
 
