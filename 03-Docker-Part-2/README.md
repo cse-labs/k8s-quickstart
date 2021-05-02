@@ -38,7 +38,7 @@ docker exec -t web ls -al
 docker exec -t jumpbox http web:8080/version
 
 # create a network
-docker create network web
+docker network create web
 
 # add containers to network
 docker network connect web jumpbox
