@@ -5,7 +5,8 @@
 ## Sessions
 
 - [Setup Codespaces](./01-Setup-Codespaces)
-- [Docker 101](./02-Docker-Commands)
+- Docker 101 [Part 1](./02-Docker-Part-1)
+- Docker 101 [Part 2](./03-Docker-Part-2)
 
 ## Additional Reading
 
