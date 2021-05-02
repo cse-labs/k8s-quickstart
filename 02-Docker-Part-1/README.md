@@ -125,4 +125,23 @@ docker exec jumpbox http www.microsoft.com
 
 ### Build jumpbox from `Dockerfile`
 
-- TODO - build jumpbox from a dockerfile
+# remove jumpbox
+docker rm -f jumpbox
+
+# remove image
+docker rmi jumpbox
+docker images
+
+# build image
+cd 02-Docker-Part-1
+docker build . -t jumpbox
+docker images
+
+# run jumpbox detached
+docker run -d --name jumpbox --restart always jumpbox
+
+# run a command "in" jumpbox
+docker exec -t jumpbox http www.microsoft.com
+
+# run a shell in jumpbox
+docker exec -it jumbox bash -l
