@@ -1,7 +1,5 @@
 # One CSE Week
 
-> Open this repo with GitHub Codespaces
-
 ## Welcome
 
 TODO - add content
@@ -30,10 +28,12 @@ Mon   | 10:30      | 11:30    | Introductions |
 |     | 12:00      | 2:00     | Break |
 |     |            |          | Docker Labs |
 |     |            |          | Lunch |
-|     | 2:00       | 3:30     | Setup Kind cluster |
+|     | 2:00       | 3:00     | Setup Kind cluster |
 |     |            |          | Deploy and explore NGSA Stack |
 |     |            |          | Break |
-|     | 3:30       | 5:00     | AKS Secure Baseline Overview  |
+|     | 3:00       | 5:00     | Kubernetes Pods |
+|     |            |          | Kubernetes Config Maps |
+|     |            |          | Kubernetes Services |
 Tues  | 10:30      | 10:45    | Stand up |
 |     | 10:45      | ???      | ??? |
 Wed   | 10:30      | 10:45    | Stand up |

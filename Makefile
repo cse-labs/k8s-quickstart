@@ -1,7 +1,5 @@
 .PHONY: help all create delete deploy check clean app loderunner load-test reset-prometheus reset-grafana jumpbox target
 
-K8S ?= "kind"
-
 help :
 	@echo "Usage:"
 	@echo "   make all              - create a cluster and deploy the apps"
@@ -84,7 +82,7 @@ clean :
 	@kubectl get po -A
 
 app :
-	# build the local image and load into ${K8S}
+	# build the local image and load into Kind
 	docker build ../ngsa-app -t ngsa-app:local
 
 	kind load docker-image ngsa-app:local
@@ -110,7 +108,7 @@ app :
 	@http localhost:30080/version
 
 loderunner :
-	# build the local image and load into ${K8S}
+	# build the local image and load into Kind
 	docker build ../loderunner -t ngsa-lr:local
 	
 	kind load docker-image ngsa-lr:local
