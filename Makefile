@@ -1,4 +1,6 @@
-.PHONY: help all create delete deploy check clean app loderunner load-test reset-prometheus reset-grafana jumpbox
+.PHONY: help all create delete deploy check clean app loderunner load-test reset-prometheus reset-grafana jumpbox target
+
+K8S ?= "kind"
 
 help :
 	@echo "Usage:"
@@ -19,13 +21,16 @@ all : delete create deploy check jumpbox
 
 delete :
 	# delete the cluster (if exists)
+	@# this will fail harmlessly if the cluster does not exist
 	@kind delete cluster
 
 create :
 	# create the cluster and wait for ready
 	@# this will fail harmlessly if the cluster exists
 	@# default cluster name is kind
-	@kind create cluster --config .devcontainer/kind.yaml
+
+	@kind create cluster --config kind/kind.yaml
+
 	# wait for cluster to be ready
 	@kubectl wait node --for condition=ready --all --timeout=60s
 
@@ -79,8 +84,9 @@ clean :
 	@kubectl get po -A
 
 app :
-	# build the local image and load into kind
+	# build the local image and load into ${K8S}
 	docker build ../ngsa-app -t ngsa-app:local
+
 	kind load docker-image ngsa-app:local
 
 	# delete LodeRunner
@@ -104,8 +110,9 @@ app :
 	@http localhost:30080/version
 
 loderunner :
-	# build the local image and load into kind
+	# build the local image and load into ${K8S}
 	docker build ../loderunner -t ngsa-lr:local
+	
 	kind load docker-image ngsa-lr:local
 
 	# display current version
@@ -137,18 +144,19 @@ reset-grafana :
 	# remove and copy the data to /grafana volume
 	@sudo rm -rf /grafana
 	@sudo mkdir -p /grafana
+	@sudo cp -R deploy/grafanadata/grafana.db /grafana
 	@sudo chown -R 472:472 /grafana
 
 jumpbox :
 	@# start a jumpbox pod
 	@-kubectl delete pod jumpbox --ignore-not-found=true
 
-	@kubectl run jumpbox --image=alpine --restart=Never -- /bin/sh -c "trap : TERM INT; sleep 9999999999d & wait"
+	@kubectl run jumpbox --image=alpine --restart=Always -- /bin/sh -c "trap : TERM INT; sleep 9999999999d & wait"
 	@kubectl wait pod jumpbox --for condition=ready --timeout=30s
 	@kubectl exec jumpbox -- /bin/sh -c "apk update && apk add bash curl httpie" > /dev/null
 	@kubectl exec jumpbox -- /bin/sh -c "echo \"alias ls='ls --color=auto'\" >> /root/.profile && echo \"alias ll='ls -lF'\" >> /root/.profile && echo \"alias la='ls -alF'\" >> /root/.profile && echo 'cd /root' >> /root/.profile" > /dev/null
 
-	# 
+	#
 	# use kje <command>
 	# kje http ngsa-memory:8080/version
 	# kje bash -l
