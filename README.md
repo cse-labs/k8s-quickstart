@@ -44,10 +44,6 @@ Fri   | 10:30      | 10:45    | Stand up |
 |     | 10:45      | ???      | ??? |
 |     | 3:00       | 4:30     | Demos and Retro |
 
-## Documentation
-
-- [How-Tos and best practices for sessions](./docs)
-
 ## Additional Reading
 
 ### Docker
