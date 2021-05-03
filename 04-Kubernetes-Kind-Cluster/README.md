@@ -70,11 +70,13 @@ Port | Service
 
 Click on the `Ports` tab in Codespaces to forward the ports
 
-![Forward Ports](./images/Codespaces-ports.jpg)
+![Forwarded Ports](./images/Codespaces-Ports.jpg)
 
 ### Further Learning
 
-Explore the [Makefile](../Makefile) and the [YAML](../deploy) for the details on the deployment
+- Explore with k9s by running `k9s from the terminal`
+- Explore the [Makefile](../Makefile)
+- Explore the [YAML](../deploy)
 
 ### Delete the Cluster
 
