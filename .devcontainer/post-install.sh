@@ -1,8 +1,9 @@
 #!/bin/sh
 
-mkdir -p ~/.ssh
-ssh-keygen -t rsa -f ~/.ssh/id_rsa
-chmod 700 ~/.ssh/id*
+# install WebV
+# we can't install this in the base image
+dotnet tool install -g webvalidate
 
-sudo apt-get update
-sudo apt-get install -y --no-install-recommends git curl httpie
+# copy our grafana dashboards
+sudo cp .devcontainer/grafana.db /grafana
+sudo chown -R 472:472 /grafana
