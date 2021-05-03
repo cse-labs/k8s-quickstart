@@ -7,6 +7,7 @@
 - [Setup Codespaces](./01-Setup-Codespaces)
 - Docker 101 [Part 1](./02-Docker-Part-1)
 - Docker 101 [Part 2](./03-Docker-Part-2)
+- Setup [Kind Cluster](./04-Kubernetes-Kind-Cluster)
 
 ## Additional Reading
 
