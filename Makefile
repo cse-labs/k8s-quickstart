@@ -67,11 +67,12 @@ check :
 clean :
 	# delete the deployment
 	@# continue on error
-	-kubectl delete -f deploy/loderunner --ignore-not-found=true
-	-kubectl delete -f deploy/ngsa-memory --ignore-not-found=true
-	-kubectl delete ns monitoring --ignore-not-found=true
-	-kubectl delete -f deploy/fluentbit --ignore-not-found=true
-	-kubectl delete secret log-secrets --ignore-not-found=true
+	@kubectl delete -f deploy/loderunner --ignore-not-found=true
+	@kubectl delete -f deploy/ngsa-memory --ignore-not-found=true
+	@kubectl delete ns monitoring --ignore-not-found=true
+	@kubectl delete -f deploy/fluentbit --ignore-not-found=true
+	@kubectl delete secret log-secrets --ignore-not-found=true
+	@kubectl delete pod jumpbox --ignore-not-found=true
 
 	# show running pods
 	@kubectl get po -A
@@ -81,7 +82,7 @@ load-test :
 	webv -s http://localhost:30080 -f baseline.json
 
 	# run a 60 second test
-	webv -s http://localhost:30080 -f baseline.json benchmark.json -r -l 1 --duration 60
+	webv -s http://localhost:30080 -f benchmark.json -r -l 10 --duration 60
 
 reset-prometheus :
 	# remove and create the /prometheus volume
@@ -106,5 +107,7 @@ jumpbox :
 	@kubectl exec jumpbox -- /bin/sh -c "echo \"alias ls='ls --color=auto'\" >> /root/.profile && echo \"alias ll='ls -lF'\" >> /root/.profile && echo \"alias la='ls -alF'\" >> /root/.profile && echo 'cd /root' >> /root/.profile" > /dev/null
 
 	# use kj to exec a bash shell in the jumpbox
-	# use kje <command>
+
+	# use kje <command> to exec a command in the jumpbox
+	# since the command executes "in" the jumpbox, we have access to the cluster network
 	# kje http ngsa-memory:8080/version
