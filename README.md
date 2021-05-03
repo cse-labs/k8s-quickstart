@@ -21,15 +21,28 @@ TODO - what time are we starting? We have EDT, CDT and PDT
 
 Day   | Start Time | End Time | Activity |
 :---: | ---------: | -------: | -------- |
-Mon   | 10:30      | 11:00    | Introductions, overview, review Working Agreement |
-|     | 11:00      | 11:30    | Setup Codespaces |
-|     | 11:30      | 1:00     | Break, Docker Labs and lunch |
-|     |  1:00      | 2:00     | Setup Kind cluster; deploy NGSA stack |
-|     | 2:00       | ???      | ???  |
-Tues  | 10:30      | ???      | ???? |
-Wed   | 10:30      | ???      | ???? |
-Thur  | 10:30      | ???      | ???? |
-Fri   | 10:30      | ???      | ???? |
+Mon   | 10:30      | 11:30    | Introductions |
+|     |            |          | Review Working Agreement |
+|     |            |          | Goals for OCW |
+|     |            |          | Verify Access - Teams, GitHub, Azure |
+|     |            |          | How to file a bug, issue or idea |
+|     | 11:30      | 12:00    | Setup Codespaces |
+|     | 12:00      | 2:00     | Break |
+|     |            |          | Docker Labs |
+|     |            |          | Lunch |
+|     | 2:00       | 3:30     | Setup Kind cluster |
+|     |            |          | Deploy and explore NGSA Stack |
+|     |            |          | Break |
+|     | 3:30       | 5:00     | AKS Secure Baseline Overview  |
+Tues  | 10:30      | 10:45    | Stand up |
+|     | 10:45      | ???      | ??? |
+Wed   | 10:30      | 10:45    | Stand up |
+|     | 10:45      | ???      | ??? |
+Thur  | 10:30      | 10:45    | Stand up |
+|     | 10:45      | ???      | ??? |
+Fri   | 10:30      | 10:45    | Stand up |
+|     | 10:45      | ???      | ??? |
+|     | 3:00       | 4:30     | Demos and Retro |
 
 ## Additional Reading
 
