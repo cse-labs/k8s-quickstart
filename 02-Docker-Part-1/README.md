@@ -125,6 +125,8 @@ docker exec jumpbox http www.microsoft.com
 
 ### Build jumpbox from `Dockerfile`
 
+```bash
+
 # remove jumpbox
 docker rm -f jumpbox
 
@@ -143,5 +145,13 @@ docker run -d --name jumpbox --restart always jumpbox
 # run a command "in" jumpbox
 docker exec -t jumpbox http www.microsoft.com
 
+# using the alias
+kje http www.microsoft.com
+
 # run a shell in jumpbox
 docker exec -it jumpbox bash -l
+
+# using the alias
+kj
+
+```
