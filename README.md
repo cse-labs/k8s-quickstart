@@ -19,17 +19,17 @@ TODO - add content
 
 TODO - what time are we starting? We have EDT, CDT and PDT
 
-Day  | Start Time | End Time | Activity |
-:---: | ----------: | ------: | ---------------------------------------------------------- |
-Mon  | 10:30      | 11:00    | Introductions, overview, review Working Agreement |
-| | 11:00      | 11:30    | Setup Codespaces |
-| | 11:30      | 1:00    | Break, Docker Labs and lunch |
-| |  1:00      | 2:00    | Setup Kind cluster; deploy NGSA stack |
-| | 2:00 | ??? | ??? |
-Tues  | 10:30      | ???    | ???? |
-Wed   | 10:30      | ???    | ???? |
-Thur  | 10:30      | ???    | ???? |
-Fri   | 10:30      | ???    | ???? |
+Day   | Start Time | End Time | Activity |
+:---: | ---------: | -------: | -------- |
+Mon   | 10:30      | 11:00    | Introductions, overview, review Working Agreement |
+|     | 11:00      | 11:30    | Setup Codespaces |
+|     | 11:30      | 1:00     | Break, Docker Labs and lunch |
+|     |  1:00      | 2:00     | Setup Kind cluster; deploy NGSA stack |
+|     | 2:00       | ???      | ???  |
+Tues  | 10:30      | ???      | ???? |
+Wed   | 10:30      | ???      | ???? |
+Thur  | 10:30      | ???      | ???? |
+Fri   | 10:30      | ???      | ???? |
 
 ## Additional Reading
 
