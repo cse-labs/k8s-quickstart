@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logapp-config
+  namespace: logapp
+data:
+  SLEEP_MS: "0"
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logapp
+  namespace: logapp
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: logapp
+  template:
+    metadata:
+      labels:
+        app: logapp
+        app.kubernetes.io/instance: logapp
+    spec:
+      containers:
+      - name: logapp
+        image: ghcr.io/retaildevcrews/logapp:latest
+        env:
+        - name: SLEEP_MS
+          valueFrom:
+            configMapKeyRef:
+              name: logapp-config
+              key: SLEEP_MS
+        args:
+          - --loop
+          - "-s $(SLEEP_MS)"
+        resources:
+          limits:
+            cpu: "1000m"
