@@ -26,36 +26,90 @@ make all
 
 ```
 
-After the cluster is created, check the cluster with `kubeadm`
+### After the cluster is created
 
-```bash
+- Check the cluster with `make`
+    ```bash
 
-k get po -A
+    make check
 
-```
+    ```
+    - Output
+        ```bash
 
-Output
+        # curl all of the endpoints
+        0.4.0-0504-0211
 
-```bash
+        0.3.0-0505-0611
 
-NAMESPACE            NAME                                         READY   STATUS
-default              fluentb                                      1/1     Running
-default              jumpbox                                      1/1     Running
-default              loderunner                                   1/1     Running
-default              ngsa-memory                                  1/1     Running
-kube-system          coredns-74ff55c5b-nbgfp                      1/1     Running
-kube-system          coredns-74ff55c5b-tq5nm                      1/1     Running
-kube-system          etcd-kind-control-plane                      1/1     Running
-kube-system          kindnet-fnt5x                                1/1     Running
-kube-system          kube-apiserver-kind-control-plane            1/1     Running
-kube-system          kube-controller-manager-kind-control-plane   1/1     Running
-kube-system          kube-proxy-rqbz4                             1/1     Running
-kube-system          kube-scheduler-kind-control-plane            1/1     Running
-local-path-storage   local-path-provisioner-78776bfc44-dtmbf      1/1     Running
-monitoring           grafana-64f7dbcf96-kp4qs                     1/1     Running
-monitoring           prometheus-deployment-67cbf97f84-x9lq6       1/1     Running
+        <a href="/graph">Found</a>.
 
-```
+        <a href="/login">Found</a>.
+
+        ```
+
+- Check the cluster in `Docker`
+    ```bash
+
+    docker ps
+
+    ```
+    - Output
+        ```text
+
+        IMAGE                  STATUS         NAMES
+        kindest/node:v1.20.2   Up 5 minutes   kind-control-plane
+
+        ```
+
+- Check the cluster with `kubeadm`
+    ```bash
+
+    k get po -A
+
+    ```
+    - Output
+        ```bash
+
+        NAMESPACE            NAME                                         READY   STATUS
+        default              fluentb                                      1/1     Running
+        default              jumpbox                                      1/1     Running
+        default              loderunner                                   1/1     Running
+        default              ngsa-memory                                  1/1     Running
+        kube-system          coredns-74ff55c5b-nbgfp                      1/1     Running
+        kube-system          coredns-74ff55c5b-tq5nm                      1/1     Running
+        kube-system          etcd-kind-control-plane                      1/1     Running
+        kube-system          kindnet-fnt5x                                1/1     Running
+        kube-system          kube-apiserver-kind-control-plane            1/1     Running
+        kube-system          kube-controller-manager-kind-control-plane   1/1     Running
+        kube-system          kube-proxy-rqbz4                             1/1     Running
+        kube-system          kube-scheduler-kind-control-plane            1/1     Running
+        local-path-storage   local-path-provisioner-78776bfc44-dtmbf      1/1     Running
+        monitoring           grafana-64f7dbcf96-kp4qs                     1/1     Running
+        monitoring           prometheus-deployment-67cbf97f84-x9lq6       1/1     Running
+
+        ```
+
+- Check the app with `http`
+    ```bash
+
+    http localhost:30080/version
+
+    http localhost:30080/healthz/ietf
+
+    ```
+
+- Check the app with `Web Validate`
+    ```bash
+
+    webv -s localhost:30080 -f baseline.json benchmark.json
+
+    ```
+
+- Check the app with `VS Code REST Client`
+    - Open `curl.http` in VS Code
+    - Click on one or more of the `Send HTTP` links
+    - Note: due to a rendering bug, you may have to close the results window between each request
 
 ### Port Forwarding
 
@@ -76,7 +130,7 @@ Click on the `Ports` tab in Codespaces to forward the ports
 
 - Explore with k9s by running `k9s from the terminal`
 - Explore the [Makefile](../Makefile)
-- Explore the [YAML](../deploy)
+- Explore the YAML files in the [deploy directory](../deploy)
 
 ### Delete the Cluster
 
