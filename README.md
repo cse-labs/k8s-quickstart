@@ -10,7 +10,7 @@ TODO - add content
 - Engineering [Practices](docs/EngineeringPractices.md)
 - Azure [Subscription](https://portal.azure.com)
   - You should have gotten an email with login instructions
-  - Maybe be easier to use `in-private browsing`
+  - It may be be easier to use `in-private browsing`
 - GitHub [Repo](https://github.com/retaildevcrews/k8s-quickstart)
 
 ### Schedule
@@ -48,11 +48,13 @@ Fri   | 10:30      | 10:45    | Stand up |
 
 ### Docker
 
+- Docker Labs: [Part 1](./LabSeries/02-Docker-Part-1/README.md) [Part 2](./LabSeries/02-Docker-Part-2/README.md)
 - Dockerfile Best Practices: <https://blog.docker.com/2019/07/intro-guide-to-dockerfile-best-practices/>
 - Dockerfile Linter: <https://github.com/hadolint/hadolint>
 
 ### Kubernetes
 
+- Kubernetes [Labs](./LabSeries)
 - AKS: <https://docs.microsoft.com/en-us/azure/aks/>
 - Kubernetes: <https://kubernetes.io/docs/home/>
 - Retail Kubernetes Channel: <https://msit.microsoftstream.com/channel/533aa1ff-0400-85a8-6076-f1eb81fb8468>
