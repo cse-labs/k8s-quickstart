@@ -48,7 +48,7 @@ Fri   | 10:30      | 10:45    | Stand up |
 
 ### Docker
 
-- Docker Labs: [Part 1](./LabSeries/02-Docker-Part-1/README.md) [Part 2](./LabSeries/02-Docker-Part-2/README.md)
+- Docker Labs: [Part 1](./LabSeries/02-Docker-Part-1/README.md) [Part 2](./LabSeries/03-Docker-Part-2/README.md)
 - Dockerfile Best Practices: <https://blog.docker.com/2019/07/intro-guide-to-dockerfile-best-practices/>
 - Dockerfile Linter: <https://github.com/hadolint/hadolint>
 
