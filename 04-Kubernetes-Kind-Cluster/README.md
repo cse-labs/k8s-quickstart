@@ -118,7 +118,7 @@ make all
     ```
 
 - Check the app with `VS Code REST Client`
-  - Open `curl.http` in VS Code
+  - Open [curl.http](../curl.http) in VS Code
   - Click on one or more of the `Send HTTP` links
   - Note: due to a rendering bug, you may have to close the results window between each request
 
