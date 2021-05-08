@@ -150,3 +150,18 @@ Click on the `Ports` tab in Codespaces to forward the ports
 make delete
 
 ```
+
+## Azure Secure Baseline
+
+A version of `PnP Azure Secure Baseline` is on this image in the `/workspaces` directory
+
+The rest of the hack will use this repo
+
+Run `git pull` to make sure you have the latest version
+
+```bash
+
+cd /workspaces/ocw-asb
+git pull
+
+```
