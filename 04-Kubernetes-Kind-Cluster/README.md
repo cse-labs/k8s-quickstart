@@ -153,11 +153,10 @@ make delete
 
 ## Azure Secure Baseline
 
-A version of `PnP Azure Secure Baseline` is on this image in the `/workspaces` directory
-
-The rest of the hack will use this repo
-
-Run `git pull` to make sure you have the latest version
+- The `OCW Azure Secure Baseline` repo is cloned in the `/workspaces` directory
+- The rest of the hack will use this repo
+- Open the repo in Codespaces with the `File - Open Folder` menu option
+- Run `git pull` to make sure you have the latest version
 
 ```bash
 
