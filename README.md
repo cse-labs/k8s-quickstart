@@ -10,6 +10,7 @@
 - Engineering [Practices](docs/EngineeringPractices.md)
 - Azure [Subscription](https://portal.azure.com)
   - You should have gotten an email with login instructions
+  - You will need to change your password on first login
   - It may be be easier to use `in-private browsing`
 - OCW GitHub [Repo](https://github.com/retaildevcrews/k8s-quickstart)
 - Kubernetes video [library](https://msit.microsoftstream.com/channel/533aa1ff-0400-85a8-6076-f1eb81fb8468)
