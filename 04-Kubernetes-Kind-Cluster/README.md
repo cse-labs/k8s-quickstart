@@ -150,3 +150,17 @@ Click on the `Ports` tab in Codespaces to forward the ports
 make delete
 
 ```
+
+## Azure Secure Baseline
+
+- The `OCW Azure Secure Baseline` repo is cloned in the `/workspaces` directory
+- The rest of the hack will use this repo
+- Open the repo in Codespaces with the `File - Open Folder` menu option
+- Run `git pull` to make sure you have the latest version
+
+```bash
+
+cd /workspaces/ocw-asb
+git pull
+
+```

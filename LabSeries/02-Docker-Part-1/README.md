@@ -8,6 +8,8 @@
 - Dockerfile Reference: <https://docs.docker.com/engine/reference/builder/>
 - Docker 101 [video walk through](https://msit.microsoftstream.com/video/7115a4ff-0400-85a8-5a90-f1eb80993e79?channelId=533aa1ff-0400-85a8-6076-f1eb81fb8468) (Microsoft Internal)
 
+> All commands are based on this directory, so `cd here`
+
 ## Some basic docker commands
 
 ```bash
@@ -79,7 +81,7 @@ docker run -it --name jumpbox alpine apk add --no-cache curl redis mariadb-clien
 docker ps -a
 
 # copy a very basic .profile
-docker cp 01-Docker101/.profile jumpbox:/root
+docker cp .profile jumpbox:/root
 
 # set the image to use bash and start in /root
 # commit (save) as an image with an additional layer
@@ -135,7 +137,6 @@ docker rmi jumpbox
 docker images
 
 # build image
-cd 02-Docker-Part-1
 docker build . -t jumpbox
 docker images
 
@@ -145,13 +146,7 @@ docker run -d --name jumpbox --restart always jumpbox
 # run a command "in" jumpbox
 docker exec -t jumpbox http www.microsoft.com
 
-# using the alias
-kje http www.microsoft.com
-
 # run a shell in jumpbox
 docker exec -it jumpbox bash -l
-
-# using the alias
-kj
 
 ```

@@ -2,7 +2,7 @@
 
 ## Welcome
 
-TODO - add content
+> Welcome to One CSE Week and the Patterns and Practices Azure Secure Baseline (ASB) upskilling hack.
 
 ### Links
 
@@ -10,38 +10,35 @@ TODO - add content
 - Engineering [Practices](docs/EngineeringPractices.md)
 - Azure [Subscription](https://portal.azure.com)
   - You should have gotten an email with login instructions
+  - You will need to change your password on first login
   - It may be be easier to use `in-private browsing`
-- GitHub [Repo](https://github.com/retaildevcrews/k8s-quickstart)
+- OCW GitHub [Repo](https://github.com/retaildevcrews/k8s-quickstart)
+- Kubernetes video [library](https://msit.microsoftstream.com/channel/533aa1ff-0400-85a8-6076-f1eb81fb8468)
 
 ### Schedule
 
-TODO - what time are we starting? We have EDT, CDT and PDT
-
 Day   | Start Time | End Time | Activity |
 :---: | ---------: | -------: | -------- |
-Mon   | 10:30      | 11:30    | Introductions |
-|     |            |          | Review Working Agreement |
+Mon   | 11:00      | 1:30     | OCW Viewing Party |
+|     | 1:45       |          | Introductions |
 |     |            |          | Goals for OCW |
-|     |            |          | Verify Access - Teams, GitHub, Azure |
+|     |            |          | Review Working Agreement |
 |     |            |          | How to file a bug, issue or idea |
-|     | 11:30      | 12:00    | Setup Codespaces |
-|     | 12:00      | 2:00     | Break |
-|     |            |          | Docker Labs |
-|     |            |          | Lunch |
-|     | 2:00       | 3:00     | Setup Kind cluster |
-|     |            |          | Deploy and explore NGSA Stack |
+|     |            |          | Verify Access - Teams, GitHub, Azure |
 |     |            |          | Break |
-|     | 3:00       | 5:00     | Kubernetes Pods |
-|     |            |          | Kubernetes Config Maps |
-|     |            |          | Kubernetes Services |
-Tues  | 10:30      | 10:45    | Stand up |
-|     | 10:45      | ???      | ??? |
-Wed   | 10:30      | 10:45    | Stand up |
-|     | 10:45      | ???      | ??? |
-Thur  | 10:30      | 10:45    | Stand up |
-|     | 10:45      | ???      | ??? |
-Fri   | 10:30      | 10:45    | Stand up |
-|     | 10:45      | ???      | ??? |
+|     |            |          | Demo of NGSA Stack |
+|     |            |          | Setup Kind cluster |
+|     |            |          | Deploy and explore NGSA Stack |
+|     | 4:30       | 5:00     | Stand up |
+Tues  | 11:00      |          | Azure Secure Baseline Overview |
+|     |            |          | Break into teams |
+|     |            |          | Deploy ASB |
+|     | 4:30       | 5:00     | Stand up and organize challenge teams |
+Wed   | 11:00      | 4:15     | Challenge Teams |
+|     | 4:15       | 5:00     | Stand up and demos |
+Thur  | 11:00      | 4:15     | Challenge Teams |
+|     | 4:15       | 5:00     | Stand up and demos |
+Fri   | 11:00      | 3:00     | Challenge Teams and final demo prep |
 |     | 3:00       | 4:30     | Demos and Retro |
 
 ## Additional Reading
@@ -63,4 +60,5 @@ Fri   | 10:30      | 10:45    | Stand up |
 
 ### AKS Secure Baseline
 
-- TODO - add links
+- Patterns and Practices [repo](https://github.com/mspnp/aks-secure-baseline)
+- One CSE Week [repo](https://github.com/retaildevcrews/ocw-asb)
