@@ -137,7 +137,6 @@ docker rmi jumpbox
 docker images
 
 # build image
-cd 02-Docker-Part-1
 docker build . -t jumpbox
 docker images
 
