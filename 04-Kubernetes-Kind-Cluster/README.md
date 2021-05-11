@@ -155,7 +155,7 @@ make delete
 
 - The `OCW Azure Secure Baseline` repo is cloned in the `/workspaces` directory
 - The rest of the hack will use this repo
-- Open the repo in Codespaces with the `File - Open Folder` menu option
+- The repo is in the `OCW Workspace` under the `ocw-asb` folder
 - Run `git pull` to make sure you have the latest version
 
 ```bash
