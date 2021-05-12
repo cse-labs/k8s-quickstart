@@ -153,14 +153,30 @@ make delete
 
 ## Azure Secure Baseline
 
-- The `OCW Azure Secure Baseline` repo is cloned in the `/workspaces` directory
-- The rest of the hack will use this repo
-- The repo is in the `OCW Workspace` under the `ocw-asb` folder
-- Run `git pull` to make sure you have the latest version
+- The `OCW Azure Secure Baseline` repo for your team is at `github/retaildevcrews/ocw-[red | blue | green]`
 
 ```bash
 
-cd /workspaces/ocw-asb
+#clone the repo
+cd /workspaces
+git clone https://github.com/retaildevcrews/ocw-[red | blue | green] asb
+
+# change ownership
+sudo chown -R akdc:akdc asb
+
+# checkout the gitops branch
+cd asb
+git checkout GitOps
 git pull
 
 ```
+
+### Open the folder in `Codespaces`
+
+- Menu - File - Open Folder - `/workspaces/ocw-[red | blue | green]
+  - ctrl-k ctrl-o
+
+- Open `deploy/flux.yaml` in the editor
+  - Search for `todo`
+  - Change the repo name to your team repo
+  - Push changes to your team repo
