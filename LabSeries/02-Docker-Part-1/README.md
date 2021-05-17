@@ -90,6 +90,9 @@ docker commit -c 'CMD ["/bin/bash", "-l"]'  -c 'WORKDIR /root' jumpbox jumpbox
 # our jumpbox image is created
 docker images
 
+# stop the jumpbox prior to removing
+docker stop jumpbox
+
 # remove container
 docker rm jumpbox
 
