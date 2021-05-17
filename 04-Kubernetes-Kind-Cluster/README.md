@@ -150,33 +150,3 @@ Click on the `Ports` tab in Codespaces to forward the ports
 make delete
 
 ```
-
-## Azure Secure Baseline
-
-- The `OCW Azure Secure Baseline` repo for your team is at `github/retaildevcrews/ocw-[red | blue | green]`
-
-```bash
-
-#clone the repo
-cd /workspaces
-git clone https://github.com/retaildevcrews/ocw-[red | blue | green] asb
-
-# change ownership
-sudo chown -R akdc:akdc asb
-
-# checkout the gitops branch
-cd asb
-git checkout GitOps
-git pull
-
-```
-
-### Open the folder in `Codespaces`
-
-- Menu - File - Open Folder - `/workspaces/ocw-[red | blue | green]
-  - ctrl-k ctrl-o
-
-- Open `deploy/flux.yaml` in the editor
-  - Search for `todo`
-  - Change the repo name to your team repo
-  - Push changes to your team repo
