@@ -139,6 +139,9 @@ docker rm -f jumpbox
 docker rmi jumpbox
 docker images
 
+# make sure you're in this directory
+pwd
+
 # build image
 docker build . -t jumpbox
 docker images
