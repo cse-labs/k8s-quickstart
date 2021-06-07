@@ -1,6 +1,6 @@
 # Session 1: Setup Codespaces Lab
 
-> Purpose: Set a `GitHub Codespace` to use for this lab series
+> Purpose: Set up `GitHub Codespace` to use for this lab series
 
 ## Lab Resources
 

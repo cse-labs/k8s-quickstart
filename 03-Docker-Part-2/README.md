@@ -2,13 +2,13 @@
 
 ## Lab Resources
 
-- For these labs, we will be using [GitHub Codespaces](https://github.com/features/codespaces). To setup Codespaces, see Lab 1, [Setup Codespaces](../01-Setup-Codespaces/README.md).
+- For these labs, we will be using [GitHub Codespaces](https://github.com/features/codespaces). To setup Codespaces, see Lab 1, [Open with Codespaces](../01-Setup-Codespaces/README.md#open-with-codespaces).
 - This is a `hands-on lab` and assumes familiarity with basic Docker. Please use the link(s) below for basic familiarity.
   - Intro to Docker: <https://docs.microsoft.com/en-us/dotnet/architecture/microservices/container-docker-introduction/>
 - Dockerfile Reference: <https://docs.docker.com/engine/reference/builder/>
 - Docker 101 [video walk through](https://msit.microsoftstream.com/video/7115a4ff-0400-85a8-5a90-f1eb80993e79?channelId=533aa1ff-0400-85a8-6076-f1eb81fb8468) (Microsoft Internal)
 
-### Run a simple web app in Docker
+## Run a simple web app in Docker
 
 ```bash
 
@@ -27,12 +27,15 @@ docker exec -t web ls -al
 
 ```
 
-### Create a Docker network
+## Create a Docker network
 
 - Currently, the `jumpbox` can't communicate with the `web server`
 - In order for this to work, you have to create a `Docker network` and add each container to the network
 
 ```bash
+
+# Verify the jumpbox container from (Session 2: Docker Part 1)[../02-Docker-Part-1/README.md] is running
+docker ps
 
 # this will fail
 docker exec -t jumpbox http web:8080/version
@@ -49,7 +52,7 @@ docker exec -t jumpbox http web:8080/version
 
 ```
 
-### Accessing web server from terminal
+## Accessing web server from terminal
 
 - Currently, we can only access `web` from `jumpbox`
 - Docker allows you to map ports from within docker
@@ -73,7 +76,7 @@ http localhost/version
 
 ```
 
-### Access from your local browser
+## Access from your local browser
 
 `Codespaces` can `forward` local ports so you can access remotely
 
@@ -84,7 +87,7 @@ http localhost/version
 - You will get a new browser tab with the `Swagger UI`
   - Note: popup blockers may have to be disabled
 
-### Remove the web container
+## Remove the web container
 
 ```bash
 
@@ -95,6 +98,8 @@ docker stop web
 
 # we can restart it
 docker start web
+
+# may take a moment for the application to available on port 80
 http localhost/version
 docker logs web
 
