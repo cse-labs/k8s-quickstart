@@ -13,7 +13,7 @@ help :
 	@echo "   make reset-grafana    - reset the Grafana volume (existing data is deleted)"
 	@echo "   make jumpbox          - deploy a 'jumpbox' pod"
 
-all : delete create deploy check jumpbox
+all : delete create deploy jumpbox check
 
 delete :
 	# delete the cluster (if exists)
