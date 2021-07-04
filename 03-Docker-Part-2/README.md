@@ -15,8 +15,8 @@
 # run a simple web app
 # pull from GitHub container registry (ghcr.io/retaildevcrews)
 # use the beta tag (:beta)
-# pass the --in-memory flag to the container
-docker run -d --name web ghcr.io/retaildevcrews/ngsa-app:beta --in-memory
+# pass the --in-memory and --prometheus flags to the container
+docker run -d --name web ghcr.io/retaildevcrews/ngsa-app:beta --in-memory --prometheus
 
 # see what happened
 docker ps
