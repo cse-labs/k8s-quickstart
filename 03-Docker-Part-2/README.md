@@ -65,7 +65,7 @@ docker rm -f web
 # create the web server
 # add to the web network
 # map port 8080 in the container to port 80 in the terminal
-docker run -d --name web -p 80:8080 --network web ghcr.io/retaildevcrews/ngsa-app:beta --in-memory
+docker run -d --name web -p 80:8080 --network web ghcr.io/retaildevcrews/ngsa-app:beta --in-memory --prometheus
 
 # check web from jumpbox
 docker exec -t jumpbox http web:8080/version
@@ -80,9 +80,7 @@ http localhost/version
 
 `Codespaces` can `forward` local ports so you can access remotely
 
-- Click on the `PORTS 4` tab
-- Choose `Add Port`
-- Enter 80
+- Click on the `PORTS 1` tab
 - Hover over `Local Address` for `Port 80` and click `Open in Browser`
 - You will get a new browser tab with the `Swagger UI`
   - Note: popup blockers may have to be disabled
