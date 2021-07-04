@@ -110,7 +110,7 @@ exit
 docker ps -a
 
 # set jumpbox to run forever (almost)
-# Alpine does support "sleep forever"
+# Alpine doesn't support "sleep forever"
 docker commit -c 'CMD ["/bin/bash", "-c", "sleep 999999999d"]'  jumpbox jumpbox
 
 # remove jumpbox container
