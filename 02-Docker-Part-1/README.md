@@ -63,6 +63,9 @@ docker pull alpine
 # notice the size difference between alpine and ubuntu
 docker images
 
+# make sure you're in this directory!
+pwd
+
 ```
 
 ### Build the `jumpbox`
@@ -74,7 +77,7 @@ We are going to build the jumpbox manually - later we'll show how to build using
 # install some utilities into the alpine base image
 # --name - names our container, jumpbox
 # apk ... is the command we want to run in the container
-docker run -it --name jumpbox alpine apk add --no-cache curl redis mariadb-client httpie jq nano bash
+docker run -it --name jumpbox alpine /bin/sh -c "apk add --no-cache curl redis mariadb-client py-pip jq nano bash && pip3 install --upgrade pip setuptools httpie"
 
 # our container is created but not running
 docker ps -a
@@ -89,9 +92,6 @@ docker commit -c 'CMD ["/bin/bash", "-l"]'  -c 'WORKDIR /root' jumpbox jumpbox
 # our jumpbox image is created
 docker images
 
-# stop the jumpbox prior to removing
-docker stop jumpbox
-
 # remove jumpbox container
 docker rm jumpbox
 
@@ -99,6 +99,9 @@ docker rm jumpbox
 docker run -it --name jumpbox jumpbox
 
 # your prompt changes again
+
+# run a command
+http www.microsoft.com
 
 # exit back to Codespaces
 exit
@@ -120,7 +123,7 @@ docker rm jumpbox
 docker run -d --name jumpbox --restart always jumpbox
 
 # run a command "in" jumpbox
-docker exec -t jumpbox http www.microsoft.com
+docker exec -it jumpbox http www.microsoft.com
 
 # notice the -t gives us ansi colors
 docker exec jumpbox http www.microsoft.com
@@ -149,7 +152,7 @@ docker images
 docker run -d --name jumpbox --restart always jumpbox
 
 # run a command "in" jumpbox
-docker exec -t jumpbox http www.microsoft.com
+docker exec -it jumpbox http www.microsoft.com
 
 # run a shell in jumpbox
 docker exec -it jumpbox bash -l
