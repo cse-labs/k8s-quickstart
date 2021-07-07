@@ -193,7 +193,7 @@ echo $CosmosDatabase > Secrets/CosmosDatabase
 echo $CosmosUrl > Secrets/CosmosUrl
 
 # add the Cosmos key from the Codespaces secret
-echo $CosmosKey > Secrets/CosmosKey
+echo $COSMOSKEY > Secrets/CosmosKey
 
 # remove the web app
 # ignore not found error
