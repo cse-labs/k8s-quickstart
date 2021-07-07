@@ -202,13 +202,15 @@ docker rm -f web
 # run web using Cosmos
 # -v mounts our local secrets into the container
 # this happens automatically in k8s with Key Vault or Hashi Vault
-docker run -d --name web -p 80:8080 --network web -v $(pwd)/secrets:/app/Secrets ghcr.io/retaildevcrews/ngsa-app:beta --prometheus
+docker run -d --name web -p 80:8080 --network web -v $(pwd)/secrets:/app/secrets ghcr.io/retaildevcrews/ngsa-app:beta --prometheus --no-cache
 
 # curl the web app
 docker exec -it jumpbox http web:8080/version
 
 # query Cosmos
-docker exec -it jumpbox http web:8080/api/genres
+# there is a bug in ngsa-app or the Cosmos DB, so keep the pagesize < 90 for now
+# default is 100
+docker exec -it jumpbox http web:8080/api/movies?pagesize=10
 
 
 ```
