@@ -200,7 +200,9 @@ echo $CosmosKey > Secrets/CosmosKey
 docker rm -f web
 
 # run web using Cosmos
-docker run -d --name web -p 80:8080 --network web ghcr.io/retaildevcrews/ngsa-app:beta --prometheus
+# -v mounts our local secrets into the container
+# this happens automatically in k8s with Key Vault or Hashi Vault
+docker run -d --name web -p 80:8080 --network web -v $(pwd)/Secrets:/app/Secrets ghcr.io/retaildevcrews/ngsa-app:beta --prometheus
 
 # curl the web app
 docker exec -it jumpbox http web:8080/version
