@@ -181,23 +181,25 @@ docker ps -a
 
 ```bash
 
+# remove the web app
+# ignore not found error
+docker rm -f web
+
 # make sure you're in this directory
 pwd
 
 # make the secrets directory
+# we will mount this as a volume
 mkdir -p secrets
 
 # add the Cosmos config values
+# these are set in the .devcontainer/devcontainer.json file
 echo $CosmosCollection > secrets/CosmosCollection
 echo $CosmosDatabase > secrets/CosmosDatabase
 echo $CosmosUrl > secrets/CosmosUrl
 
 # add the Cosmos key from the Codespaces secret
 echo $COSMOSKEY > secrets/CosmosKey
-
-# remove the web app
-# ignore not found error
-docker rm -f web
 
 # run web using Cosmos
 # -v mounts our local secrets into the container
@@ -208,9 +210,8 @@ docker run -d --name web -p 80:8080 --network web -v $(pwd)/secrets:/app/secrets
 docker exec -it jumpbox http web:8080/version
 
 # query Cosmos
-# there is a bug in ngsa-app or the Cosmos DB, so keep the pagesize < 90 for now
-# default is 100
+# there is a bug in ngsa-app or the Cosmos DB, so keep the pagesize < 90 or > 105 for now
+# default is 100 which fails
 docker exec -it jumpbox http web:8080/api/movies?pagesize=10
-
 
 ```
