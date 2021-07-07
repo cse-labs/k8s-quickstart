@@ -15,4 +15,4 @@
 # vendor/
 
 # Ignore Secrets
-**/Secrets/**
+**/secrets/**
