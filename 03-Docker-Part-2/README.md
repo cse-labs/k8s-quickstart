@@ -174,3 +174,39 @@ docker rm -f web
 docker ps -a
 
 ```
+
+## TODO - temporary instructions
+
+> Deploy ngsa-app with Cosmos
+
+```bash
+
+# make sure you're in this directory
+pwd
+
+# make the secrets directory
+mkdir -p Secrets
+
+# add the Cosmos config values
+echo $CosmosCollection > Secrets/CosmosCollection
+echo $CosmosDatabase > Secrets/CosmosDatabase
+echo $CosmosUrl > Secrets/CosmosUrl
+
+# add the Cosmos key from the Codespaces secret
+echo $CosmosKey > Secrets/CosmosKey
+
+# remove the web app
+# ignore not found error
+docker rm -f web
+
+# run web using Cosmos
+docker run -d --name web -p 80:8080 --network web ghcr.io/retaildevcrews/ngsa-app:beta --prometheus
+
+# curl the web app
+docker exec -it jumpbox http web:8080/version
+
+# query Cosmos
+docker exec -it jumpbox http web:8080/api/genres
+
+
+```
