@@ -1,6 +1,6 @@
 # Session 1: Setup Codespaces Lab
 
-> Purpose: Set a `GitHub Codespace` to use for this lab series
+> Purpose: Set up `GitHub Codespace` to use for this lab series
 
 ## Lab Resources
 
@@ -35,17 +35,17 @@ kind --version
 
 ```
 
-## Suspend Codespaces
+## Stop Codespaces
 
-> Codespaces will automatically suspend after 30 minutes of inactivity
+> Codespaces will automatically stop after 30 minutes of inactivity
 
-To manually suspend Codespaces
+To manually stop Codespaces
 
 - On the lower left corner, select the `Codespaces` with the blue background
 
 ![Codespaces Options](./images/SuspendCodespaces1.png)
 
-- A dropdown will appear at the top of the screen. Select `Codespaces: Suspend Current Codespace`
+- A dropdown will appear at the top of the screen. Select `Codespaces: Stop Current Codespace`
 
 ![Codespaces Options](./images/SuspendCodespaces2.png)
 

@@ -10,4 +10,5 @@ ENTRYPOINT ["/bin/bash", "-c", "sleep 999999999d"]
 COPY .profile /root
 
 # install our utilities
-RUN apk add --no-cache curl redis mariadb-client httpie jq nano bash
+RUN apk add --no-cache curl redis mariadb-client jq nano bash py-pip && \
+    pip3 install --upgrade pip setuptools httpie
