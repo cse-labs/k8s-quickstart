@@ -113,7 +113,7 @@ docker logs web
 # --log-format json uses json logs
 # --verbose displays all logs (not just failures)
 # --prometheus exposes the Prometheus counters on /metrics
-docker run -d --name webv --rm --net web -p 8080:8080 -v $(pwd):/app/TestFiles ghcr.io/retaildevcrews/webvalidate -s http://web:8080 -f baseline.json --run-loop --sleep 1000 --log-format json --verbose --prometheus
+docker run -d --name webv --net web -p 8080:8080 -v $(pwd):/app/TestFiles ghcr.io/retaildevcrews/webvalidate -s http://web:8080 -f baseline.json --run-loop --sleep 1000 --log-format json --verbose --prometheus
 
 # check the webv logs a few times
 docker logs webv
