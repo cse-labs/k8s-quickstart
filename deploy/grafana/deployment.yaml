@@ -16,17 +16,17 @@ spec:
     spec:
       containers:
       - name: grafana
-        image: grafana/grafana:latest
+        image: grafana/grafana:8.1.1
         ports:
         - name: grafana
           containerPort: 3000
         resources:
           limits:
-            memory: "2Gi"
-            cpu: "1000m"
-          requests: 
-            memory: "1Gi"
+            memory: "512Mi"
             cpu: "500m"
+          requests: 
+            memory: "256Mi"
+            cpu: "200m"
         volumeMounts:
           - mountPath: /var/lib/grafana
             name: grafana-storage
@@ -41,3 +41,22 @@ spec:
           configMap:
               defaultMode: 420
               name: grafana-datasources
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+  namespace: monitoring
+  annotations:
+      prometheus.io/scrape: 'true'
+      prometheus.io/port:   '3000'
+spec:
+  selector: 
+    app: grafana
+  type: NodePort  
+  ports:
+    - port: 3000
+      targetPort: 3000
+      nodePort: 32000

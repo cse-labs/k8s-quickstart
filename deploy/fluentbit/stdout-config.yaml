@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: fluent-bit-config
-  namespace: default
+  namespace: logging
   labels:
     k8s-app: fluent-bit
 data:
@@ -18,12 +18,10 @@ data:
     @INCLUDE input-kubernetes.conf
     @INCLUDE filter-kubernetes.conf
     @INCLUDE output.conf
-
   output.conf: |
     [OUTPUT]
         Name                stdout
         Match               kube.var.log.containers.ngsa*.*
-
   input-kubernetes.conf: |
     [INPUT]
         Name                tail
@@ -34,7 +32,6 @@ data:
         Mem_Buf_Limit       5MB
         Skip_Long_Lines     Off
         Refresh_Interval    10
-
   filter-kubernetes.conf: |
     [FILTER]
         Name                kubernetes
@@ -50,28 +47,24 @@ data:
         K8S-Logging.Exclude Off
         Annotations         Off
         Labels              On
-
     [FILTER]
         Name                nest
         Match               kube.*
         Operation           lift
         Nested_under        kubernetes
         Add_prefix          kubernetes_
-
     [FILTER]
         Name                nest
         Match               kube.*
         Operation           lift
         Nested_under        kubernetes_labels
         Add_prefix          kubernetes_labels_
-
     [FILTER]
         Name    modify
         Match   kube.*
         Copy    kubernetes_labels_app.kubernetes.io/instance   k_app
         Copy    kubernetes_labels_app                          k_app
         Copy    kubernetes_container_name                      k_container
-
   parsers.conf: |
     [PARSER]
         Name         json
@@ -79,21 +72,18 @@ data:
         Time_Key     time
         Time_Format  %d/%b/%Y:%H:%M:%S %z
         Time_Keep    Off
-
     [PARSER]
         Name         syslog
         Format       regex
         Regex        ^\<(?<pri>[0-9]+)\>(?<time>[^ ]* {1,2}[^ ]* [^ ]*) (?<host>[^ ]*) (?<ident>[a-zA-Z0-9_\/\.\-]*)(?:\[(?<pid>[0-9]+)\])?(?:[^\:]*\:)? *(?<message>.*)$
         Time_Key     time
         Time_Format  %b %d %H:%M:%S
-
     [PARSER]
         Name         cri
         Format       regex
         Regex        ^(?<time>[^ ]+) (?<stream>stdout|stderr) (?<logtag>[^ ]*) (?<log>.*)$
         Time_Key     time
         Time_Format  %Y-%m-%dT%H:%M:%S.%L%z
-
     [PARSER]
         Name         docker
         Format       json

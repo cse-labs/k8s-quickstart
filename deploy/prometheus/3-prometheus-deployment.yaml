@@ -17,7 +17,14 @@ spec:
     spec:
       containers:
         - name: prometheus
-          image: prom/prometheus
+          image: prom/prometheus:v2.29.1
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests: 
+              memory: "256Mi"
+              cpu: "250m"
           args:
             - "--config.file=/etc/prometheus/prometheus.yml"
             - "--storage.tsdb.path=/prometheus/"
@@ -37,3 +44,23 @@ spec:
         - name: prometheus-storage-volume
           hostPath:
             path: /prometheus
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-service
+  namespace: monitoring
+  annotations:
+      prometheus.io/scrape: 'true'
+      prometheus.io/port:   '9090'
+  
+spec:
+  selector: 
+    app: prometheus-server
+  type: NodePort  
+  ports:
+    - port: 8080
+      targetPort: 9090 
+      nodePort: 30000
