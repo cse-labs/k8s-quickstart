@@ -5,7 +5,7 @@
 - For this lab, we will use [GitHub Codespaces](https://github.com/features/codespaces) and [k3d](https://k3d.io/) to create a `Development Cluster`
 - For `production clusters` please see the [AKS documentation](https://docs.microsoft.com/en-us/azure/aks/)
 
-> EXCUTE ALL COMMAND IN THE `k8-quickstart` DIRECTORY
+> EXCUTE ALL COMMANDS IN THE `k8-quickstart` DIRECTORY
 
 ## Create a k3d Cluster
 
