@@ -1,4 +1,4 @@
-# Session 8: Kubernetes LodeRunner Lab
+# Lab 8: Kubernetes LodeRunner Lab
 
 > Purpose: TODO
 

@@ -1,4 +1,4 @@
-# Session 12: Kubernetes Deploy from Makefile
+# Lab 12: Kubernetes Deploy from Makefile
 
 > Purpose: TODO
 

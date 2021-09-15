@@ -1,4 +1,4 @@
-# Session 10: Kubernetes Grafana Lab
+# Lab 10: Kubernetes Grafana Lab
 
 > Purpose: TODO
 

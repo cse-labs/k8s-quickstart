@@ -1,4 +1,4 @@
-# Session 5: Kubernetes Pods Lab
+# Lab 5: Kubernetes Pods Lab
 
 > Purpose: TODO
 

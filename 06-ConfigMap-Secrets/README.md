@@ -1,4 +1,4 @@
-# Session 6: Kubernetes ConfigMap Secrets Lab
+# Lab 6: Kubernetes ConfigMap Secrets Lab
 
 > Purpose: TODO
 

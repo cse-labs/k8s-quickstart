@@ -1,4 +1,4 @@
-# Session 11: Kubernetes FluentBit Lab
+# Lab 11: Kubernetes FluentBit Lab
 
 > Purpose: TODO
 

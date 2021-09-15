@@ -1,4 +1,4 @@
-# Session 7: Kubernetes Services Lab
+# Lab 7: Kubernetes Services Lab
 
 > Purpose: TODO
 

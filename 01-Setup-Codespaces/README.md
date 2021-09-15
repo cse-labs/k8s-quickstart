@@ -1,4 +1,4 @@
-# Session 1: Setup Codespaces Lab
+# Lab 1: Setup Codespaces Lab
 
 > Purpose: Set up `GitHub Codespace` to use for this lab series
 

@@ -1,4 +1,4 @@
-# Session 14: Kubernetes Load Test Lab
+# Lab 14: Kubernetes Load Test Lab
 
 > Purpose: TODO
 

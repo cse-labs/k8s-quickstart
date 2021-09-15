@@ -1,4 +1,4 @@
-# Session 9: Kubernetes Prometheus Lab
+# Lab 9: Kubernetes Prometheus Lab
 
 > Purpose: TODO
 

@@ -1,4 +1,4 @@
-# Session 13: Kubernetes Debugging
+# Lab 13: Kubernetes Debugging
 
 > Purpose: TODO
 
