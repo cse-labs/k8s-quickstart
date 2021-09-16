@@ -1,59 +1,62 @@
-.PHONY: help all create delete deploy check clean load-test reset-prometheus reset-grafana jumpbox target
+.PHONY: help all create delete deploy check clean app webv test load-test jumpbox
 
 help :
 	@echo "Usage:"
 	@echo "   make all              - create a cluster and deploy the apps"
-	@echo "   make create           - create a kind cluster"
-	@echo "   make delete           - delete the kind cluster"
+	@echo "   make create           - create a k3d cluster"
+	@echo "   make delete           - delete the k3d cluster"
 	@echo "   make deploy           - deploy the apps to the cluster"
 	@echo "   make check            - check the endpoints with curl"
+	@echo "   make test             - run a WebValidate test"
+	@echo "   make load-test        - run a 60 second WebValidate test"
 	@echo "   make clean            - delete the apps from the cluster"
-	@echo "   make load-test        - run a 60 second load test"
-	@echo "   make reset-prometheus - reset the Prometheus volume (existing data is deleted)"
-	@echo "   make reset-grafana    - reset the Grafana volume (existing data is deleted)"
+	@echo "   make app              - build and deploy a local app docker image"
+	@echo "   make webv             - build and deploy a local WebV docker image"
 	@echo "   make jumpbox          - deploy a 'jumpbox' pod"
 
-all : delete create deploy jumpbox check
+all : create deploy jumpbox
 
 delete :
 	# delete the cluster (if exists)
 	@# this will fail harmlessly if the cluster does not exist
-	@kind delete cluster
+	@k3d cluster delete
 
-create :
-	# create the cluster and wait for ready
+create : delete
+	@# create the cluster and wait for ready
 	@# this will fail harmlessly if the cluster exists
-	@# default cluster name is kind
+	@# default cluster name is k3d
 
-	@kind create cluster --config deploy/kind/kind.yaml
+	@k3d cluster create --registry-use k3d-registry.localhost:5500 --config deploy/k3d.yaml --k3s-server-arg "--no-deploy=traefik" --k3s-server-arg "--no-deploy=servicelb"
 
 	# wait for cluster to be ready
 	@kubectl wait node --for condition=ready --all --timeout=60s
+	@sleep 5
+	@kubectl wait pod -A --all --for condition=ready --timeout=60s
 
 deploy :
 	# deploy the app
 	@# continue on most errors
-	-kubectl apply -f deploy/ngsa-memory
+	@kubectl apply -f deploy/ngsa-memory
 
 	# deploy prometheus and grafana
-	-kubectl apply -f deploy/prometheus
-	-kubectl apply -f deploy/grafana
+	@kubectl apply -f deploy/prometheus
+	@kubectl apply -f deploy/grafana
 
 	# deploy fluent bit
-	-kubectl create secret generic log-secrets --from-literal=WorkspaceId=dev --from-literal=SharedKey=dev
-	-kubectl apply -f deploy/fluentbit
-
-	# deploy LodeRunner after the app starts
-	@kubectl wait pod ngsa-memory --for condition=ready --timeout=30s
-	-kubectl apply -f deploy/loderunner
+	@kubectl create secret generic log-secrets --from-literal=WorkspaceId=dev --from-literal=SharedKey=dev
+	@kubectl apply -f deploy/fluentbit
 
 	# wait for the pods to start
 	@kubectl wait pod -n monitoring --for condition=ready --all --timeout=30s
-	@kubectl wait pod fluentb --for condition=ready --timeout=30s
-	@kubectl wait pod loderunner --for condition=ready --timeout=30s
+	@kubectl wait pod -n logging fluentbit --for condition=ready --timeout=30s
+
+	# deploy WebV after the app starts
+	@kubectl wait pod ngsa-memory --for condition=ready --timeout=30s
+	@kubectl apply -f deploy/webv
+	@kubectl wait pod webv --for condition=ready --timeout=30s
 
 	# display pod status
-	@kubectl get po -A | grep "default\|monitoring"
+	@kubectl get po -A | grep "default\|monitoring\|logging"
 
 check :
 	# curl all of the endpoints
@@ -67,48 +70,87 @@ check :
 clean :
 	# delete the deployment
 	@# continue on error
-	@kubectl delete -f deploy/loderunner --ignore-not-found=true
-	@kubectl delete -f deploy/ngsa-memory --ignore-not-found=true
-	@kubectl delete ns monitoring --ignore-not-found=true
-	@kubectl delete -f deploy/fluentbit --ignore-not-found=true
-	@kubectl delete secret log-secrets --ignore-not-found=true
-	@kubectl delete pod jumpbox --ignore-not-found=true
+	-kubectl delete pod jumpbox --ignore-not-found=true
+	-kubectl delete -f deploy/webv --ignore-not-found=true
+	-kubectl delete -f deploy/ngsa-memory --ignore-not-found=true
+	-kubectl delete ns monitoring --ignore-not-found=true
+	-kubectl delete ns logging --ignore-not-found=true
 
 	# show running pods
 	@kubectl get po -A
 
+app :
+	# build push the local image
+	docker build ../ngsa-app -t k3d-registry.localhost:5500/ngsa-app:local
+	docker push k3d-registry.localhost:5500/ngsa-app:local
+
+	# delete WebV
+	-kubectl delete -f deploy/webv --ignore-not-found=true
+
+	# delete/deploy the app
+	-kubectl delete -f deploy/ngsa-memory --ignore-not-found=true
+	kubectl apply -f deploy/ngsa-local
+
+	# deploy WebValidate after app starts
+	@kubectl wait pod ngsa-memory --for condition=ready --timeout=30s
+	kubectl apply -f deploy/webv
+	@kubectl wait pod webv --for condition=ready --timeout=30s
+
+	@kubectl get po
+
+	# display the app version
+	-http localhost:30080/version
+
+webv :
+	# build and push the local image
+	docker build ../webvalidate -t k3d-registry.localhost:5500/webv:local
+	docker push k3d-registry.localhost:5500/webv:local
+	
+	# delete / create WebValidate
+	-kubectl delete -f deploy/webv --ignore-not-found=true
+	kubectl apply -f deploy/webv-local
+	kubectl wait pod webv --for condition=ready --timeout=30s
+	@kubectl get po
+
+	# display the current version
+	-http localhost:30088/version
+
+test :
+	# use WebValidate to run a test
+	webv --verbose --summary tsv --server http://localhost:30080 --files baseline.json
+	# the 400 and 404 results are expected
+	# Errors and ValidationErrorCount should both be 0
+
 load-test :
-	# run a single test
-	webv -s http://localhost:30080 -f baseline.json
-
-	# run a 60 second test
-	webv -s http://localhost:30080 -f benchmark.json -r -l 10 --duration 60
-
-reset-prometheus :
-	# remove and create the /prometheus volume
-	@sudo rm -rf /prometheus
-	@sudo mkdir -p /prometheus
-	@sudo chown -R 65534:65534 /prometheus
-
-reset-grafana :
-	# remove and copy the data to /grafana volume
-	@sudo rm -rf /grafana
-	@sudo mkdir -p /grafana
-	@sudo cp deploy/grafana/grafana.db /grafana
-	@sudo chown -R 472:472 /grafana
+	# use WebValidate to run a 60 second test
+	webv --verbose --server http://localhost:30080 --files benchmark.json --run-loop --sleep 100 --duration 60
 
 jumpbox :
-	@# start a jumpbox pod
+	# start a jumpbox pod
 	@-kubectl delete pod jumpbox --ignore-not-found=true
 
-	@kubectl run jumpbox --image=alpine --restart=Always -- /bin/sh -c "trap : TERM INT; sleep 9999999999d & wait"
+	@kubectl run jumpbox --image=ghcr.io/retaildevcrews/alpine --restart=Always -- /bin/sh -c "trap : TERM INT; sleep 9999999999d & wait"
 	@kubectl wait pod jumpbox --for condition=ready --timeout=30s
-	@kubectl exec jumpbox -- /bin/sh -c "apk update && apk add bash curl py-pip" > /dev/null
+
+	###### If you get an error after this  ####
+	# run make patch-jumpbox
+	@kubectl exec jumpbox -- /bin/sh -c "apk update && apk add bash curl nano jq py-pip" > /dev/null
 	@kubectl exec jumpbox -- /bin/sh -c "pip3 install --upgrade pip setuptools httpie" > /dev/null
 	@kubectl exec jumpbox -- /bin/sh -c "echo \"alias ls='ls --color=auto'\" >> /root/.profile && echo \"alias ll='ls -lF'\" >> /root/.profile && echo \"alias la='ls -alF'\" >> /root/.profile && echo 'cd /root' >> /root/.profile" > /dev/null
 
-	# use kj to exec a bash shell in the jumpbox
+	# Run an interactive bash shell in the jumpbox
+	# kj
+	# use kje <command>
+	# kje http ngsa-memory:8080/version
 
-	# use kje <command> to exec a command in the jumpbox
-	# since the command executes "in" the jumpbox, we have access to the cluster network
+patch-jumpbox :
+	@# in case of ddos
+	@kubectl wait pod jumpbox --for condition=ready --timeout=30s
+	@kubectl exec jumpbox -- /bin/sh -c "apk update && apk add bash curl nano jq py-pip" > /dev/null
+	@kubectl exec jumpbox -- /bin/sh -c "pip3 install --upgrade pip setuptools httpie" > /dev/null
+	@kubectl exec jumpbox -- /bin/sh -c "echo \"alias ls='ls --color=auto'\" >> /root/.profile && echo \"alias ll='ls -lF'\" >> /root/.profile && echo \"alias la='ls -alF'\" >> /root/.profile && echo 'cd /root' >> /root/.profile" > /dev/null
+
+	# Run an interactive bash shell in the jumpbox
+	# kj
+	# use kje <command>
 	# kje http ngsa-memory:8080/version
