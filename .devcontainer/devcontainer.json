@@ -16,6 +16,10 @@
 		"terminal.integrated.defaultProfile.linux": "zsh"
 	},
 
+	"hostRequirements": {
+		"cpus": 4
+	},
+
 	// forward ports for the app
 	"forwardPorts": [
 		30000,
