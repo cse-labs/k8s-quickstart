@@ -245,5 +245,6 @@ make delete
 
 ## Further Learning
 
-- Explore the [Makefile](../Makefile)
-- Explore the YAML files in the [deploy directory](../deploy)
+- Use the autocomplete to explore different contexts
+- Try out different context commands
+
