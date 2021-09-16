@@ -43,6 +43,7 @@ deploy :
 	@kubectl apply -f deploy/grafana
 
 	# deploy fluent bit
+	@kubectl create secret generic log-secrets --from-literal=WorkspaceId=dev --from-literal=SharedKey=dev
 	@kubectl apply -f deploy/fluentbit
 
 	# wait for the pods to start
