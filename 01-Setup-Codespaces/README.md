@@ -1,6 +1,6 @@
 # Lab 1: Setup Codespaces Lab
 
-## Lab Resources
+## Lab Introduction
 
 - For these labs, we will be using [GitHub Codespaces](https://github.com/features/codespaces)
 - [Docs](https://docs.github.com/en/codespaces) for Codespaces
