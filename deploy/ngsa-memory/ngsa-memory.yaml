@@ -9,7 +9,7 @@ spec:
   containers:
   - name: ds
     imagePullPolicy: Always
-    image: ghcr.io/retaildevcrews/ngsa-app:beta
+    image: ghcr.io/cse-labs/ngsa-app:beta
     resources:
       limits:
         memory: "512Mi"

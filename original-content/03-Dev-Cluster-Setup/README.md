@@ -4,7 +4,7 @@
 
 ### [GitHub Codespaces](https://github.com/features/codespaces) is the easiest way to create a developer cluster
 
-- Follow the setup instructions: [Dev Cluster on Codespaces](https://github.com/retaildevcrews/akdc-kind)
+- Follow the setup instructions: [Dev Cluster on Codespaces](https://github.com/cse-labs/kubernetes-in-codespaces)
 
 ## Azure VM Setup
 
@@ -36,7 +36,7 @@
 
 # change to the directory where you keep your repos
 
-git clone https://github.com/retaildevcrews/k8s-quickstart.git
+git clone https://github.com/cse-labs/k8s-quickstart.git
 
 # start in the scripts directory
 cd k8s-quickstart/03-Dev-Cluster-Setup/scripts/

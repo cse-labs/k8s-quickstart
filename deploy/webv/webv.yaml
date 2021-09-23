@@ -10,7 +10,7 @@ spec:
   containers:
   - name: app
 
-    image: ghcr.io/retaildevcrews/webvalidate:beta
+    image: ghcr.io/cse-labs/webvalidate:beta
     imagePullPolicy: Always
     resources:
       limits:

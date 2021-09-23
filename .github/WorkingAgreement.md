@@ -119,9 +119,8 @@ Our crews are distributed across timezones and across the world. Where possible,
 #### Definition of Done
 
 - Acceptance Criteria are satisfied
-- Appropriate [Pull Request template(s)](https://github.com/retaildevcrews/ngsa/blob/main/.github/PULL_REQUEST_TEMPLATE.md) satisfied
-- [Pull Request](https://github.com/orgs/retaildevcrews/projects/4) approved and completed
-- [DoD Review & Release](https://github.com/orgs/retaildevcrews/projects/4?card_filter_query=label%3Arelease) checklist satisfied and completed
+- Appropriate [Pull Request template(s)](https://github.com/cse-labs/k8s-quickstart/blob/main/.github/PULL_REQUEST_TEMPLATE.md) satisfied
+- [Pull Request](https://github.com/orgs/cse-labs/projects/1) approved and completed
 - Demonstration recorded and available to customer (when applicable)
 
 ### Backlogs and (Dash)boards

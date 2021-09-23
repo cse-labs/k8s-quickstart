@@ -14,7 +14,7 @@ This is an end-to-end walkthrough of setting up Fluent Bit for log forwarding to
 ### Prerequisites
 
 - Kubernetes Dev Cluster
-  - Setup a [Development Cluster](https://github.com/retaildevcrews/akdc) on an Azure VM
+  - Setup a [Development Cluster](https://github.com/cse-labs/kubernetes-in-codespaces) on an Azure VM
 - Visual Studio Code (optional) ([download](https://code.visualstudio.com/download))
 
 ### Verify your dev cluster
@@ -53,7 +53,7 @@ alias kf='kubectl logs fluentb'
 
 ```bash
 
-git clone https://github.com/retaildevcrews/k8s-quickstart
+git clone https://github.com/cse-labs/k8s-quickstart
 cd k8s-quickstart/04-Logging-FluentBit-LogAnalytics
 
 ```

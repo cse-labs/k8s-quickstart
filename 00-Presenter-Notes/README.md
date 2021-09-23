@@ -18,7 +18,7 @@ These are some ideas for the types of sessions you can choose from here. You can
 
 ## Logistics for the Session Preparation
 
-- Pick a session idea, or add one to the [project board](https://github.com/retaildevcrews/k8s-quickstart/projects/1)
+- Pick a session idea, or add one to the [project board](https://github.com/orgs/cse-labs/projects/1)
 - Assign the presenters to the issue.
 - Work with your team during sprints to schedule.
 - Create calendar invite and invite team members.

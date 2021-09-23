@@ -7,4 +7,4 @@ assignees: ''
 
 ---
 
-To find the dead links, please review the GitHub Actions logs at: https://github.com/retaildevcrews/k8s-quickstart/actions
+To find the dead links, please review the GitHub Actions logs at: https://github.com/cse-labs/k8s-quickstart/actions
